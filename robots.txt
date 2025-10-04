@@ -1,3 +1,0 @@
-Sitemap: https://mranonymousnwo.github.io/One_World/sitemap.xml
-User-agent: *
-Allow: /
