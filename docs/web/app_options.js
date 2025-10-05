@@ -519,26 +519,9 @@ const defaultOptions = {
         : "../web/wasm/",
     kind: OptionKind.API,
   },
-
-  workerPort: {
-    /** @type {Object} */
-    value:
-      typeof PDFJSDev !== "undefined" && PDFJSDev.test("MOZCENTRAL")
-        ? globalThis.pdfjsPreloadedWorker || null
-        : null,
-    kind: OptionKind.WORKER,
-  },
   workerSrc: {
-    /** @type {string} */
-    value:
-      // eslint-disable-next-line no-nested-ternary
-      typeof PDFJSDev === "undefined"
-        ? "../src/pdf.worker.js"
-        : PDFJSDev.test("MOZCENTRAL")
-          ? "resource://pdf.js/build/pdf.worker.mjs"
-          : "../build/pdf.worker.mjs",
-    kind: OptionKind.WORKER,
-  },
+  value: "../build/pdf.worker.mjs",
+  kind: OptionKind.WORKER,
 };
 if (typeof PDFJSDev === "undefined" || !PDFJSDev.test("MOZCENTRAL")) {
   defaultOptions.defaultUrl = {
