@@ -1,57 +1,75 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Dokumente zur Elektronischen Technokratie und Welt-Sukzessionsurkunde 1400/98 – direkt lesbar und indexierbar." />
-  <title>One World Dokumentenarchiv</title>
+  <meta charset="UTF-8">
+  <title>PDF Bibliothek – Zukunft, Technokratie & UBI</title>
+  <meta name="description" content="Kostenlos online lesen: Sammlung von PDFs zu Zukunft, KI, Elektrischer Technokratie, UBI, Mikronationen und globalen Staatsdokumenten.">
+  <meta name="keywords" content="PDF Bibliothek, Zukunft, KI, Technokratie, UBI, Mikronation, Staatsgründung, Post-Scarcity, Weltordnung, Dokumente, kostenlos, online lesen, herunterladen, Electric Technocracy, BGE, Humanity, Succession Deed, Vertrag, NATO, Staatensukzession, Dark Mode">
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #111;
-      color: #eee;
-      padding: 2rem;
-      line-height: 1.6;
-    }
-    h1 { color: #00ffe0; }
-    a {
-      color: #00ff88;
-      text-decoration: none;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-    .doc {
-      margin-bottom: 1rem;
-    }
-    .viewer-button {
-      margin-left: 1rem;
-      font-size: 0.9rem;
-      color: #ccc;
-    }
+    body { background:#121212; color:#eee; font-family:Arial, sans-serif; margin:0; padding:20px; }
+    h1 { color:#00e0ff; }
+    a { color:#00bfff; text-decoration:none; }
+    a:hover { text-decoration:underline; }
+    .menu { margin:20px 0; }
+    select { padding:10px; background:#222; color:#eee; border:1px solid #444; }
+    .list { margin-top:30px; }
+    .list p { margin:10px 0; }
   </style>
+  <script>
+    function goToPDF() {
+      var url = document.getElementById("pdfSelect").value;
+      if(url) window.location.href = url;
+    }
+  </script>
 </head>
 <body>
-  <h1>📁 One World – Dokumentenarchiv</h1>
-  <p>Alle PDF-Dateien sind direkt indexierbar und können im Browser angezeigt werden.</p>
+  <h1>📚 Zukunft & Technokratie – PDF Bibliothek</h1>
+  <p>Hier finden Sie eine Sammlung von Dokumenten über KI, Elektrische Technokratie, UBI, Mikronationen und globale Staatsdokumente. Alle PDFs können Sie <strong>kostenlos online lesen und herunterladen</strong>.</p>
 
-  <div class="doc">
-    <a href="https://github.com/MrAnonymousNWO/One_World/raw/master/docs/2025%20Trillions%20for%20the%20Future-AI%2C%20Power%2C%20and%20Post-Scarcity%20-%20Electric%20Technocracy.pdf">2025 Trillions for the Future</a>
-    <a class="viewer-button" href="web/viewer.html?file=docs/2025%20Trillions%20for%20the%20Future-AI%2C%20Power%2C%20and%20Post-Scarcity%20-%20Electric%20Technocracy.pdf">📖 Anzeigen</a>
+  <div class="menu">
+    <label for="pdfSelect">Wähle ein Dokument:</label>
+    <select id="pdfSelect" onchange="goToPDF()">
+      <option value="">-- Bitte wählen --</option>
+      <option value="2025-trillions-for-the-future-ai-power-and-post-scarcity-electric-technocracy.html">2025 Trillions for the Future – AI, Power, and Post-Scarcity</option>
+      <option value="2025-billionen-fuer-die-zukunft-ki-macht-und-post-scarcity-elektronische-technokratie.html">2025 Billionen für die Zukunft – KI & Elektrische Technokratie</option>
+      <option value="2025-state-founding-for-dummies-how-to-start-your-own-country.html">2025 State Founding for Dummies</option>
+      <option value="2025-staatsgruendung-fuer-dummies.html">2025 Staatsgründung für Dummies</option>
+      <option value="2025-micronation-made-easy.html">2025 Micronation Made Easy</option>
+      <option value="ubi-universal-basic-income-and-the-electric-technocracy.html">UBI Universal Basic Income & Electric Technocracy</option>
+      <option value="bge-und-die-elektronische-technokratie.html">BGE und die Elektronische Technokratie</option>
+      <option value="bge-und-die-zukunft-der-menschheit-und-die-elektronische-technokratie.html">BGE und die Zukunft der Menschheit</option>
+      <option value="ubi-and-the-future-of-humanity-from-work-to-electric-technocracy.html">UBI and the Future of Humanity</option>
+      <option value="2025-mikronation-leicht-gemacht.html">2025 Mikronation leicht gemacht</option>
+      <option value="world-sold-non-fiction-succession-deed.html">World Sold – Non-fiction Succession Deed</option>
+      <option value="welt-verkauft-sukzession.html">Welt verkauft – Sukzession</option>
+      <option value="electric-technocracy.html">Electric Technocracy</option>
+      <option value="elektrische-technokratie-staatensukzessionsurkunde.html">Elektrische Technokratie Staatensukzessionsurkunde</option>
+      <option value="turenne-kaserne-vertrag-1400-98-06-10-1998-nato-brd-nl.html">Turenne Kaserne Vertrag 1998</option>
+      <option value="world-sold-state-succession-deed-1400.html">World Sold State Succession Deed 1400</option>
+      <option value="welt-verkauft-staatensukzessionsurkunde1400.html">Welt verkauft Staatensukzessionsurkunde 1400</option>
+    </select>
   </div>
 
-  <!-- Wiederhole diesen Block für jede Datei -->
-  <div class="doc">
-    <a href="https://github.com/MrAnonymousNWO/One_World/raw/master/docs/2025_billionen_zukunft.pdf">2025 Billionen Zukunft</a>
-    <a class="viewer-button" href="web/viewer.html?file=docs/2025_billionen_zukunft.pdf">📖 Anzeigen</a>
+  <div class="list">
+    <h2>Alle Dokumente</h2>
+    <p><a href="2025-trillions-for-the-future-ai-power-and-post-scarcity-electric-technocracy.html">2025 Trillions for the Future – AI, Power, and Post-Scarcity</a> – Vision einer post-scarcity Gesellschaft durch KI und Energie.</p>
+    <p><a href="2025-billionen-fuer-die-zukunft-ki-macht-und-post-scarcity-elektronische-technokratie.html">2025 Billionen für die Zukunft</a> – Deutsche Version über KI, Macht und Elektrische Technokratie.</p>
+    <p><a href="2025-state-founding-for-dummies-how-to-start-your-own-country.html">2025 State Founding for Dummies</a> – Anleitung zur Staatsgründung.</p>
+    <p><a href="2025-staatsgruendung-fuer-dummies.html">2025 Staatsgründung für Dummies</a> – Deutsche Version der Anleitung.</p>
+    <p><a href="2025-micronation-made-easy.html">2025 Micronation Made Easy</a> – Mikronationen leicht gemacht.</p>
+    <p><a href="ubi-universal-basic-income-and-the-electric-technocracy.html">UBI Universal Basic Income</a> – Bedingungsloses Grundeinkommen und Technokratie.</p>
+    <p><a href="bge-und-die-elektronische-technokratie.html">BGE und die Elektronische Technokratie</a> – Deutsche Perspektive auf BGE.</p>
+    <p><a href="bge-und-die-zukunft-der-menschheit-und-die-elektronische-technokratie.html">BGE und die Zukunft der Menschheit</a> – Verbindung von BGE und Zukunftsvisionen.</p>
+    <p><a href="ubi-and-the-future-of-humanity-from-work-to-electric-technocracy.html">UBI and the Future of Humanity</a> – Von Arbeit zur Elektrischen Technokratie.</p>
+    <p><a href="2025-mikronation-leicht-gemacht.html">2025 Mikronation leicht gemacht</a> – Deutsche Mikronationsanleitung.</p>
+    <p><a href="world-sold-non-fiction-succession-deed.html">World Sold – Non-fiction Succession Deed</a> – Juristisches Dokument zur Weltordnung.</p>
+    <p><a href="welt-verkauft-sukzession.html">Welt verkauft – Sukzession</a> – Deutsche Version des Dokuments.</p>
+    <p><a href="electric-technocracy.html">Electric Technocracy</a> – Grundsatzdokument zur Elektrischen Technokratie.</p>
+    <p><a href="elektrische-technokratie-staatensukzessionsurkunde.html">Elektrische Technokratie Staatensukzessionsurkunde</a> – Juristische Grundlage.</p>
+    <p><a href="turenne-kaserne-vertrag-1400-98-06-10-1998-nato-brd-nl.html">Turenne Kaserne Vertrag 1998</a> – NATO/BRD/NL Vertragsdokument.</p>
+    <p><a href="world-sold-state-succession-deed-1400.html">World Sold State Succession Deed 1400</a> – Internationales Rechtsdokument.</p>
+    <p><a href="welt-verkauft-staatensukzessionsurkunde1400.html">Welt verkauft Staatensukzessionsurkunde 1400</a> – Deutsche Version.</p>
   </div>
-
-  <div class="doc">
-    <a href="https://github.com/MrAnonymousNWO/One_World/raw/master/docs/turenne_kaserne_vertrag_1400_98_06_10_1998_nato_brd_nl.pdf">Turenne-Kaserne Vertrag 1400/98</a>
-    <a class="viewer-button" href="web/viewer.html?file=docs/turenne_kaserne_vertrag_1400_98_06_10_1998_nato_brd_nl.pdf">📖 Anzeigen</a>
-  </div>
-
-  <!-- Du kannst hier alle weiteren PDFs einfügen -->
-
 </body>
 </html>
+Index.html
