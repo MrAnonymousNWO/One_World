@@ -3,14 +3,52 @@
 <head>
   <meta charset="utf-8">
   <title>PDF Auswahl – One_World</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="viewer.css">
   <script src="pdf.js"></script>
   <script src="viewer.js"></script>
   <style>
-    body { font-family: sans-serif; margin: 0; }
-    #menu { padding: 10px; background: #f0f0f0; }
-    #pdfSelect { width: 100%; padding: 6px; font-size: 14px; }
-    #viewerContainer { height: 90vh; }
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      background: var(--bg);
+      color: var(--fg);
+      transition: background 0.3s, color 0.3s;
+    }
+    :root {
+      --bg: #ffffff;
+      --fg: #000000;
+    }
+    body.dark {
+      --bg: #121212;
+      --fg: #e0e0e0;
+    }
+    #menu {
+      padding: 10px;
+      background: var(--bg);
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      border-bottom: 1px solid #ccc;
+    }
+    #pdfSelect {
+      flex: 1;
+      padding: 6px;
+      font-size: 14px;
+    }
+    #toggleTheme {
+      padding: 6px 12px;
+      cursor: pointer;
+    }
+    #viewerContainer {
+      height: calc(100vh - 60px);
+      width: 100%;
+      overflow: auto;
+    }
+    .pdfViewer {
+      width: 100% !important;
+      height: 100% !important;
+    }
   </style>
 </head>
 <body>
@@ -41,12 +79,16 @@
       <option value="docs/World_Sold_State_succession_deed_1400.pdf">2024 World Sold State Succession Deed 1400</option>
       <option value="docs/turenne_kaserne_vertrag_1400_98_06_10_1998_nato_brd_nl.pdf">Turenne Kaserne Vertrag 14009806101998 NATO BRD NL</option>
     </select>
+    <button id="toggleTheme">🌙 Dark Mode</button>
   </div>
 
+  <!-- Hier der eigentliche PDF.js Viewer -->
   <div id="viewerContainer" class="pdfViewer"></div>
 
   <script>
     const select = document.getElementById('pdfSelect');
+    const toggleTheme = document.getElementById('toggleTheme');
+
     function loadPDF(path) {
       fetch(path)
         .then(r => r.blob())
@@ -55,10 +97,23 @@
           PDFViewerApplication.open({ url: pdfUrl });
         });
     }
+
     // Standard: erste PDF laden
     loadPDF(select.value);
+
     // Wechsel bei Auswahl
     select.addEventListener('change', () => loadPDF(select.value));
+
+    // Dark Mode Toggle
+    toggleTheme.addEventListener('click', () => {
+      document.body.classList.toggle('dark');
+      toggleTheme.textContent = document.body.classList.contains('dark') ? '☀️ Light Mode' : '🌙 Dark Mode';
+    });
+
+    // Responsive Anpassung: Viewer füllt immer den Container
+    window.addEventListener('resize', () => {
+      document.getElementById('viewerContainer').style.height = (window.innerHeight - 60) + 'px';
+    });
   </script>
 </body>
 </html>
