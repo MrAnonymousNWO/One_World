@@ -4,9 +4,6 @@
   <meta charset="utf-8">
   <title>PDF Auswahl – One_World</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="viewer.css">
-  <script src="pdf.js"></script>
-  <script src="viewer.js"></script>
   <style>
     body {
       font-family: sans-serif;
@@ -40,14 +37,10 @@
       padding: 6px 12px;
       cursor: pointer;
     }
-    #viewerContainer {
-      height: calc(100vh - 60px);
+    #pdfFrame {
       width: 100%;
-      overflow: auto;
-    }
-    .pdfViewer {
-      width: 100% !important;
-      height: 100% !important;
+      height: calc(100vh - 60px);
+      border: none;
     }
   </style>
 </head>
@@ -82,37 +75,23 @@
     <button id="toggleTheme">🌙 Dark Mode</button>
   </div>
 
-  <!-- Hier der eigentliche PDF.js Viewer -->
-  <div id="viewerContainer" class="pdfViewer"></div>
+  <!-- iFrame mit PDF.js Viewer -->
+  <iframe id="pdfFrame" src="viewer.html?file=docs/2025_billionen_zukunft.pdf"></iframe>
 
   <script>
     const select = document.getElementById('pdfSelect');
+    const frame = document.getElementById('pdfFrame');
     const toggleTheme = document.getElementById('toggleTheme');
 
-    function loadPDF(path) {
-      fetch(path)
-        .then(r => r.blob())
-        .then(blob => {
-          const pdfUrl = URL.createObjectURL(blob);
-          PDFViewerApplication.open({ url: pdfUrl });
-        });
-    }
-
-    // Standard: erste PDF laden
-    loadPDF(select.value);
-
     // Wechsel bei Auswahl
-    select.addEventListener('change', () => loadPDF(select.value));
+    select.addEventListener('change', () => {
+      frame.src = "viewer.html?file=" + select.value;
+    });
 
     // Dark Mode Toggle
     toggleTheme.addEventListener('click', () => {
       document.body.classList.toggle('dark');
       toggleTheme.textContent = document.body.classList.contains('dark') ? '☀️ Light Mode' : '🌙 Dark Mode';
-    });
-
-    // Responsive Anpassung: Viewer füllt immer den Container
-    window.addEventListener('resize', () => {
-      document.getElementById('viewerContainer').style.height = (window.innerHeight - 60) + 'px';
     });
   </script>
 </body>
