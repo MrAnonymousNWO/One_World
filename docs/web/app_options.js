@@ -546,9 +546,10 @@ if (typeof PDFJSDev === "undefined" || !PDFJSDev.test("MOZCENTRAL")) {
     value:
       typeof PDFJSDev !== "undefined" && PDFJSDev.test("CHROME")
         ? ""
-        : "../2025_billionen_zukunft.pdf", 
+        : "../World-Sold-Non-fiction-Succession-Deed.pdf", 
     kind: OptionKind.VIEWER,
   };
+}
   defaultOptions.sandboxBundleSrc = {
     /** @type {string} */
     value:
