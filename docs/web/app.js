@@ -2406,30 +2406,23 @@ if (typeof PDFJSDev === "undefined" || !PDFJSDev.test("MOZCENTRAL")) {
 }
 
 if (typeof PDFJSDev === "undefined" || PDFJSDev.test("GENERIC")) {
-  const HOSTED_VIEWER_ORIGINS = new Set([
-    "null",
-    "http://mozilla.github.io",
-    "https://mozilla.github.io",
-    "https://mranonymousnwo.github.io"
-  ]);
-  // eslint-disable-next-line no-var
   var validateFileURL = function (file) {
-    if (!file) {
-      return;
-    }
-    const viewerOrigin = URL.parse(window.location)?.origin || "null";
-    if (HOSTED_VIEWER_ORIGINS.has(viewerOrigin)) {
-      // Hosted or local viewer, allow for any file locations
-      return;
-    }
-    const fileOrigin = URL.parse(file, window.location)?.origin;
-    if (fileOrigin === viewerOrigin) {
-      return;
-    }
-    const ex = new Error("file origin does not match viewer's");
-
-    PDFViewerApplication._documentError("pdfjs-loading-error", {
-      message: ex.message,
+  if (!file) {
+    return;
+  }
+  if (file.startsWith("../") || file.startsWith("./")) {
+    return file;
+  }
+  const viewerOrigin = window.location.origin;
+  const fileOrigin = new URL(file, window.location).origin;
+  if (fileOrigin === viewerOrigin) {
+    return file;
+  }
+  const ex = new Error("Untrusted file URL: " + file);
+  PDFViewerApplication._documentError("pdfjs-loading-error", {
+    message: ex.message,
+  });
+  throw ex;
     });
     // Removing of the following line will not guarantee that the viewer will
     // start accepting URLs from foreign origin -- CORS headers on the remote
