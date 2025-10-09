@@ -1,25 +1,28 @@
-# robots.txt for One_World Archive
-# Optimized for SEO and PDF/HTML indexing
+# ===============================
+# robots.txt for One World Project
+# NATO & UN Legal Successor Archive
+# ===============================
 
 User-agent: *
+# Allow all bots to access and index your public pages
 Allow: /
 
-# Crawl-delay (optional, schont Serverlast)
-# Crawl-delay: 5
+# Prevent indexing of temporary or private files
+Disallow: /drafts/
+Disallow: /private/
+Disallow: /tmp/
+Disallow: /test/
 
-# Haupt-Sitemap mit allen HTML- und PDF-Links
+# ===============================
+# Sitemap References
+# ===============================
 Sitemap: https://mranonymousnwo.github.io/One_World/sitemap.xml
+Sitemap: https://mranonymousnwo.github.io/One_World/sitemap-pages.xml
+Sitemap: https://mranonymousnwo.github.io/One_World/sitemap-pdfs.xml
 
-# Zusätzliche Sitemaps (falls du sie trennen willst)
-# Sitemap: https://mranonymousnwo.github.io/One_World/sitemap-html.xml
-# Sitemap: https://mranonymousnwo.github.io/One_World/sitemap-pdf.xml
-
-# Wichtige Hinweise für Googlebot
-User-agent: Googlebot
-Allow: /*.html$
-Allow: /*.pdf$
-
-# Bingbot und andere
-User-agent: Bingbot
-Allow: /*.html$
-Allow: /*.pdf$
+# ===============================
+# Notes:
+# - Keep sitemaps updated when adding new pages or PDFs.
+# - Use Google Search Console and Bing Webmaster Tools to resubmit when content changes.
+# - GitHub Pages automatically serves robots.txt as plain text.
+# ===============================
