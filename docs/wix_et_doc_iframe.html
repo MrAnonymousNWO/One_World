@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Noir PDF – Ein Viewer, 3 Modi</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  min-height:100dvh; display:flex; flex-direction:column; align-items:center;
+  color:#f0f0f0; font-family:"Inter",system-ui,sans-serif; overflow-x:hidden; position:relative;
+}
+
+/* Hintergrund */
+.bg-matrix{position:fixed; inset:0; z-index:0; background-color:#05050a; width:100%; height:100%; overflow:hidden;
+  display:grid; grid-template-columns:repeat(auto-fill, minmax(40px, 1fr)); grid-auto-rows:40px; font-size:32px; color:rgba(0,150,255,.4);
+  font-family:"Courier New", Courier, monospace; justify-content:center; align-content:center;}
+.bg-matrix > span{text-align:center; text-shadow:0 0 5px rgba(0,150,255,.5); user-select:none; transition:color .5s, text-shadow .5s; line-height:1;}
+.bg-matrix > span:nth-child(19n + 2){animation:smooth-pulse 3.5s ease-in-out infinite .2s}
+.bg-matrix > span:nth-child(29n + 1){animation:smooth-pulse 4.1s ease-in-out infinite .7s}
+.bg-matrix > span:nth-child(11n){color:rgba(100,200,255,.7);animation:smooth-pulse 2.9s ease-in-out infinite 1.1s}
+.bg-matrix > span:nth-child(37n + 10){animation:smooth-pulse 5.3s ease-in-out infinite 1.5s}
+.bg-matrix > span:nth-child(41n + 1){animation:smooth-pulse 3.9s ease-in-out infinite .4s}
+.bg-matrix > span:nth-child(17n + 9){animation:smooth-pulse 2.8s ease-in-out infinite .9s}
+.bg-matrix > span:nth-child(23n + 18){animation:smooth-pulse 4.3s ease-in-out infinite 1.3s}
+.bg-matrix > span:nth-child(31n + 4){animation:smooth-pulse 5.6s ease-in-out infinite .1s}
+.bg-matrix > span:nth-child(43n + 20){animation:smooth-pulse 3.6s ease-in-out infinite 1.8s}
+.bg-matrix > span:nth-child(13n + 6){animation:smooth-pulse 3.2s ease-in-out infinite 1.2s}
+.bg-matrix > span:nth-child(53n + 5){animation:smooth-pulse 4.9s ease-in-out infinite .5s}
+.bg-matrix > span:nth-child(47n + 15){animation:smooth-pulse 5.9s ease-in-out infinite 1s}
+@keyframes smooth-pulse{0%,100%{color:rgba(0,150,255,.4);text-shadow:0 0 5px rgba(0,150,255,.5)}30%{color:rgba(100,200,255,1);text-shadow:0 0 10px rgba(100,200,255,1),0 0 15px rgba(100,200,255,1)}50%{color:rgba(255,105,180,1);text-shadow:0 0 10px rgba(255,105,180,1),0 0 15px rgba(255,105,180,1)}70%{color:#fff;text-shadow:0 0 10px #fff,0 0 15px #fff,0 0 20px #fff}}
+
+.container{position:relative; z-index:2; width:100%; max-width:900px; padding:0.8rem}
+
+/* Menü */
+.menu-row{position:relative;display:flex;gap:0.6rem;align-items:center;justify-content:space-between}
+.glass-box,.dropdown-container,.hamburger,.menu-popup{
+  position:relative; backdrop-filter:blur(15px) saturate(180%);
+  background:rgba(15,15,25,0.45); border-radius:14px; border:1px solid rgba(255,255,255,0.1);
+  box-shadow:0 0 12px rgba(0,255,255,0.25), inset 0 0 12px rgba(255,0,255,0.15);
+  transition:box-shadow .4s ease, transform .25s ease;
+}
+.glass-box:active,.dropdown-container:active,.hamburger:active{transform:scale(0.98)}
+.glass-box:hover,.dropdown-container:hover,.hamburger:hover,.menu-popup:hover{
+  box-shadow:0 0 18px rgba(0,255,255,0.4), inset 0 0 18px rgba(255,0,255,0.3)
+}
+.neon-border{position:absolute;inset:0;border-radius:14px;background:linear-gradient(135deg,#0ff,#f0c);opacity:.4;filter:blur(25px);z-index:1;transition:opacity .4s;animation:glow 10s linear infinite}
+@keyframes glow{0%{filter:hue-rotate(0)}100%{filter:hue-rotate(360deg)}}
+.menu-row:hover>.neon-border{opacity:.7}
+.click-pulse{position:relative}
+.click-pulse::after{content:"";position:absolute;inset:-2px;border-radius:12px;border:1px solid rgba(255,255,255,.35);box-shadow:0 0 12px rgba(255,255,255,.35);opacity:0;transform:scale(.9);animation:pulse .35s ease-out}
+@keyframes pulse{0%{opacity:.9;transform:scale(.96)}100%{opacity:0;transform:scale(1.06)}}
+
+.dropdown-container{flex:1;min-width:0;height:clamp(46px,9vw,54px);display:flex;align-items:center;cursor:pointer;z-index:5}
+.dropdown-selected{flex:1;height:100%;display:flex;align-items:center;justify-content:space-between;padding:0 1rem;color:#fff;font-size:clamp(15px,2.6vw,18px);overflow:hidden;white-space:nowrap;text-overflow:ellipsis;position:relative;z-index:3}
+.dropdown-container::after{content:"▾";position:absolute;right:1rem;top:50%;transform:translateY(-50%);font-size:1.2rem;color:#0ff;pointer-events:none;z-index:5}
+.dropdown-options{position:absolute;top:calc(100% + 6px);left:0;width:100%;background:rgba(25,25,30,.95);border-radius:8px;border:1px solid rgba(255,255,255,.1);box-shadow:0 0 15px rgba(255,255,255,.15);backdrop-filter:blur(14px);overflow:hidden;opacity:0;transform:translateY(-10px);pointer-events:none;transition:opacity .25s,transform .25s;max-height:min(60svh,420px);overflow-y:auto;z-index:30}
+.dropdown-container.active .dropdown-options{opacity:1;transform:translateY(0);pointer-events:auto}
+.dropdown-option{padding:0.7rem 1rem;color:#fff;transition:background .2s;cursor:pointer}
+.dropdown-option:hover{background:rgba(255,255,255,.08)}
+
+.hamburger{width:clamp(46px,9vw,54px);height:clamp(46px,9vw,54px);display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:5}
+.bar{display:flex;flex-direction:column;gap:5px;position:relative;z-index:3}
+.bar span{width:20px;height:3px;border-radius:3px;background:#fff}
+.menu-popup{position:absolute;top:calc(100% + 8px);right:0;background:rgba(25,25,30,.95);border-radius:8px;border:1px solid rgba(255,255,255,.1);box-shadow:0 0 15px rgba(255,255,255,.15);backdrop-filter:blur(12px);overflow:hidden;opacity:0;transform:translateY(-10px);pointer-events:none;transition:opacity .25s,transform .25s;min-width:220px;z-index:30}
+.menu-popup.active{opacity:1;transform:translateY(0);pointer-events:auto}
+.menu-item{padding:0.7rem 1rem;color:#fff;transition:background .25s ease,box-shadow .25s;cursor:pointer;position:relative;z-index:3}
+.menu-item:hover{background:rgba(255,255,255,.08);box-shadow:inset 0 0 8px rgba(255,255,255,.1)}
+
+/* Viewer – responsive Maximalhöhe mobil */
+.viewer{margin-top:0.6rem}
+.viewer-stage{
+  width:100%;max-width:900px;
+  height:var(--viewer-h, 600px);
+  margin:0 auto; position:relative; z-index:4;
+  max-height:calc(100dvh - var(--menu-h, 130px)); /* Absicherung mobil */
+}
+.viewer-stage > iframe,
+.viewer-stage > .smallpdf-host,
+.viewer-stage > .smallpdf-host > .smallpdf-widget{width:100%;height:100%}
+
+/* Mobile: Resthöhe = Viewport - Menü */
+@media(max-width:768px){
+  .menu-row{justify-content:space-between}
+  .viewer-stage{height:calc(100dvh - var(--menu-h, 130px))}
+}
+
+/* Host Basis */
+.smallpdf-host{border:none;border-radius:8px;background:#111;position:relative;z-index:4}
+iframe{border:none;border-radius:8px;background:#111;position:relative;z-index:4}
+</style>
+</head>
+<body>
+  <div class="bg-matrix" aria-hidden="true">
+    <span>ア</span><span>イ</span><span>ウ</span><span>エ</span><span>オ</span>
+    <span>カ</span><span>キ</span><span>ク</span><span>ケ</span><span>コ</span>
+    <span>サ</span><span>シ</span><span>ス</span><span>セ</span><span>ソ</span>
+    <span>タ</span><span>チ</span><span>ツ</span><span>テ</span><span>ト</span>
+    <span>ナ</span><span>ニ</span><span>ヌ</span><span>ネ</span><span>ノ</span>
+    <span>ハ</span><span>ヒ</span><span>フ</span><span>ヘ</span><span>ホ</span>
+    <span>マ</span><span>ミ</span><span>ム</span><span>メ</span><span>モ</span>
+    <span>ヤ</span><span>ユ</span><span>ヨ</span><span>ラ</span><span>リ</span>
+    <span>ル</span><span>レ</span><span>ロ</span><span>ワ</span><span>ヲ</span>
+    <span>ン</span><span>ガ</span><span>ギ</span><span>グ</span><span>ゲ</span>
+    <span>ゴ</span><span>ザ</span><span>ジ</span><span>ズ</span><span>ゼ</span>
+    <span>ゾ</span><span>ダ</span><span>ヂ</span><span>ヅ</span><span>デ</span>
+    <span>ド</span><span>バ</span><span>ビ</span><span>ブ</span><span>ベ</span>
+    <span>ボ</span><span>パ</span><span>ピ</span><span>プ</span><span>ペ</span>
+    <span>ポ</span>
+  </div>
+
+  <div class="container">
+    <div class="menu-row" id="menuRow">
+      <div class="neon-border"></div>
+
+      <div class="dropdown-container glass-box" id="docDropdown" aria-haspopup="listbox" aria-expanded="false">
+        <div class="neon-border"></div>
+        <div class="dropdown-selected" id="docSelected">📘 Auswahl – PDF Liste</div>
+        <div class="dropdown-options" id="docOptions" role="listbox">
+          <!-- ENGLISH -->
+          <div class="dropdown-option" data-id="en-1" data-name="2025 World-Sold-Non-fiction- World Succession Deed 1400/98">🇺🇸 2025 World-Sold-Non-fiction- World Succession Deed 1400/98</div>
+          <div class="dropdown-option" data-id="en-2" data-name="The World Succession Deed 1400/98 – Presentation 1">🇺🇸 The World Succession Deed 1400/98 – Presentation 1</div>
+          <div class="dropdown-option" data-id="en-3" data-name="The World Succession Deed 1400/98 - A Detailed Legal Analysis: Presentation 2">🇺🇸 The World Succession Deed 1400/98 - A Detailed Legal Analysis: Presentation 2</div>
+          <div class="dropdown-option" data-id="en-4" data-name="2024 World Sold: State Succession Deed 1400/98">🇺🇸 2024 World Sold: State Succession Deed 1400/98</div>
+          <div class="dropdown-option" data-id="en-5" data-name="The Electronic Technocracy – Built on the Legal Reality of the World Succession Deed 1400/98">🇺🇸 The Electronic Technocracy – Built on the Legal Reality of the World Succession Deed 1400/98</div>
+          <div class="dropdown-option" data-id="en-6" data-name="Electric_Technocracy Presentation (World Succession Deed 1400/98)">🇺🇸 Electric_Technocracy Presentation (World Succession Deed 1400/98)</div>
+          <div class="dropdown-option" data-id="en-7" data-name="2025 Trillions for the Future – AI, Power, and Post-Scarcity – Electric Technocracy">🇺🇸 2025 Trillions for the Future – AI, Power, and Post-Scarcity – Electric Technocracy</div>
+          <div class="dropdown-option" data-id="en-8" data-name="2025 Unconditional Basic Income and the Electric Technocracy - Presentation">🇺🇸 2025 Unconditional Basic Income and the Electric Technocracy - Presentation</div>
+          <div class="dropdown-option" data-id="en-9" data-name="UBI - Universal Basic Income and the Electric Technocracy: Presentation">🇺🇸 UBI - Universal Basic Income and the Electric Technocracy: Presentation</div>
+          <div class="dropdown-option" data-id="en-10" data-name="UBI Universal Basic Income And The Electric Technocracy (Large Version)">🇺🇸 UBI Universal Basic Income And The Electric Technocracy (Large Version)</div>
+          <div class="dropdown-option" data-id="en-11" data-name="UBI and the Future of Humanity – From Work to Electric Technocracy (Short Version)">🇺🇸 UBI and the Future of Humanity – From Work to Electric Technocracy (Short Version)</div>
+          <div class="dropdown-option" data-id="en-12" data-name="Micronation Made Easy">🇺🇸 Micronation Made Easy</div>
+          <div class="dropdown-option" data-id="en-13" data-name="2025 State Founding for Dummies: How to Start Your Own Country">🇺🇸 2025 State Founding for Dummies: How to Start Your Own Country</div>
+
+          <!-- DEUTSCH — BRD BLOCK -->
+          <div class="dropdown-option" data-id="de-1" data-name="2025 Sachbuch: Welt Verkauft - Staatensukzessionsurkunde 1400/98- globaler Staatennachfolgevertrag">🇩🇪 2025 Sachbuch: Welt Verkauft - Staatensukzessionsurkunde 1400/98- globaler Staatennachfolgevertrag</div>
+          <div class="dropdown-option" data-id="de-2" data-name="2024 Welt verkauft (NATO-UN Treaty): Staatensukzessionsurkunde 1400/98">🇩🇪 2024 Welt verkauft (NATO-UN Treaty): Staatensukzessionsurkunde 1400/98</div>
+          <div class="dropdown-option" data-id="de-3" data-name="Elektrische Technokratie & die Staatensukzessionsurkunde 1400/98">🇩🇪 Elektrische Technokratie & die Staatensukzessionsurkunde 1400/98</div>
+          <div class="dropdown-option" data-id="de-4" data-name="2025 Billionen für die Zukunft – KI, Macht und Post-Scarcity">🇩🇪 2025 Billionen für die Zukunft – KI, Macht und Post-Scarcity</div>
+          <div class="dropdown-option" data-id="de-5" data-name="BGE - Bedingungsloses Grundeinkommen und die Elektronische Technokratie (Große Version)">🇩🇪 BGE - Bedingungsloses Grundeinkommen und die Elektronische Technokratie (Große Version)</div>
+          <div class="dropdown-option" data-id="de-6" data-name="Bedingungsloses Grundeinkommen (BGE) und die Elektronische Technokratie (Kurze Version)">🇩🇪 Bedingungsloses Grundeinkommen (BGE) und die Elektronische Technokratie (Kurze Version)</div>
+          <div class="dropdown-option" data-id="de-7" data-name="Mikronation gründen leicht gemacht">🇩🇪 Mikronation gründen leicht gemacht</div>
+          <div class="dropdown-option" data-id="de-8" data-name="Staatsgruendung fuer Dummies">🇩🇪 Staatsgruendung fuer Dummies</div>
+          <div class="dropdown-option" data-id="de-9" data-name="Turenne NATO Kaserne - original Kaufvertrag Urkundenrolle 1400/98 vom 06.10.1998 (Staatensukzessionsurkunde - World Succession Deed): United Nations- NATO Treaty">🇩🇪 Turenne NATO Kaserne - original Kaufvertrag Urkundenrolle 1400/98 vom 06.10.1998 (Staatensukzessionsurkunde - World Succession Deed): United Nations- NATO Treaty</div>
+        </div>
+      </div>
+
+      <div class="hamburger glass-box" id="hamburger" aria-haspopup="menu" aria-expanded="false">
+        <div class="neon-border"></div>
+        <div class="bar"><span></span><span></span><span></span></div>
+        <div class="menu-popup" id="menuPopup" role="menu">
+          <div class="neon-border"></div>
+          <div class="menu-item" data-viewer="google">📃 Google Viewer</div>
+          <div class="menu-item" data-viewer="pdfjs">📝 PDF.js Viewer</div>
+          <div class="menu-item" data-viewer="smallpdf">🗂️ SmallPDF Viewer</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="viewer">
+      <div class="viewer-stage" id="viewerStage"></div>
+    </div>
+  </div>
+
+  <script defer src="https://smallpdf.com/api/embed-widget.js"></script>
+
+  <script>
+  const LINKS = {
+    // Google Docs Viewer (exakte Vorgaben)
+    google: {
+      "en-1":  "https://docs.google.com/viewer?url=https://github.com/MrAnonymousNWO/One_World/raw/master/docs/World-Sold-Non-fiction-Succession-Deed.pdf&embedded=true",
+      "en-2":  "https://docs.google.com/viewer?url=https://github.com/MrAnonymousNWO/One_World/raw/master/docs/The%20World%20Succession%20Deed%201400_98-Presentation.pdf&embedded=true",
+      "en-3":  "https://docs.google.com/viewer?url=https://github.com/MrAnonymousNWO/One_World/raw/master/docs/The-World-Succession-Deed-140098-A-Detailed-Legal-Analysis.pdf&embedded=true",
+      "en-4":  "https://docs.google.com/viewer?url=https://github.com/MrAnonymousNWO/One_World/raw/master/docs/World_Sold_State_succession_deed_1400.pdf&embedded=true",
+      "en-5":  "https://docs.google.com/viewer?url=https://github.com/MrAnonymousNWO/One_World/raw/master/docs/Electric_Technocracy.pdf&embedded=true",
+      "en-6":  "https://docs.google.com/viewer?url=https://github.com/MrAnonymousNWO/One_World/raw/master/docs/The%20Electronic%20Technocracy%20%E2%80%93%20Built%20on%20the%20Legal%20Reality%20of%20the%20World%20Succession%20Deed%201400_98_Komprimieren.pdf&embedded=true",
+      "en-7":  "https://docs.google.com/viewer?url=https://github.com/MrAnonymousNWO/One_World/raw/master/docs/2025%20Trillions%20for%20the%20Future-AI%2C%20Power%2C%20and%20Post-Scarcity%20-%20Electric%20Technocracy.pdf&embedded=true",
+      "en-8":  "https://docs.google.com/viewer?url=https://github.com/MrAnonymousNWO/One_World/raw/master/docs/2025%20Unconditional%20Basic%20Income%20and%20the%20Electric%20Technocracy-compressed.pdf&embedded=true",
+      "en-9":  "https://docs.google.com/viewer?url=https://github.com/MrAnonymousNWO/One_World/raw/master/docs/2025_Universal%20Basic%20Income%20and%20the%20Electric%20Technocracy.pdf&embedded=true",
+      "en-10": "https://docs.google.com/viewer?url=https://github.com/MrAnonymousNWO/One_World/raw/master/docs/UBI%20and%20the%20Future%20of%20Humanity%20%E2%80%93%20From%20Work%20to%20Electric%20Technocracy.pdf&embedded=true",
+      "en-11": "https://docs.google.com/viewer?url=https://github.com/MrAnonymousNWO/One_World/raw/master/docs/UBI%20Universal%20Basic%20Income%20And%20The%20Electric%20Technocracy.pdf&embedded=true",
+      "en-12": "https://docs.google.com/viewer?url=https://github.com/MrAnonymousNWO/One_World/raw/master/docs/2025_Micronation_Made_Easy.pdf&embedded=true",
+      "en-13": "https://docs.google.com/viewer?url=https://github.com/MrAnonymousNWO/One_World/raw/master/docs/2025_State_Founding_for_Dummies_How_to_Start_Your_Own_Country.pdf&embedded=true",
+      "de-1":  "https://docs.google.com/viewer?url=https://github.com/MrAnonymousNWO/One_World/raw/master/docs/Welt_Verkauft_Sukzession.pdf&embedded=true",
+      "de-2":  "https://docs.google.com/viewer?url=https://github.com/MrAnonymousNWO/One_World/raw/master/docs/Welt_verkauft_Staatensukzessionsurkunde1400.pdf&embedded=true",
+      "de-3":  "https://docs.google.com/viewer?url=https://github.com/MrAnonymousNWO/One_World/raw/master/docs/Elektrische_Technokratie_Staatensukzessionsurkunde.pdf&embedded=true",
+      "de-4":  "https://docs.google.com/viewer?url=https://github.com/MrAnonymousNWO/One_World/raw/master/docs/2025_billionen_zukunft.pdf&embedded=true",
+      "de-5":  "https://docs.google.com/viewer?url=https://github.com/MrAnonymousNWO/One_World/raw/master/docs/BGE%20und%20die%20Zukunft%20der%20Menschheit%20und%20die%20Elektronische%20Technokratie.pdf&embedded=true",
+      "de-6":  "https://docs.google.com/viewer?url=https://github.com/MrAnonymousNWO/One_World/raw/master/docs/BGE%20und%20die%20Elektronische%20Technokratie.pdf&embedded=true",
+      "de-7":  "https://docs.google.com/viewer?url=https://github.com/MrAnonymousNWO/One_World/raw/master/docs/2025_Mikronation_leicht_gemacht.pdf&embedded=true",
+      "de-8":  "https://docs.google.com/viewer?url=https://github.com/MrAnonymousNWO/One_World/raw/master/docs/2025_Staatsgruendung_fuer_Dummies.pdf&embedded=true",
+      "de-9":  "https://docs.google.com/viewer?url=https://github.com/MrAnonymousNWO/One_World/raw/master/docs/turenne_kaserne_vertrag_1400_98_06_10_1998_nato_brd_nl.pdf&embedded=true"
+    },
+    // PDF.js (exakte Vorgaben)
+    pdfjs: {
+      "en-1":  "https://mozilla.github.io/pdf.js/web/viewer.html?file=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2FMrAnonymousNWO%2FOne_World%40master%2Fdocs%2FWorld-Sold-Non-fiction-Succession-Deed.pdf",
+      "en-2":  "https://mozilla.github.io/pdf.js/web/viewer.html?file=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2FMrAnonymousNWO%2FOne_World%40master%2Fdocs%2FThe%2520World%2520Succession%2520Deed%25201400_98-Presentation.pdf",
+      "en-3":  "https://mozilla.github.io/pdf.js/web/viewer.html?file=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2FMrAnonymousNWO%2FOne_World%40master%2Fdocs%2FThe-World-Succession-Deed-140098-A-Detailed-Legal-Analysis.pdf",
+      "en-4":  "https://mozilla.github.io/pdf.js/web/viewer.html?file=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2FMrAnonymousNWO%2FOne_World%40master%2Fdocs%2FWorld_Sold_State_succession_deed_1400.pdf",
+      "en-5":  "https://mozilla.github.io/pdf.js/web/viewer.html?file=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2FMrAnonymousNWO%2FOne_World%40master%2Fdocs%2FElectric_Technocracy.pdf",
+      "en-6":  "https://mozilla.github.io/pdf.js/web/viewer.html?file=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2FMrAnonymousNWO%2FOne_World%40master%2Fdocs%2FThe%2520Electronic%2520Technocracy%2520%25E2%2580%2593%2520Built%2520on%2520the%2520Legal%2520Reality%2520of%2520the%2520World%2520Succession%2520Deed%25201400_98_Komprimieren.pdf",
+      "en-7":  "https://mozilla.github.io/pdf.js/web/viewer.html?file=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2FMrAnonymousNWO%2FOne_World%40master%2Fdocs%2F2025%2520Trillions%2520for%2520the%2520Future-AI%252C%2520Power%252C%2520and%2520Post-Scarcity%2520-%2520Electric%2520Technocracy.pdf",
+      "en-8":  "https://mozilla.github.io/pdf.js/web/viewer.html?file=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2FMrAnonymousNWO%2FOne_World%40master%2Fdocs%2F2025%2520Unconditional%2520Basic%2520Income%2520and%2520the%2520Electric%2520Technocracy-compressed.pdf",
+      "en-9":  "https://mozilla.github.io/pdf.js/web/viewer.html?file=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2FMrAnonymousNWO%2FOne_World%40master%2Fdocs%2F2025_Universal%2520Basic%2520Income%2520and%2520the%2520Electric%2520Technocracy.pdf",
+      "en-10": "https://mozilla.github.io/pdf.js/web/viewer.html?file=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2FMrAnonymousNWO%2FOne_World%40master%2Fdocs%2FUBI%2520and%2520the%2520Future%2520of%2520Humanity%2520%25E2%2580%2593%2520From%2520Work%2520to%2520Electric%2520Technocracy.pdf",
+      "en-11": "https://mozilla.github.io/pdf.js/web/viewer.html?file=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2FMrAnonymousNWO%2FOne_World%40master%2Fdocs%2FUBI%2520Universal%2520Basic%2520Income%2520And%2520The%2520Electric%2520Technocracy.pdf",
+      "en-12": "https://mozilla.github.io/pdf.js/web/viewer.html?file=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2FMrAnonymousNWO%2FOne_World%40master%2Fdocs%2F2025_Micronation_Made_Easy.pdf",
+      "en-13": "https://mozilla.github.io/pdf.js/web/viewer.html?file=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2FMrAnonymousNWO%2FOne_World%40master%2Fdocs%2F2025_State_Founding_for_Dummies_How_to_Start_Your_Own_Country.pdf",
+      "de-1":  "https://mozilla.github.io/pdf.js/web/viewer.html?file=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2FMrAnonymousNWO%2FOne_World%40master%2Fdocs%2FWelt_Verkauft_Sukzession.pdf",
+      "de-2":  "https://mozilla.github.io/pdf.js/web/viewer.html?file=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2FMrAnonymousNWO%2FOne_World%40master%2Fdocs%2FWelt_verkauft_Staatensukzessionsurkunde1400.pdf",
+      "de-3":  "https://mozilla.github.io/pdf.js/web/viewer.html?file=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2FMrAnonymousNWO%2FOne_World%40master%2Fdocs%2FElektrische_Technokratie_Staatensukzessionsurkunde.pdf",
+      "de-4":  "https://mozilla.github.io/pdf.js/web/viewer.html?file=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2FMrAnonymousNWO%2FOne_World%40master%2Fdocs%2F2025_billionen_zukunft.pdf",
+      "de-5":  "https://mozilla.github.io/pdf.js/web/viewer.html?file=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2FMrAnonymousNWO%2FOne_World%40master%2Fdocs%2FBGE%2520und%2520die%2520Zukunft%2520der%2520Menschheit%2520und%2520die%2520Elektronische%2520Technokratie.pdf",
+      "de-6":  "https://mozilla.github.io/pdf.js/web/viewer.html?file=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2FMrAnonymousNWO%2FOne_World%40master%2Fdocs%2FBGE%2520und%2520die%2520Elektronische%2520Technokratie.pdf",
+      "de-7":  "https://mozilla.github.io/pdf.js/web/viewer.html?file=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2FMrAnonymousNWO%2FOne_World%40master%2Fdocs%2F2025_Mikronation_leicht_gemacht.pdf",
+      "de-8":  "https://mozilla.github.io/pdf.js/web/viewer.html?file=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2FMrAnonymousNWO%2FOne_World%40master%2Fdocs%2F2025_Staatsgruendung_fuer_Dummies.pdf",
+      "de-9":  "https://mozilla.github.io/pdf.js/web/viewer.html?file=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2FMrAnonymousNWO%2FOne_World%40master%2Fdocs%2Fturenne_kaserne_vertrag_1400_98_06_10_1998_nato_brd_nl.pdf"
+    },
+    // SmallPDF (exakte Vorgaben)
+    smallpdf: {
+      "en-1":  "https://github.com/MrAnonymousNWO/One_World/raw/master/docs/World-Sold-Non-fiction-Succession-Deed.pdf",
+      "en-2":  "https://github.com/MrAnonymousNWO/One_World/raw/master/docs/The%20World%20Succession%20Deed%201400_98-Presentation.pdf",
+      "en-3":  "https://github.com/MrAnonymousNWO/One_World/raw/master/docs/The-World-Succession-Deed-140098-A-Detailed-Legal-Analysis.pdf",
+      "en-4":  "https://github.com/MrAnonymousNWO/One_World/raw/master/docs/World_Sold_State_succession_deed_1400.pdf",
+      "en-5":  "https://github.com/MrAnonymousNWO/One_World/raw/master/docs/Electric_Technocracy.pdf",
+      "en-6":  "https://github.com/MrAnonymousNWO/One_World/raw/master/docs/The%20Electronic%20Technocracy%20%E2%80%93%20Built%20on%20the%20Legal%20Reality%20of%20the%20World%20Succession%20Deed%201400_98_Komprimieren.pdf",
+      "en-7":  "https://github.com/MrAnonymousNWO/One_World/raw/master/docs/2025%20Trillions%20for%20the%20Future-AI%2C%20Power%2C%20and%20Post-Scarcity%20-%20Electric%20Technocracy.pdf",
+      "en-8":  "https://github.com/MrAnonymousNWO/One_World/raw/master/docs/2025%20Unconditional%20Basic%20Income%20and%20the%20Electric%20Technocracy-compressed.pdf",
+      "en-9":  "https://github.com/MrAnonymousNWO/One_World/raw/master/docs/2025_Universal%20Basic%20Income%20and%20the%20Electric%20Technocracy.pdf",
+      "en-10": "https://github.com/MrAnonymousNWO/One_World/raw/master/docs/UBI%20and%20the%20Future%20of%20Humanity%20%E2%80%93%20From%20Work%20to%20Electric%20Technocracy.pdf",
+      "en-11": "https://github.com/MrAnonymousNWO/One_World/raw/master/docs/UBI%20Universal%20Basic%20Income%20And%20The%20Electric%20Technocracy.pdf",
+      "en-12": "https://github.com/MrAnonymousNWO/One_World/raw/master/docs/2025_Micronation_Made_Easy.pdf",
+      "en-13": "https://github.com/MrAnonymousNWO/One_World/raw/master/docs/2025_State_Founding_for_Dummies_How_to_Start_Your_Own_Country.pdf",
+      "de-1":  "https://github.com/MrAnonymousNWO/One_World/raw/master/docs/Welt_Verkauft_Sukzession.pdf",
+      "de-2":  "https://github.com/MrAnonymousNWO/One_World/raw/master/docs/Welt_verkauft_Staatensukzessionsurkunde1400.pdf",
+      "de-3":  "https://github.com/MrAnonymousNWO/One_World/raw/master/docs/Elektrische_Technokratie_Staatensukzessionsurkunde.pdf",
+      "de-4":  "https://github.com/MrAnonymousNWO/One_World/raw/master/docs/2025_billionen_zukunft.pdf",
+      "de-5":  "https://github.com/MrAnonymousNWO/One_World/raw/master/docs/BGE%20und%20die%20Zukunft%20der%20Menschheit%20und%20die%20Elektronische%20Technokratie.pdf",
+      "de-6":  "https://github.com/MrAnonymousNWO/One_World/raw/master/docs/BGE%20und%20die%20Elektronische%20Technokratie.pdf",
+      "de-7":  "https://github.com/MrAnonymousNWO/One_World/raw/master/docs/2025_Mikronation_leicht_gemacht.pdf",
+      "de-8":  "https://github.com/MrAnonymousNWO/One_World/raw/master/docs/2025_Staatsgruendung_fuer_Dummies.pdf",
+      "de-9":  "https://github.com/MrAnonymousNWO/One_World/raw/master/docs/turenne_kaserne_vertrag_1400_98_06_10_1998_nato_brd_nl.pdf"
+    }
+  };
+
+let currentViewer = "google";
+let currentDocId = "en-1"; // Startauswahl
+  let scrollYBeforeOpen = null;
+
+  const menuRow = document.getElementById("menuRow");
+  const dropdown = document.getElementById("docDropdown");
+  const docSelected = document.getElementById("docSelected");
+  const docOptions = document.getElementById("docOptions");
+  const hamburger = document.getElementById("hamburger");
+  const menuPopup = document.getElementById("menuPopup");
+  const stage = document.getElementById("viewerStage");
+
+  const noirPulse = el => { el.classList.remove("click-pulse"); void el.offsetWidth; el.classList.add("click-pulse"); };
+
+  function getViewportHeight(){
+    if (window.visualViewport) return Math.round(window.visualViewport.height);
+    return Math.round(window.innerHeight);
+  }
+
+  function applyDynamicHeights(){
+    const menuH = menuRow?.getBoundingClientRect().height || 130;
+    const isMobile = matchMedia("(max-width: 768px)").matches;
+    const desktopH = 600;
+    const availableH = Math.max(320, getViewportHeight() - Math.round(menuH));
+    const viewerH = isMobile ? availableH : desktopH;
+    stage.style.setProperty("--menu-h", `${Math.round(menuH)}px`);
+    stage.style.setProperty("--viewer-h", `${viewerH}px`);
+    if (currentViewer === "smallpdf" && window.SmallpdfEmbed) window.SmallpdfEmbed.load();
+  }
+
+  // Viewer rendern
+  function renderViewer(mode){
+    stage.innerHTML = "";
+    const url = LINKS[mode]?.[currentDocId] || "about:blank";
+
+    if (mode === "google") {
+      const iframe = document.createElement("iframe");
+      iframe.src = url;
+      iframe.width = "100%";
+      iframe.height = "100%";
+      iframe.style.border = "none";
+      iframe.allowFullscreen = true;
+      iframe.loading = "lazy";
+      stage.appendChild(iframe);
+    } else if (mode === "pdfjs") {
+      const iframe = document.createElement("iframe");
+      iframe.src = url;
+      iframe.width = "100%";
+      iframe.height = "100%";
+      iframe.style.border = "none";
+      iframe.allowFullscreen = true;
+      iframe.loading = "lazy";
+      stage.appendChild(iframe);
+    } else {
+      const host = document.createElement("div");
+      host.className = "smallpdf-host";
+      host.style.width = "100%";
+      host.style.height = "100%";
+
+      const widget = document.createElement("div");
+      widget.className = "smallpdf-widget";
+      widget.style.width = "100%";
+      widget.style.height = "100%";
+      widget.setAttribute("data-pdf-url", url);
+
+      host.appendChild(widget);
+      stage.appendChild(host);
+
+      const init = () => window.SmallpdfEmbed && window.SmallpdfEmbed.load();
+      if (window.SmallpdfEmbed) init();
+      else {
+        const iv = setInterval(() => { if (window.SmallpdfEmbed){ init(); clearInterval(iv); } }, 60);
+        setTimeout(() => clearInterval(iv), 4000);
+      }
+    }
+    applyDynamicHeights();
+  }
+
+  function populateDocDropdown(){
+    const active = docOptions.querySelector(`.dropdown-option[data-id="${currentDocId}"]`);
+    docSelected.textContent = active ? `📘 ${active.dataset.name}` : "📘 Auswahl – PDF Liste";
+  }
+
+  // Menü öffnen/schließen mit Scroll-Erhalt
+  function closeDropdown(){ if (dropdown.classList.contains("active")){ dropdown.classList.remove("active"); dropdown.setAttribute("aria-expanded","false"); if (Number.isFinite(scrollYBeforeOpen)) window.scrollTo(0, scrollYBeforeOpen); scrollYBeforeOpen=null; } }
+  function closeHamburger(){ if (menuPopup.classList.contains("active")){ menuPopup.classList.remove("active"); hamburger.setAttribute("aria-expanded","false"); if (Number.isFinite(scrollYBeforeOpen)) window.scrollTo(0, scrollYBeforeOpen); scrollYBeforeOpen=null; } }
+  function openDropdown(){ if (menuPopup.classList.contains("active")) closeHamburger(); if (!dropdown.classList.contains("active")){ scrollYBeforeOpen=window.scrollY; dropdown.classList.add("active"); dropdown.setAttribute("aria-expanded","true"); noirPulse(dropdown);} }
+  function openHamburger(){ if (dropdown.classList.contains("active")) closeDropdown(); if (!menuPopup.classList.contains("active")){ scrollYBeforeOpen=window.scrollY; menuPopup.classList.add("active"); hamburger.setAttribute("aria-expanded","true"); noirPulse(hamburger);} }
+
+  dropdown.addEventListener("click", e => { e.stopPropagation(); dropdown.classList.contains("active") ? closeDropdown() : openDropdown(); });
+  docOptions.addEventListener("click", e => {
+    const opt=e.target.closest(".dropdown-option"); if(!opt) return;
+    e.stopPropagation();
+    currentDocId = opt.dataset.id;
+    populateDocDropdown();
+    closeDropdown();
+    renderViewer(currentViewer);
+  });
+  hamburger.addEventListener("click", e => { e.stopPropagation(); menuPopup.classList.contains("active") ? closeHamburger() : openHamburger(); });
+  menuPopup.addEventListener("click", e => {
+    const item = e.target.closest(".menu-item"); if (!item) return;
+    e.stopPropagation();
+    currentViewer = item.dataset.viewer;
+    noirPulse(item);
+    closeHamburger();
+    renderViewer(currentViewer);
+  });
+  document.addEventListener("click", () => { closeDropdown(); closeHamburger(); });
+  document.addEventListener("keydown", e => { if (e.key==="Escape"){ closeDropdown(); closeHamburger(); } });
+
+  const ro = new ResizeObserver(() => applyDynamicHeights());
+  ro.observe(document.body);
+
+  window.addEventListener("resize", () => applyDynamicHeights(), { passive:true });
+  window.addEventListener("orientationchange", () => setTimeout(applyDynamicHeights, 150), { passive:true });
+  if (window.visualViewport){
+    window.visualViewport.addEventListener("resize", () => setTimeout(applyDynamicHeights, 50), { passive:true });
+  }
+
+  // Init
+  populateDocDropdown();
+  renderViewer(currentViewer);
+  </script>
+</body>
+</html>
