@@ -92,7 +92,13 @@
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
-
+<url>
+    <loc>https://mranonymousnwo.github.io/One_World/docs/world-sold-non-fiction-succession-deed.html</loc>
+    <lastmod>2025-10-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
   <!-- === HTML Pages (Deutsch) === -->
   <url>
     <loc>https://mranonymousnwo.github.io/One_World/docs/welt-verkauft-sukzession.html</loc>
