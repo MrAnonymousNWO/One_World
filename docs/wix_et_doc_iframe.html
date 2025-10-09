@@ -1,11 +1,38 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Noir PDF – Ein Viewer, 3 Modi</title>
+
+<!-- SEO Optimization -->
+<title>One World Dokument Archive Viewer</title>
+<meta name="keywords" content="International Law, NATO, UNITED NATIONS, New official Treaty Archive, World Succession Deed, Staatensukzessionsurkunde, Electric Technocracy, ASI Governance, UBI, Universal Basic Income, Infinite Life, Longevity, Post-Scarcity, Abundance, Tech Tax, Humans Tax Free, Global Jurisdiction, Domino Effect, Treaty Chain, UN, ITU, Sovereignty, Politics, Automation, Robots, Justice, Peace, No Ideologies, New World Order, Legal Reality, Kaufvertrag, Urkundenrolle, 1400/98, Telecommunication Networks, Territorial Expansion">
+<meta name="description" content="Access the Succession Treaty Archive of the NATO and United Nations (World Succession Deed 1400/98 - Staatensukzessionsurkunde - Urkundenrolle 1400/98): Read/download the legally binding texts and contracts behind the sale of NATO and UN assets on October 6, 1998. Unveil the Electric Technocracy blueprint, ASI Governance, and the Domino Effect leading to new global jurisdiction.">
+
+<!-- Favicon and Touch Icons -->
+<link rel="apple-touch-icon" sizes="57x57" href="https://MrAnonymousNWO.github.io/One_World/apple-touch-icon-57x57.png">
+<link rel="apple-touch-icon" sizes="60x60" href="https://MrAnonymousNWO.github.io/One_World/apple-touch-icon-60x60.png">
+<link rel="apple-touch-icon" sizes="72x72" href="https://MrAnonymousNWO.github.io/One_World/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="76x76" href="https://MrAnonymousNWO.github.io/One_World/apple-touch-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="114x114" href="https://MrAnonymousNWO.github.io/One_World/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="120x120" href="https://MrAnonymousNWO.github.io/One_World/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="144x144" href="https://MrAnonymousNWO.github.io/One_World/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="152x152" href="https://MrAnonymousNWO.github.io/One_World/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="167x167" href="https://MrAnonymousNWO.github.io/One_World/apple-touch-icon-167x167.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://MrAnonymousNWO.github.io/One_World/apple-touch-icon-180x180.png">
+<link rel="apple-touch-icon" sizes="1024x1024" href="https://MrAnonymousNWO.github.io/One_World/apple-touch-icon-1024x1024.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://MrAnonymousNWO.github.io/One_World/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://MrAnonymousNWO.github.io/One_World/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="48x48" href="https://MrAnonymousNWO.github.io/One_World/favicon-48x48.png">
+<link rel="icon" type="image/png" sizes="64x64" href="https://MrAnonymousNWO.github.io/One_World/favicon-64x64.png">
+<link rel="icon" type="image/png" sizes="128x128" href="https://MrAnonymousNWO.github.io/One_World/favicon-128x128.png">
+<link rel="icon" type="image/png" sizes="256x256" href="https://MrAnonymousNWO.github.io/One_World/favicon-256x256.png">
+<link rel="manifest" href="https://MrAnonymousNWO.github.io/One_World/site.webmanifest">
+<meta name="msapplication-TileImage" content="https://MrAnonymousNWO.github.io/One_World/mstile-144x144.png">
+
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
+h1{font-size:inherit;font-weight:normal}
 html,body{height:100%}
 body{
   min-height:100dvh; display:flex; flex-direction:column; align-items:center;
@@ -116,7 +143,7 @@ iframe{border:none;border-radius:8px;background:#111;position:relative;z-index:4
 
       <div class="dropdown-container glass-box" id="docDropdown" aria-haspopup="listbox" aria-expanded="false">
         <div class="neon-border"></div>
-        <div class="dropdown-selected" id="docSelected">📘 Auswahl – PDF Liste</div>
+        <h1 class="dropdown-selected" id="docSelected">📘 Select – PDF List</h1>
         <div class="dropdown-options" id="docOptions" role="listbox">
           <!-- ENGLISH -->
           <div class="dropdown-option" data-id="en-1" data-name="2025 World-Sold-Non-fiction- World Succession Deed 1400/98">🇺🇸 2025 World-Sold-Non-fiction- World Succession Deed 1400/98</div>
@@ -324,7 +351,7 @@ let currentDocId = "en-1"; // Startauswahl
 
   function populateDocDropdown(){
     const active = docOptions.querySelector(`.dropdown-option[data-id="${currentDocId}"]`);
-    docSelected.textContent = active ? `📘 ${active.dataset.name}` : "📘 Auswahl – PDF Liste";
+    docSelected.textContent = active ? `📘 ${active.dataset.name}` : "📘 Select – PDF List";
   }
 
   // Menü öffnen/schließen mit Scroll-Erhalt
