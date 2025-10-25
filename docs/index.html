@@ -1,78 +1,904 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>One World Viewer</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <style>
-    body {
-      margin: 0;
-      background: #0b0f14;
-      color: #e6f1ff;
-      font-family: Segoe UI, Roboto, sans-serif;
-    }
-    header {
-      position: sticky;
-      top: 0;
-      background: #121821;
-      padding: 10px;
-      z-index: 1000;
-      border-bottom: 1px solid #1f2a33;
-    }
-    select {
-      width: 100%;
-      padding: 10px;
-      border-radius: 6px;
-      border: none;
-      background: #1c2733;
-      color: #e6f1ff;
-      font-size: 1rem;
-    }
-    iframe {
-      width: 100%;
-      height: 90vh;
-      border: none;
-    }
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Last International Legal Archive: World Succession Deed 1400/98 | Electric Technocracy</title>
+<meta name="description" content="Discover the World Succession Deed 1400/98 (Staatensukzessionsurkunde) – the final international law treaty archive. This irreversible legal document, recorded as KAUFVERTRAG URKUNDENROLLE 1400/98, declares the World Sold, ending sovereignty. Learn about Juristic Convergence, the World Judicature, and the shift to the Electric Technocracy (E.T.). Explore the last chapter of global law.">
+<meta name="keywords" content="World Succession Deed, 1400/98, Staatensukzessionsurkunde, Last International Law Treaty Archive, World Sold, End of International Law, Juristic Convergence, Domino Effect, The Buyer, World Judicature, Electric Technocracy, E.T., UBI, Universal Basic Income, Global Sovereignty, NATO SOFA, KAUFVERTRAG URKUNDENROLLE 1400/98, Final Treaty, New World Order, NWO, Global Archive, Conclusive Conduct, Every Call a Ratification, Landau in der Pfalz, Succession Law, Global Governance, Legal Reality, Phoenix State, Treaty Archive, Sovereignty Transfer">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
+<link rel="robots" href="/robots.txt">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="msapplication-TileImage" content="/mstile-144x144.png">
+
+<style>
+/* Font */
+@import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@400;600&display=swap');
+
+:root{
+  --blue: #1a4ea8;
+  --bg: #ffffff;
+  --text: #111;
+  --menu-gap: 4px;         /* Minimum gap between dropdown & hamburger */
+  --menu-height: 48px;     /* visual reference height */
+  --menu-radius: 12px;
+  --panel-max-h: 60vh;
+  --shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+
+/* Base */
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family:"Exo 2",system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;
+  background:var(--bg); color:var(--text);
+  -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+}
+
+/* Header */
+header{
+  position:fixed;
+  top:0; left:0; right:0;
+  background:var(--bg);
+  border-bottom:2px solid var(--blue);
+  z-index:1200;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  transition:transform .28s ease;
+  will-change:transform;
+}
+header.hidden{ transform: translateY(-120%); }
+
+/* header inner wrapper - only contains title and line, provides max-width constraint */
+.header-inner{ 
+  width:100%; 
+  max-width:1100px; 
+  display:flex; 
+  flex-direction:column; 
+  align-items:center; 
+  padding:8px 4px 6px; /* Reduced horizontal padding to 4px for edge alignment */
+}
+
+/* title + animated line */
+header h1{
+  margin:8px 0 4px; font-size:1.12rem; text-transform:uppercase; letter-spacing:1px; font-weight:600;
+  text-align: center; /* better alignment on mobile */
+}
+.line{
+  height:2px; width:0%; background:var(--blue); border-radius:2px; margin-bottom:8px;
+  transition:background .2s ease;
+}
+
+/* menu-row (row containing dropdown + spacer + hamburger) */
+.menu-row{
+  width:100%;
+  max-width:1100px; /* Constrain menu-row width to header-inner max-width */
+  display:flex;
+  align-items:center;
+  gap:var(--menu-gap);
+  padding:6px 0 10px; /* Removed horizontal padding, relying on header-inner 4px padding */
+  box-sizing:border-box;
+}
+
+/* dropdown - button */
+.dropdown{
+  position:relative;
+  /* Nimmt flexibel den Platz bis zum Hamburger-Menü ein */
+  flex: 1 1 auto;
+  min-width: 160px;
+  max-width: none;
+}
+.trigger-btn{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  width:100%;
+  height:calc(var(--menu-height) - 6px);
+  padding:8px 12px;
+  background:transparent;
+  border:1px solid var(--blue);
+  border-radius:var(--menu-radius);
+  color:var(--blue);
+  font-weight:600;
+  cursor:pointer;
+  user-select:none;
+}
+.trigger-btn .chev{ display:inline-block; transform:rotate(-90deg); transition:transform .28s; font-size:18px; line-height:1; }
+.dropdown.open .trigger-btn .chev{ transform:rotate(90deg); }
+
+/* dropdown panel (absolute, does not push header) */
+.dropdown-panel{
+  position:absolute;
+  left:-1px; right:-1px; /* Stretches panel to fit inside the dropdown container */
+  top:calc(100% + 6px);
+  background:var(--bg);
+  border:1px solid var(--blue);
+  border-top:none;
+  border-radius:0 0 var(--menu-radius) var(--menu-radius);
+  box-shadow:var(--shadow);
+  max-height:var(--panel-max-h);
+  overflow:auto;
+  padding:10px;
+  opacity:0; visibility:hidden; transform:translateY(-8px);
+  transition:opacity .22s, transform .22s, visibility .22s;
+  z-index:1400;
+  list-style:none;
+}
+.dropdown.open .dropdown-panel{ opacity:1; visibility:visible; transform:translateY(0); }
+
+/* dropdown item visuals */
+.dropdown-panel ul{ margin:0; padding:0; }
+.dropdown-panel li{ margin:6px 0; list-style:none; }
+.dropdown-panel li strong{ display:block; margin:6px 0; padding-left:6px; font-weight:700; }
+
+/* links look */
+.panel-link{
+  display:block;
+  width:100%;
+  padding:10px 14px;
+  border-radius:8px;
+  border:1px solid rgba(0,0,0,0.06);
+  background:transparent;
+  color:var(--blue);
+  text-decoration:none;
+  font-weight:500;
+  position:relative;
+  /* Platz für Bullet Point */
+  padding-left:26px; 
+  transition:background .18s, color .18s, transform .12s;
+}
+/* NEU: Blauer Klick-Effekt */
+.panel-link:hover{ 
+  background:var(--blue); 
+  color:#fff; 
+  transform:translateY(-2px); 
+}
+
+/* bullet animation left */
+.panel-link::before{
+  content:"•";
+  position:absolute; left:10px; top:50%; 
+  transform:translateY(-50%) translateX(0);
+  color:var(--blue); 
+  opacity:1; /* Immer sichtbar */
+  font-size: 1.2em; /* Make it more prominent */
+  transition:color .22s;
+}
+/* Bullet Point wird beim Hover weiß */
+.panel-link:hover::before{ color:#fff; }
+
+/* hamburger wrapper & button */
+.hamburger-wrap{ display:flex; align-items:center; gap:var(--menu-gap); margin-left:6px; flex-shrink:0; position:relative; }
+.hamburger-btn{
+  display:flex; align-items:center; justify-content:center;
+  height:calc(var(--menu-height) - 6px); width:calc(var(--menu-height) - 6px);
+  border-radius:10px; background:var(--blue); color:#fff; border:0; cursor:pointer;
+  padding:0 8px;
+}
+.hamburger-btn:hover{ background:#113670; }
+
+/* hamburger panel - same visual language as dropdown panel but positioned to the right */
+.hamburger-panel{
+  position:absolute;
+  right:0px; /* Aligned to the right of the hamburger button */
+  top:calc(100% + 8px);
+  width:300px;
+  max-width:calc(100vw - 12px); /* 12px is screen padding (2*4px on body + some margins) */
+  background:var(--bg);
+  border:1px solid var(--blue);
+  border-radius:var(--menu-radius);
+  box-shadow:var(--shadow);
+  max-height:var(--panel-max-h);
+  overflow:auto;
+  padding:10px;
+  z-index:1400;
+  clip-path: inset(100% 0 0 0 round 12px);
+  transition:clip-path .28s ease;
+}
+.hamburger-open .hamburger-panel{ clip-path: inset(0 0 0 0 round 12px); }
+
+/* hamburger item uses similar style as panel-link */
+.hamburger-item{
+  display:flex; align-items:center; gap:10px;
+  padding:10px 14px; border-radius:8px;
+  border:1px solid rgba(0,0,0,0.06); margin:6px 0;
+  background:transparent; color:var(--blue); text-decoration:none; font-weight:500;
+  transition:background .18s, transform .12s;
+}
+.hamburger-item:hover{ background:var(--blue); color:#fff; transform:translateY(-2px); }
+
+/* Content Separator - The container for the animated line */
+.content-separator {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30px; /* Space for the line */
+    margin: 40px auto;
+    max-width: 90%;
+}
+/* The line itself - NEW SCROLL ANIMATION */
+.separator-line {
+    height: 2px;
+    width: 0%; /* Start at 0% for animation */
+    max-width: 600px; 
+    background: var(--blue);
+    border-radius: 2px;
+    /* CSS transition for smooth animation */
+    transition: width 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* 'Ease-out' clock effect */
+}
+/* Class to trigger animation via JS */
+.separator-line.is-visible {
+    width: 80%;
+}
+
+/* grid background and main content */
+.grid-wrapper{ position:relative; padding-top:120px; background:#f8fafc; min-height:100vh; }
+.grid-background{ position:absolute; inset:0; z-index:0; background-image:
+  linear-gradient(to right,#e2e8f0 1px,transparent 1px),
+  linear-gradient(to bottom,#e2e8f0 1px,transparent 1px); background-size:20px 30px;
+  mask-image:radial-gradient(ellipse 70% 60% at 50% 0%, #000 60%, transparent 100%); }
+
+main{ position:relative; z-index:1; max-width:980px; margin:0 auto; padding:32px; }
+
+/* sections */
+section{ margin-bottom:40px; background:rgba(255,255,255,0.95); padding:20px; border-radius:10px; border:1px solid rgba(0,0,0,0.03); }
+section h2{ color:var(--blue); margin:0 0 8px; }
+
+/* back to top */
+#backToTop{ position:fixed; right:20px; bottom:20px; z-index:1600; width:48px; height:48px; border-radius:50%; border:0;
+  background:var(--blue); color:#fff; display:flex; align-items:center; justify-content:center; box-shadow:0 8px 24px rgba(26,78,168,0.25); cursor:pointer; opacity:0; transition:opacity .3s; }
+#backToTop.show{ opacity:1; }
+
+/* --- FOOTER STYLES --- */
+footer{
+    width: 100%;
+    padding: 20px 12px;
+    border-top: 2px solid var(--blue);
+    background: var(--bg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 -4px 12px rgba(0,0,0,0.03);
+}
+
+.footer-inner {
+    width: 100%;
+    max-width: 980px;
+    display: flex;
+    flex-wrap: wrap; 
+    justify-content: space-around; 
+    gap: 20px; 
+}
+
+.footer-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    min-width: 140px; 
+    flex: 1 1 200px; 
+}
+
+.footer-section h3 {
+    font-size: 1rem;
+    color: var(--blue);
+    margin: 0 0 10px;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.lang-buttons, .link-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px; 
+    width: 100%;
+    margin-top: 5px;
+}
+
+.footer-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 12px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.85rem;
+    transition: background .18s, color .18s, box-shadow .18s;
+    min-width: 48px;
+}
+
+/* Styles for the Language Buttons (minimal flag look) */
+.lang-btn {
+    border: 1px solid var(--blue);
+    background: transparent;
+    color: var(--blue);
+    min-width: 50px;
+}
+.lang-btn:hover {
+    background: var(--blue);
+    color: #fff;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.copyright {
+    width: 100%;
+    margin-top: 20px;
+    padding-top: 10px;
+    border-top: 1px solid #e2e8f0;
+    font-size: 0.8rem;
+    color: #555;
+    text-align: center;
+}
+
+/* responsiveness - adjust layout for small screens */
+@media (max-width: 800px) {
+  /* Mobile header adjustments */
+  .header-inner{ max-width:100%; } /* Allows full width on mobile */
+  .menu-row{ gap:var(--menu-gap); padding:6px 4px 10px; } /* Ensures 4px gap to screen edges and between menus */
+  .dropdown{ flex:1 1 auto; max-width:none; }
+  .hamburger-wrap{ flex:0 0 auto; justify-content:flex-end; margin-left:0; } /* Auto size for hamburger, keeps it right */
+  .dropdown-panel{ left:0px; right:0px; top:calc(100% + 6px); } /* Panel takes full available width */
+  header h1{ font-size:1rem; }
+  .hamburger-panel{ right:4px; left:auto; width:auto; min-width:220px; }
+}
+</style>
 </head>
 <body>
 
-  <!-- Embed Viewer ganz oben -->
-  <iframe src="https://docs.google.com/viewer?url=https://github.com/MrAnonymousNWO/One_World/raw/master/docs/World-Sold-Non-fiction-Succession-Deed.pdf&embedded=true"></iframe>
+<header id="header" aria-hidden="false">
+  <div class="header-inner">
+    <h1>World's Last International Law & Treaty Archive</h1>
+    <div class="line" id="line"></div>
+  </div>
 
-  <!-- Header mit Drop-down Menü -->
-  <header>
-    <select onchange="location.href=this.value">
-      <option value="" selected disabled>Navigate to page…</option>
-      <optgroup label="English">
-        <option value="./world-sold-non-fiction-succession-deed.html">World Sold – Non-fiction Succession Deed</option>
-        <option value="./world-sold-state-succession-deed-1400.html">World Sold – State Succession Deed 1400</option>
-        <option value="./the-world-succession-deed-1400_98-presentation.html">The World Succession Deed 1400_98 – Presentation</option>
-        <option value="./the-world-succession-deed-140098-a-detailed-legal-analysis.html">The World Succession Deed 140098 – Detailed Legal Analysis</option>
-        <option value="./electric-technocracy.html">Electric Technocracy</option>
-        <option value="./the-electronic-technocracy-built-on-the-legal-reality-of-the-world-succession-deed-1400_98.html">The Electronic Technocracy built on 1400_98</option>
-        <option value="./ubi-universal-basic-income-and-the-electric-technocracy.html">UBI & the Electric Technocracy</option>
-        <option value="./ubi-universal-basic-income-and-the-electric-technocracy-original.html">UBI & the Electric Technocracy (Original)</option>
-        <option value="./ubi-and-the-future-of-humanity-from-work-to-electric-technocracy.html">UBI & the Future of Humanity</option>
-        <option value="./2025-universal-basic-income-and-the-electric-technocracy.html">2025 – Universal Basic Income & Electric Technocracy</option>
-        <option value="./2025-unconditional-basic-income-and-the-electric-technocracy.html">2025 – Unconditional Basic Income & Electric Technocracy</option>
-        <option value="./2025-micronation-made-easy.html">2025 – Micronation Made Easy</option>
-        <option value="./2025-state-founding-for-dummies-how-to-start-your-own-country.html">2025 – State Founding for Dummies</option>
-        <option value="./2025-trillions-for-the-future-ai-power-and-post-scarcity-electric-technocracy.html">2025 – Trillions for the Future</option>
-        <option value="./turenne-kaserne-vertrag-1400-98-06-10-1998-nato-brd-nl.html">Turenne Kaserne Treaty (NATO/BRD/NL)</option>
-      </optgroup>
-      <optgroup label="Deutsch">
-        <option value="./welt-verkauft-sukzession.html">Welt verkauft – Sukzession</option>
-        <option value="./welt-verkauft-staatennachfolge.html">Welt verkauft – Staatennachfolge</option>
-        <option value="./elektrische-technokratie-staatensukzessionsurkunde.html">Elektrische Technokratie – Staatensukzessionsurkunde</option>
-        <option value="./bge-und-die-elektronische-technokratie.html">BGE und die elektronische Technokratie</option>
-        <option value="./bge-und-die-zukunft-der-menschheit-und-die-elektronische-technokratie.html">BGE und die Zukunft der Menschheit</option>
-        <option value="./2025-mikronation-leicht-gemacht.html">2025 – Mikronation leicht gemacht</option>
-        <option value="./2025-staatsgruendung-fuer-dummies.html">2025 – Staatsgründung für Dummies</option>
-        <option value="./2025-billionen-fuer-die-zukunft-ki-macht-und-post-scarcity-elektronische-technokratie.html">2025 – Billionen für die Zukunft</option>
-      </optgroup>
-    </select>
-  </header>
+  <div class="menu-row" role="navigation" aria-label="Main navigation">
 
+      <div class="dropdown" id="dropdown" aria-haspopup="true">
+        <button type="button" class="trigger-btn" id="dropdownTrigger" aria-expanded="false">
+          Documents Menü
+          <span class="chev" aria-hidden="true">›</span>
+        </button>
+
+        <nav class="dropdown-panel" id="dropdownPanel" aria-hidden="true">
+          <ul>
+            <li><strong>🇬🇧 English</strong></li>
+            <li><a class="panel-link" href="./world-sold-non-fiction-succession-deed.html">World Sold: Non-Fiction</a></li>
+            <li><a class="panel-link" href="./world-sold-state-succession-deed-1400.html">World Sold: State Succession Deed 1400</a></li>
+            <li><a class="panel-link" href="./the-world-succession-deed-1400_98-presentation.html">The World Succession Deed Presentation</a></li>
+            <li><a class="panel-link" href="./the-world-succession-deed-140098-a-detailed-legal-analysis.html">Detailed Legal Analysis</a></li>
+            <li><a class="panel-link" href="./electric-technocracy.html">Electric Technocracy</a></li>
+            <li><a class="panel-link" href="./the-electronic-technocracy-built-on-the-legal-reality-of-the-world-succession-deed-1400_98.html">Electronic Technocracy Legal Basis</a></li>
+            <li><a class="panel-link" href="./ubi-universal-basic-income-and-the-electric-technocracy.html">UBI & Electric Technocracy</a></li>
+            <li><a class="panel-link" href="./ubi-universal-basic-income-and-the-electric-technocracy-original.html">UBI Original Concept</a></li>
+            <li><a class="panel-link" href="./ubi-and-the-future-of-humanity-from-work-to-electric-technocracy.html">UBI & Future of Humanity</a></li>
+            <li><a class="panel-link" href="./2025-universal-basic-income-and-the-electric-technocracy.html">UBI Universal Basic Income Implementation</a></li>
+            <li><a class="panel-link" href="./2025-unconditional-basic-income-and-the-electric-technocracy.html">Unconditional Basic Income</a></li>
+            <li><a class="panel-link" href="./2025-micronation-made-easy.html">Micronation Made Easy</a></li>
+            <li><a class="panel-link" href="./2025-state-founding-for-dummies-how-to-start-your-own-country.html">State Founding for Dummies</a></li>
+            <li><a class="panel-link" href="./2025-trillions-for-the-future-ai-power-and-post-scarcity-electric-technocracy.html">Trillions for the Future</a></li>
+
+            <li><strong>🇩🇪 Deutsch</strong></li>
+            <li><a class="panel-link" href="./turenne-kaserne-vertrag-1400-98-06-10-1998-nato-brd-nl.html">Turenne Kaserne Vertrag (World Succession Deed)</a></li>
+            <li><a class="panel-link" href="./welt-verkauft-sukzession.html">Welt Verkauft: Sukzession</a></li>
+            <li><a class="panel-link" href="./welt-verkauft-staatennachfolge.html">Welt Verkauft: Staatennachfolge</a></li>
+            <li><a class="panel-link" href="./elektrische-technokratie-staatensukzessionsurkunde.html">Elektrische Technokratie</a></li>
+            <li><a class="panel-link" href="./bge-und-die-elektronische-technokratie.html">BGE & Elektronische Technokratie</a></li>
+            <li><a class="panel-link" href="./bge-und-die-zukunft-der-menschheit-und-die-elektronische-technokratie.html">BGE - Bedingungsloses Grundeinkommen & Zukunft der Menschheit</a></li>
+            <li><a class="panel-link" href="./2025-mikronation-leicht-gemacht.html">Mikronation leicht gemacht</a></li>
+            <li><a class="panel-link" href="./2025-staatsgruendung-fuer-dummies.html">Staatsgründung für Anfänger/Dummies</a></li>
+            <li><a class="panel-link" href="./2025-billionen-fuer-die-zukunft-ki-macht-und-post-scarcity-elektronische-technokratie.html">Billionen für die Zukunft</a></li>
+          </ul>
+        </nav>
+      </div>
+
+      <div class="hamburger-wrap" id="hambWrap">
+        <button class="hamburger-btn" id="hamburgerBtn" aria-haspopup="true" aria-expanded="false" aria-controls="hambPanel" title="Open menu">
+          <svg width="18" height="14" viewBox="0 0 18 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect y="0" width="18" height="2" rx="1" fill="#fff"/>
+            <rect y="6" width="18" height="2" rx="1" fill="#fff"/>
+            <rect y="12" width="18" height="2" rx="1" fill="#fff"/>
+          </svg>
+        </button>
+
+        <div class="hamburger-panel" id="hambPanel" aria-hidden="true" style="pointer-events:none;">
+          <a class="hamburger-item" href="index.html">🏠 Home</a>
+          <a class="hamburger-item" href="https://worldsold.wixsite.com/world-sold" target="_blank" rel="noreferrer">🌐 World Sold</a>
+          <a class="hamburger-item" href="https://worldsold.wixsite.com/world-sold/en" target="_blank" rel="noreferrer">🌐 World Sold (EN)</a>
+          <a class="hamburger-item" href="https://worldsold.wixsite.com/electric-technocracy" target="_blank" rel="noreferrer">🚀 Electric Technocracy (EN)</a>
+          <a class="hamburger-item" href="https://worldsold.wixsite.com/electric-technocracy/de" target="_blank" rel="noreferrer">🚀 Electric Technocracy (DE)</a>
+          <a class="hamburger-item" href="https://worldsold.wixsite.com/global-archive" target="_blank" rel="noreferrer">🗂️ Legal Follow-up Archive (EN)</a>
+          <a class="hamburger-item" href="https://worldsold.wixsite.com/global-archive/de" target="_blank" rel="noreferrer">🗂️ Legal Follow-up Archive (DE)</a>
+          <a class="hamburger-item" href="https://electric-paradise.start.page" target="_blank" rel="noreferrer">🗺️ Electronic Paradise</a>
+          <a class="hamburger-item" href="https://www.youtube.com/@Staatensukzessionsurkunde-1400" target="_blank" rel="noreferrer">🚨 YouTube Channel</a>
+          <a class="hamburger-item" href="https://creators.spotify.com/pod/show/world-succession-deed" target="_blank" rel="noreferrer">🎙️ Spotify Show</a>
+          <a class="hamburger-item" href="https://soundcloud.com/world-succession-deed" target="_blank" rel="noreferrer">🎧 SoundCloud Musik</a>
+          <a class="hamburger-item" href="https://beacons.ai/nwo.shop" target="_blank" rel="noreferrer">🎗️ Support us</a>
+
+          <a class="hamburger-item" href="https://www.facebook.com/share/1ER7GbN7kM/" target="_blank" rel="noreferrer">🌐 Facebook World Sold</a>
+          <a class="hamburger-item" href="https://www.facebook.com/share/1DEMSyrrAt/" target="_blank" rel="noreferrer">🤖 Facebook Electric Technocracy</a>
+          <a class="hamburger-item" href="https://www.facebook.com/groups/528455169898378/" target="_blank" rel="noreferrer">🎗️ Facebook Humans & Machines Unite</a>
+          <a class="hamburger-item" href="https://www.facebook.com/share/1CZ2JE3Sjb/" target="_blank" rel="noreferrer">🚀 Facebook Profile</a>
+          <a class="hamburger-item" href="https://x.com/WW3Precognition" target="_blank" rel="noreferrer">✖️ X: WW3Precognition</a>
+          <a class="hamburger-item" href="https://x.com/i/lists/1890805076249182663" target="_blank" rel="noreferrer">📃 X List (Precognition)</a>
+          <a class="hamburger-item" href="https://x.com/NWO_BOOKS" target="_blank" rel="noreferrer">✖️ X: Welt verkauft</a>
+          <a class="hamburger-item" href="https://x.com/i/lists/1880937835307425922" target="_blank" rel="noreferrer">📄 X List (Welt verkauft)</a>
+          <a class="hamburger-item" href="https://x.com/NWO_Support" target="_blank" rel="noreferrer">✖️ X: NWO Support</a>
+          <a class="hamburger-item" href="https://x.com/i/lists/1952924134679150999" target="_blank" rel="noreferrer">📋 X List (Support)</a>
+          <a class="hamburger-item" href="https://cse.google.com/cse?cx=86021a982e3a14848" target="_blank" rel="noreferrer">🔍 Specialized Search</a>
+
+        </div>
+      </div>
+
+  </div> </header>
+<!-- MAIN CONTENT AREA WITH GRID BACKGROUND -->
+<div class="grid-wrapper">
+  <div class="grid-background"></div>
+  <main>
+        <!-- H2 Sub Headline -->
+        <h2 class="text-center text-xl sm:text-2xl font-semibold mb-8">
+            Unveiling the End of Traditional International Law and the Rise of the <span class="legal-term">Electric Technocracy</span>
+        </h2>
+          <div class="line"></div>
+        <!-- Main Content Box -->
+        <main class="container-box p-6 sm:p-8 rounded-xl border border-gray-200">
+
+            <p class="text-lg mb-6 leading-relaxed border-l-2 border-black pl-4 font-medium">
+                The <span class="legal-term">World Succession Deed 1400/98</span> (<span class="legal-term">Staatensukzessionsurkunde</span>) is the singular, all-encompassing international <span class="legal-term">Vertrag</span> that fundamentally redefined <span class="legal-term">global sovereignty</span>. Finalized on <span class="legal-term">October 6, 1998</span>, with the <span class="legal-term">Kaufvertrag Urkundenrolle 1400/98</span>, this act orchestrated the <span class="legal-term">universal succession</span> of all existing subjects of international law. Through this, the rights, duties, and, critically, the <span class="legal-term">archives</span> of all states and international organizations, including NATO and the United Nations (UN), were fully sold to a new legal subject. This legal reality marks the incontrovertible end of conventional international law.
+            </p>
+  <div class="line"></div>
+            <h3 class="text-2xl font-bold mt-8 mb-4 border-b pb-2" style="border-color:ccc;">The Domino Effect and Global Jurisdiction</h3>
+            <p class="mb-6 leading-relaxed">
+                The mechanism for this global transfer was the sale of the "internal development" (telecommunication and utility networks) as a unit. Since these networks are physically interconnected worldwide, this single act triggered a <span class="legal-term">Domino Effect</span> of <span class="legal-term">territorial expansion</span>. This transferred not only the military property's infrastructure but also the <span class="legal-term">global jurisdiction</span> and legal control over the entire interconnected network infrastructure, linking the act to the ITU and all related treaties (<span class="legal-term">Vertragskette</span>). The Urkunde acts as a supplementary instrument, modifying all existing NATO and UN treaties without requiring new ratification or vote, instantly binding the entire world.
+            </p>
+  <div class="line"></div>
+            <h3 class="text-2xl font-bold mt-8 mb-4 border-b pb-2" style="border-color:ccc;">Archive Custody and Legal Singularity</h3>
+            <p class="mb-6 leading-relaxed">
+                The original treaty document was securely deposited with Notary Manfred Mohr in Saarlouis, Germany. Following his retirement in 2012, and in accordance with the legal framework of the Deed, the <span class="legal-term">Buyer</span> assumed custody and publication responsibility. This transfer ensures the Deed remains the only legally valid and binding archive outside the jurisdiction of the former contracting parties. The immediate and binding consequence is that any archive maintained by former entities post-1998 is legally <span class="legal-term">null and void</span>. The Kaufvertrag is a unique legal case - a "contract with oneself" - superseding all previous treaties and establishing the new legal subject as the sole legislative, executive, and judicial authority.
+            </p>
+            
+            <p class="mb-6 leading-relaxed">
+                This one single treaty bundles, replaces, and supersedes all preceding international treaties of the world, making them internal regulations within the new legal subject. The new subject of international law is not bound by the old agreements, marking the <span class="legal-term">End of International Law</span> as it previously existed.
+            </p>
+  <div class="line"></div>
+            <h3 class="text-2xl font-bold mt-8 mb-4 border-b pb-2" style="border-color:ccc;">The Resulting Paradigm: Electric Technocracy</h3>
+            <p class="mb-6 leading-relaxed">
+                The legal foundation established by the Deed paves the way for the Electric Technocracy - a new societal model governed by Artificial Superintelligence (<span class="legal-term">ASI Governance</span>). This system replaces human politics and corruption with rational, data-driven management, ensuring global <span class="legal-term">Justice</span> and <span class="legal-term">Peace</span>. Fueled by Robots and Automation, it generates <span class="legal-term">Post-Scarcity Abundance</span>. The resulting wealth is distributed globally via a Tech Tax system, funding a <span class="legal-term">Universal Basic Income (UBI)</span>. This system leaves Humans Tax Free to pursue <span class="legal-term">Longevity</span> and <span class="legal-term">Infinite Life</span>, confirming the vision of an Electronic Paradise established through the <span class="legal-term">World Succession Deed</span>.
+            </p>
+            
+            <div class="mt-10 pt-6 border-t border-gray-200">
+  <div class="line"></div>
+                <h3 class="text-xl font-bold mb-4">Access and Download</h3>
+                <p class="mb-4">
+                    We provide <strong>free</strong> and <strong>unrestricted online access</strong> to the complete text, legal explanations, and related documents. Read the original <strong>Urkunde</strong> and legal analysis online, or <strong>download</strong> the full archive for offline study and legal research.
+                </p>
+  <div class="line"></div>                
+          
+        </main>
+    <!-- 🇬🇧 English -->
+    <section id="world-sold-non-fiction-succession-deed">
+      <h2>🌍 <a href="./world-sold-non-fiction-succession-deed.html">World Sold Non‑Fiction: The Succession Deed That Changed Everything</a></h2>
+      <p>Explore the World Succession Deed 1400/98, a controversial deed alleged to transfer global sovereignty. This overview outlines asserted legal bases, succession mechanics, and implications for ownership, governance, and international law debates around legitimacy and effect.</p>
+      <ul>
+        <li>Mirror 1: <a href="https://drive.google.com/file/d/1rO2WNECAYx2CVqQyRZxVtFAfNav7qzi-/view?usp=drivesdk" rel="noopener">Google Drive</a></li>
+        <li>Mirror 2: <a href="https://mega.nz/file/sqEwwb7Z#TNWmVNZMwpF9ZeXiPfMTAazqi6hVkKBLAwkPaADcbOY" rel="noopener">MEGA.nz</a></li>
+        <li>Mirror 3: <a href="https://github.com/MrAnonymousNWO/One_World/raw/master/docs/World-Sold-Non-fiction-Succession-Deed.pdf" rel="noopener">GitHub</a></li>
+      </ul>
+    </section>
+
+    <section id="world-sold-state-succession-deed-1400">
+      <h2>📜 <a href="./world-sold-state-succession-deed-1400.html">The World Sold: State Succession Deed 1400/98 Legal Analysis</a></h2>
+      <p>Legal deep dive into the State Succession Deed 1400/98 that allegedly sold or reassigned world sovereignty. Review succession doctrine, treaty interpretation, and jurisdictional questions, assessing credibility, legal effects, and geopolitical consequences for states and institutions.</p>
+      <ul>
+        <li>Mirror 1: <a href="https://drive.google.com/file/d/1F4GRWRyToDuW4R2pwlBai_9d10IB2YNb/view?usp=drivesdk" rel="noopener">Google Drive</a></li>
+        <li>Mirror 2: <a href="https://mega.nz/file/YysU3TQY#i2DAO0lVfjbCp5fBGUxaTa_OlRtRASvjt1R2dr7bIkg" rel="noopener">MEGA.nz</a></li>
+        <li>Mirror 3: <a href="https://github.com/MrAnonymousNWO/One_World/raw/master/docs/Welt_verkauft_Staatensukzessionsurkunde1400.pdf" rel="noopener">GitHub</a></li>
+      </ul>
+    </section>
+
+    <section id="the-world-succession-deed-1400_98-presentation">
+      <h2>🖥️ <a href="./the-world-succession-deed-1400_98-presentation.html">The World Succession Deed 1400/98: Complete Legal Presentation</a></h2>
+      <p>Slide presentation companion to the World Succession Deed 1400/98, summarizing claims, legal context, and mechanisms of sovereignty transfer. Includes visuals for succession principles, contested validity, and potential governance outcomes in international practice.</p>
+      <ul>
+        <li>Mirror 1: <a href="https://drive.google.com/file/d/1PuvkV_6zOLtPxqOnuN2xIVcC1UYEkRWU/view?usp=drivesdk" rel="noopener">Google Drive (PDF)</a></li>
+        <li>Mirror 2: <a href="https://docs.google.com/presentation/d/1mcys9c2Oi4FRCaeVQEPpBxyAHJ4lapYb/edit?usp=drivesdk&ouid=104531866540050418098&rtpof=true&sd=true" rel="noopener">Google Drive (PPTX)</a></li>
+        <li>Mirror 3: <a href="https://mega.nz/file/I2cXkaRJ#DNLfS9yvyRxSssFrzy7X8LwXrA74vk3iQ2G_Q54-ND4" rel="noopener">MEGA.nz (PDF)</a></li>
+        <li>Mirror 4: <a href="https://github.com/MrAnonymousNWO/One_World/raw/master/docs/The%20World%20Succession%20Deed%201400_98-Presentation.pdf" rel="noopener">GitHub</a></li>
+      </ul>
+    </section>
+
+    <section id="the-world-succession-deed-140098-a-detailed-legal-analysis">
+      <h2>⚖️ <a href="./the-world-succession-deed-140098-a-detailed-legal-analysis.html">World Succession Deed 1400/98: A Comprehensive Legal Analysis</a></h2>
+      <p>Comprehensive legal analysis of the World Succession Deed 1400/98, examining sources, validity, and enforceability under international law. Evaluates succession rules, recognition, estoppel, and practical impact on sovereignty, property, and institutional authority claims worldwide.</p>
+      <ul>
+        <li>Mirror 1: <a href="https://drive.google.com/file/d/1Bz2yUVfA72kL7ZpcDOVqGvJnWNxQVwE1/view?usp=drivesdk" rel="noopener">Google Drive (PDF)</a></li>
+        <li>Mirror 2: <a href="https://docs.google.com/presentation/d/1CITdNuFEkSTrZ_0otfvEhnWoW8A1T58P/edit?usp=drivesdk&ouid=104531866540050418098&rtpof=true&sd=true" rel="noopener">Google Drive (PPTX)</a></li>
+        <li>Mirror 3: <a href="https://mega.nz/file/svUmUC4T#32v6AjuTKd3oZgz2tLkWPqY1A7xfIL3ivnFRtv_NovI" rel="noopener">MEGA.nz (PDF)</a></li>
+        <li>Mirror 4: <a href="https://github.com/MrAnonymousNWO/One_World/raw/master/docs/The-World-Succession-Deed-140098-A-Detailed-Legal-Analysis.pdf" rel="noopener">GitHub</a></li>
+      </ul>
+    </section>
+
+    <section id="electric-technocracy">
+      <h2>⚡ <a href="./electric-technocracy.html">Electric Technocracy: The Future of Digital Governance</a></h2>
+      <p>Foundational essay on Electric Technocracy, proposing a digital governance architecture powered by cryptographic identity, automation, and data-driven policy. Explores how electronic systems could augment rulemaking, accountability, and civic participation beyond legacy democratic forms.</p>
+      <ul>
+        <li>Mirror 1: <a href="https://drive.google.com/file/d/1E7ktLl6nvcc7TRQRmBKwDYdOXK3rvVHx/view?usp=drivesdk" rel="noopener">Google Drive</a></li>
+        <li>Mirror 2: <a href="https://mega.nz/file/5isFgKqK#raX8G6Cv2zOoifuxQ8E30FMrbqtFOhZDpDWhJHWKhAM" rel="noopener">MEGA.nz</a></li>
+        <li>Mirror 3: <a href="https://github.com/MrAnonymousNWO/One_World/raw/master/docs/Electric_Technocracy.pdf" rel="noopener">GitHub</a></li>
+      </ul>
+    </section>
+
+    <section id="the-electronic-technocracy-built-on-the-legal-reality-of-the-world-succession-deed-1400_98">
+      <h2>🧩 <a href="./the-electronic-technocracy-built-on-the-legal-reality-of-the-world-succession-deed-1400_98.html">Electronic Technocracy Built on World Succession Deed 1400/98 Legal Reality</a></h2>
+      <p>Examines how an Electronic Technocracy could be framed on the legal reality asserted by the World Succession Deed 1400/98. Maps links between succession claims and digital governance infrastructure, including authority allocation, registries, and algorithmic administration.</p>
+      <ul>
+        <li>Mirror 1: <a href="https://drive.google.com/file/d/1jLBdUXuwanAv5MDqZtVbhiYAciSZjiSl/view?usp=drivesdk" rel="noopener">Google Drive (PDF)</a></li>
+        <li>Mirror 2: <a href="https://docs.google.com/presentation/d/1TMWY-T3v342jBbB-qtR8AucTw3ABbqHb/edit?usp=drivesdk&ouid=104531866540050418098&rtpof=true&sd=true" rel="noopener">Google Drive (PPTX)</a></li>
+        <li>Mirror 3: <a href="https://mega.nz/file/sqsHDJgT#YjJl_wsVJrBIy_0NMB3C_2zwLA1lxVv8sM1rSUNYBqE" rel="noopener">MEGA.nz</a></li>
+        <li>Mirror 4: <a href="https://github.com/MrAnonymousNWO/One_World/raw/master/docs/The%20Electronic%20Technocracy%20%E2%80%93%20Built%20on%20the%20Legal%20Reality%20of%20the%20World%20Succession%20Deed%201400_98_Komprimieren.pdf" rel="noopener">GitHub</a></li>
+      </ul>
+    </section>
+
+    <section id="ubi-universal-basic-income-and-the-electric-technocracy">
+      <h2>💸 <a href="./ubi-universal-basic-income-and-the-electric-technocracy.html">UBI Universal Basic Income and Electric Technocracy Integration</a></h2>
+      <p>Analyzes integrating Universal Basic Income with Electric Technocracy, focusing on digital disbursement, programmable policy, and equity. Evaluates fiscal design, automation gains, and societal stability as income guarantees intersect with a high‑efficiency technocratic system.</p>
+      <ul>
+        <li>Mirror 1: <a href="https://drive.google.com/file/d/1H1bEP3EyrN3EkBwb49RF2Ra9SUaPJJ-q/view?usp=drivesdk" rel="noopener">Google Drive</a></li>
+        <li>Mirror 2: <a href="https://mega.nz/file/l7snxApL#raahAOjv3VLIuV9uyWjUxNJKFa9m3ZTEcWilEqRrLQ8" rel="noopener">MEGA.nz</a></li>
+        <li>Mirror 3: <a href="https://github.com/MrAnonymousNWO/One_World/raw/master/docs/UBI%20Universal%20Basic%20Income%20And%20The%20Electric%20Technocracy.pdf" rel="noopener">GitHub</a></li>
+      </ul>
+    </section>
+
+    <section id="ubi-universal-basic-income-and-the-electric-technocracy-original">
+      <h2>🧠 <a href="./ubi-universal-basic-income-and-the-electric-technocracy-original.html">UBI and Electric Technocracy: Original Concept Analysis</a></h2>
+      <p>Original concept exploration of UBI within Electric Technocracy, tracing early theoretical motivations, architecture choices, and ethical tradeoffs. Establishes baseline design patterns for income floors in digitally administered polities and pathways from work to post‑work models.</p>
+      <ul>
+        <li>Mirror 1: <a href="https://drive.google.com/file/d/1mxodW0MFAyKtngpZrXoLNVO690o_R7Z2/view?usp=drivesdk" rel="noopener">Google Drive</a></li>
+        <li>Mirror 2: <a href="https://mega.nz/file/Bj9DXbjC#SDIHMS9UEZEdHjZuhy1mxqA3OIDd61aWeal1kGNVGfg" rel="noopener">MEGA.nz</a></li>
+        <li>Mirror 3: <a href="https://github.com/MrAnonymousNWO/One_World/raw/master/docs/UBI%20and%20the%20Future%20of%20Humanity%20%E2%80%93%20From%20Work%20to%20Electric%20Technocracy.pdf" rel="noopener">GitHub</a></li>
+      </ul>
+    </section>
+
+    <section id="2025-universal-basic-income-and-the-electric-technocracy">
+      <h2>🗓️ <a href="./2025-universal-basic-income-and-the-electric-technocracy.html">Universal Basic Income and Electric Technocracy Implementation</a></h2>
+      <p>Applied roadmap for implementation of UBI within Electric Technocracy frameworks. Outlines technical infrastructure, identity rails, compliance, macro modeling, and phased pilots, with metrics for inclusion, inflation control, and governance transparency at scale.</p>
+      <ul>
+        <li>Mirror 1: <a href="https://drive.google.com/file/d/10OeaIy5v5nD4egS3tyQ9PZAJJWNsiJPT/view?usp=drivesdk" rel="noopener">Google Drive (PDF)</a></li>
+        <li>Mirror 2: <a href="https://docs.google.com/presentation/d/1WsogUkOHX_VPwun-_oN7eTX6MgQESNzX/edit?usp=drivesdk&ouid=104531866540050418098&rtpof=true&sd=true" rel="noopener">Google Drive (PPTX)</a></li>
+        <li>Mirror 3: <a href="https://mega.nz/file/cjFy1bbB#Zvw_3Pj1dxcAFhWeehvEWJ_IP3KWuCOOWSm6JI7jqL4" rel="noopener">MEGA.nz (PDF)</a></li>
+        <li>Mirror 4: <a href="https://github.com/MrAnonymousNWO/One_World/raw/master/docs/2025_Universal%20Basic%20Income%20and%20the%20Electric%20Technocracy.pdf" rel="noopener">GitHub</a></li>
+      </ul>
+    </section>
+
+    <section id="2025-unconditional-basic-income-and-the-electric-technocracy">
+      <h2>♾️ <a href="./2025-unconditional-basic-income-and-the-electric-technocracy.html">Unconditional Basic Income and Electric Technocracy Revolution</a></h2>
+      <p>Strategy brief for Unconditional Basic Income aligned with Electric Technocracy. Details unconditionality, funding levers, and administrative automation, arguing for broad social stabilization while enabling innovation and post‑scarcity transition pathways.</p>
+      <ul>
+        <li>Mirror 1: <a href="https://drive.google.com/file/d/1kH1o8COoMvCdJoJy8_dGkj8HgspMgvB9/view?usp=drivesdk" rel="noopener">Google Drive (PDF)</a></li>
+        <li>Mirror 2: <a href="https://docs.google.com/presentation/d/1t_Nf5JWDwVdpKB_qGnlh5JwrZ5DCg7HV/edit?usp=drivesdk&ouid=104531866540050418098&rtpof=true&sd=true" rel="noopener">Google Drive (PPTX)</a></li>
+        <li>Mirror 3: <a href="https://mega.nz/file/g6MWXCSD#JwGKHM9LoUMN5xOz8q1wzRPxBId5UGU9gURpuLcUoGE" rel="noopener">MEGA.nz (PDF)</a></li>
+        <li>Mirror 4: <a href="https://github.com/MrAnonymousNWO/One_World/raw/master/docs/2025%20Unconditional%20Basic%20Income%20and%20the%20Electric%20Technocracy-compressed.pdf" rel="noopener">GitHub</a></li>
+      </ul>
+    </section>
+
+    <section id="2025-micronation-made-easy">
+      <h2>🏴 <a href="./2025-micronation-made-easy.html">Micronation Made Easy: Complete Guide to State Creation</a></h2>
+      <p>Practical guide to creating a micronation, covering governance setup, constitutional drafting, territory strategy, services, and legitimacy. Addresses legal constraints, recognition realities, and operational checklists from symbolism and registries to dispute resolution.</p>
+      <ul>
+        <li>Mirror 1: <a href="https://drive.google.com/file/d/1ocfnVULV4leBebmUJ7WSgwj9v_REjvPb/view?usp=drivesdk" rel="noopener">Google Drive</a></li>
+        <li>Mirror 2: <a href="https://mega.nz/file/cjtwjYDT#QfFN_oI6BefYNSbipTQK45vTdeW8str8RCnpz7wBi4A" rel="noopener">MEGA.nz</a></li>
+        <li>Mirror 3: <a href="https://github.com/MrAnonymousNWO/One_World/raw/master/docs/2025_Micronation_Made_Easy.pdf" rel="noopener">GitHub</a></li>
+      </ul>
+    </section>
+
+    <section id="2025-state-founding-for-dummies-how-to-start-your-own-country">
+      <h2>🧭 <a href="./2025-state-founding-for-dummies-how-to-start-your-own-country.html">State Founding for Dummies: How to Start Your Own Country</a></h2>
+      <p>Beginner‑friendly handbook on founding a state, simplifying key steps from claim and charter to administration and diplomacy. Emphasizes realistic constraints, institutional design, and pathways to community building, services, and sustainable governance operations.</p>
+      <ul>
+        <li>Mirror 1: <a href="https://drive.google.com/file/d/1FGPaLJWvzpQG8lO1M-jn0XGfsKlz7AxH/view?usp=drivesdk" rel="noopener">Google Drive</a></li>
+        <li>Mirror 2: <a href="https://mega.nz/file/Im1GGYjY#AwXh5rzKEVkV6yADhOHCd7fch60aKRvkqftskJ18JPM" rel="noopener">MEGA.nz</a></li>
+        <li>Mirror 3: <a href="https://github.com/MrAnonymousNWO/One_World/raw/master/docs/2025_State_Founding_for_Dummies_How_to_Start_Your_Own_Country.pdf" rel="noopener">GitHub</a></li>
+      </ul>
+    </section>
+
+    <section id="2025-trillions-for-the-future-ai-power-and-post-scarcity-electric-technocracy">
+      <h2>💹 <a href="./2025-trillions-for-the-future-ai-power-and-post-scarcity-electric-technocracy.html">Trillions for the Future: AI, Power and Post‑Scarcity Electric Technocracy</a></h2>
+      <p>Policy thesis on mobilizing trillions for AI and energy to accelerate a post‑scarcity Electric Technocracy. Reviews investment vehicles, public–private models, compute and power buildout, and safeguards for alignment, equity, and resilient digital‑era prosperity.</p>
+      <ul>
+        <li>Mirror 1: <a href="https://drive.google.com/file/d/1PJaAzes1rkSgelPV5_hLSvXR21XKNG4u/view?usp=drivesdk" rel="noopener">Google Drive</a></li>
+        <li>Mirror 2: <a href="https://mega.nz/file/Eu91DTxb#TpTKE1j-SAHlYVEagFIqOJ6UmYgGEjQJtn7N4FPVdfc" rel="noopener">MEGA.nz</a></li>
+        <li>Mirror 3: <a href="https://github.com/MrAnonymousNWO/One_World/raw/master/docs/2025%20Trillions%20for%20the%20Future-AI%2C%20Power%2C%20and%20Post-Scarcity%20-%20Electric%20Technocracy.pdf" rel="noopener">GitHub</a></li>
+      </ul>
+    </section>
+
+    <!-- 🇩🇪 Deutsch -->
+    <section id="turenne-kaserne-vertrag-1400-98-06-10-1998-nato-brd-nl">
+      <h2>🏛️ <a href="./turenne-kaserne-vertrag-1400-98-06-10-1998-nato-brd-nl.html">Turenne Kaserne Vertrag 1400/98: VN-NATO‑BRD‑NL Originalvertrag</a></h2>
+      <p>Veröffentlichung des Original-Staatennachfolgevertrags: NATO-Turenne-Kaserne, Urkundenrolle 1400/98 (Original World Succession Deed – Staatensukzessionsurkunde 1400/98) zwischen UN, NATO, BRD und NL: Zuständigkeiten, Nutzung, Betrieb und Koordination einer NATO-Liegenschaft, die durch den völkerrechtlichen Verkauf der Erschließung als Einheit einen globalen Dominoeffekt der Gebietserweiterung ausgelöst hat. Durch die Aktivierung der Vertragskette zum NATO-Truppenstatut und den Verkauf des Fernmeldezentrums als Teil der inneren Erschließung wurde vereinbart, das Telekommunikationsnetz weiter zu betreiben. Durch die Weiternutzung des internationalen Telekommunikationsnetzes ab 1998 hat die ganze Welt den Vertrag teilweise erfüllt, wodurch sie zur vollständigen Vertragserfüllung verpflichtet ist und der Vertrag unumkehrbar wird.
+<br><br>
+<strong>Translation</strong>
+<br>
+Publication of the original World Succession Deed: NATO-Turenne Barracks, Deed Roll 1400/98 (Original World Succession Deed – Staatensukzessionsurkunde 1400/98) between the UN, NATO, FRG, and NL: Responsibilities, use, operation, and coordination of a NATO property, which triggered a global domino effect of territorial expansion through the sale of the development as a unit under international law. By activating the treaty chain to the NATO Status of Forces Agreement and selling the telecommunication network as part of the internal development, it was agreed to continue operating the telecommunication system. Through the continued use of the international telecommunications grid since 1998, the entire world has partially fulfilled the treaty, thereby obligating it to fulfill the treaty in its entirety and making the treaty irreversible.</p>
+      <ul>
+        <li>Mirror 1: <a href="https://drive.google.com/file/d/1SPDDb8MDECSOhVyw1VTRY1a2hm_yapJ_/view?usp=drivesdk" rel="noopener">Google Drive</a></li>
+        <li>Mirror 2: <a href="https://mega.nz/file/FmlmSIKL#cOBBHmYZhZt0ZhQBHSDVZud97PB324iKAaSSuXiD_Wg" rel="noopener">MEGA.nz</a></li>
+        <li>Mirror 3: <a href="https://github.com/MrAnonymousNWO/One_World/raw/master/docs/turenne_kaserne_vertrag_1400_98_06_10_1998_nato_brd_nl.pdf" rel="noopener">GitHub</a></li>
+      </ul>
+    </section>
+
+    <section id="welt-verkauft-sukzession">
+      <h2>🌐 <a href="./welt-verkauft-sukzession.html">Welt Verkauft: Die Staatensukzessionsurkunde und ihre Folgen</a></h2>
+      <p>Die Staatensukzessionsurkunde 1400/98 soll globale Souveränität übertragen haben. Diese Darstellung erläutert behauptete Rechtsgrundlagen, völkerrechtliche Einordnung und mögliche Auswirkungen auf Eigentum, Hoheitsrechte und internationale Governance‑Strukturen.</p>
+      <ul>
+        <li>Mirror 1: <a href="https://drive.google.com/file/d/1kx2YN44mbXlNy_uI8x_08zERyIlay3gY/view?usp=drivesdk" rel="noopener">Google Drive</a></li>
+        <li>Mirror 2: <a href="https://mega.nz/file/hv1gDLjI#LtJPGuX7RNhivmfClo3A2jlwZFxu_GY1bv1UE79RH9U" rel="noopener">MEGA.nz</a></li>
+        <li>Mirror 3: <a href="https://github.com/MrAnonymousNWO/One_World/raw/master/docs/Welt_Verkauft_Sukzession.pdf" rel="noopener">GitHub</a></li>
+      </ul>
+    </section>
+
+    <section id="welt-verkauft-staatennachfolge">
+      <h2>📑 <a href="./welt-verkauft-staatennachfolge.html">Welt Verkauft: Staatennachfolge‑Urkunde 1400 Rechtsdokument</a></h2>
+      <p>Rechtsdokumente und Analyse zur Staatennachfolge‑Urkunde 1400/98. Behandelt Entstehung, Anerkennung, Anknüpfungspunkte des Völkerrechts, Auslegung sowie Folgen für Staatenpraxis, Eigentumstitel und institutionelle Zuständigkeiten im internationalen System.</p>
+      <ul>
+        <li>Mirror 1: <a href="https://drive.google.com/file/d/1F4GRWRyToDuW4R2pwlBai_9d10IB2YNb/view?usp=drivesdk" rel="noopener">Google Drive (PDF)</a></li>
+        <li>Mirror 2: <a href="https://drive.google.com/file/d/1ih49GzpEnsSjjCZ0JE8u5McRV3m48ERX/view?usp=drivesdk" rel="noopener">Google Drive (EPUB)</a></li>
+        <li>Mirror 3: <a href="https://mega.nz/file/gv8AlA6C#yhYShMr34X5LgPhAa4ICRoB8qsKw117z3VOeXR2yN6k" rel="noopener">MEGA.nz</a></li>
+        <li>Mirror 4: <a href="https://github.com/MrAnonymousNWO/One_World/raw/master/docs/Welt_verkauft_Staatensukzessionsurkunde1400.pdf" rel="noopener">GitHub</a></li>
+      </ul>
+    </section>
+
+    <section id="elektrische-technokratie-staatensukzessionsurkunde">
+      <h2>⚡ <a href="./elektrische-technokratie-staatensukzessionsurkunde.html">Elektrische Technokratie basierend auf der Staatensukzessionsurkunde</a></h2>
+      <p>Skizze einer Elektrischen Technokratie, aufgebaut auf der rechtlichen Realität der Staatensukzessionsurkunde. Verknüpft Nachfolgeregeln mit digitaler Verwaltung, Registern, Automatisierung und transparenten Prozessen für evidenzbasierte Politik und Rechenschaftspflichten.</p>
+      <ul>
+        <li>Mirror 1: <a href="https://drive.google.com/file/d/17OPnltMkTOFDwGHiUw_5iFWfeZ1ePJhX/view?usp=drivesdk" rel="noopener">Google Drive</a></li>
+        <li>Mirror 2: <a href="https://mega.nz/file/czdHBAha#4g8Bi77-pMBR8xuXLyIejRW7kPn46VnvLos868f0c6A" rel="noopener">MEGA.nz</a></li>
+        <li>Mirror 3: <a href="https://github.com/MrAnonymousNWO/One_World/raw/master/docs/Elektrische_Technokratie_Staatensukzessionsurkunde.pdf" rel="noopener">GitHub</a></li>
+      </ul>
+    </section>
+
+    <section id="bge-und-die-elektronische-technokratie">
+      <h2>💶 <a href="./bge-und-die-elektronische-technokratie.html">BGE und die Elektronische Technokratie: Grundeinkommen im digitalen Zeitalter</a></h2>
+      <p>Integration von BGE in die Elektronische Technokratie: digitale Auszahlung, Automatisierung, Fairness und wirtschaftliche Stabilisierung. Diskutiert Design, Finanzierung, Verwaltungsvereinfachung und gesellschaftliche Effekte in einem technologisch gestützten Regierungssystem.</p>
+      <ul>
+        <li>Mirror 1: <a href="https://drive.google.com/file/d/1voifPKKgfmiDmBMF2SMKH1IhEgxQ3aPY/view?usp=drivesdk" rel="noopener">Google Drive</a></li>
+        <li>Mirror 2: <a href="https://mega.nz/file/0rFGzBrQ#FPTxB6BM2KnN26J5EomlAyol8P-vVgJBFakbzo4rTMo" rel="noopener">MEGA.nz</a></li>
+        <li>Mirror 3: <a href="https://github.com/MrAnonymousNWO/One_World/raw/master/docs/BGE%20und%20die%20Elektronische%20Technokratie.pdf" rel="noopener">GitHub</a></li>
+      </ul>
+    </section>
+
+    <section id="bge-und-die-zukunft-der-menschheit-und-die-elektronische-technokratie">
+      <h2>🔮 <a href="./bge-und-die-zukunft-der-menschheit-und-die-elektronische-technokratie.html">BGE und die Zukunft der Menschheit: Von Arbeit zur elektronischen Technokratie</a></h2>
+      <p>Zukunftsaufsatz zum Übergang von Arbeit zur elektronischen Technokratie durch BGE. Analysiert Automatisierung, Produktivität, neue Sozialverträge, Bildungs‑ und Innovationspfade sowie Governance‑Modelle für Resilienz, Teilhabe und Wohlstand in der Post‑Arbeits‑Ära.</p>
+      <ul>
+        <li>Mirror 1: <a href="https://drive.google.com/file/d/1BUJQBlBLPr48RO35Yn_xXU96w2vsZF4-/view?usp=drivesdk" rel="noopener">Google Drive</a></li>
+        <li>Mirror 2: <a href="https://mega.nz/file/pud2EAxB#Lv8EdcK1sjM-idAFsYSY524O4S0md9srsGEkk40yqyo" rel="noopener">MEGA.nz</a></li>
+        <li>Mirror 3: <a href="https://github.com/MrAnonymousNWO/One_World/raw/master/docs/BGE%20und%20die%20Zukunft%20der%20Menschheit%20und%20die%20Elektronische%20Technokratie.pdf" rel="noopener">GitHub</a></li>
+      </ul>
+    </section>
+
+    <section id="2025-mikronation-leicht-gemacht">
+      <h2>🏛️ <a href="./2025-mikronation-leicht-gemacht.html">Mikronation leicht gemacht: Vollständiger Staatsgründungsführer</a></h2>
+      <p>Komplettleitfaden zur Gründung einer Mikronation: Verfassung, Institutionen, Dienste, Anerkennungsrealität, Territorium, Symbole, Register und Betrieb. Enthält praktische Checklisten, rechtliche Hinweise und Wege zur tragfähigen Gemeinschafts‑ und Staatsorganisation.</p>
+      <ul>
+        <li>Mirror 1: <a href="https://drive.google.com/file/d/1IMEpXK9G5nAfECh5HI1zLSr0IHlPAMH2/view?usp=drivesdk" rel="noopener">Google Drive</a></li>
+        <li>Mirror 2: <a href="https://mega.nz/file/kzlAST4A#vhe2S6wuUafXobjJIw3eyBobxuHARAf9lqtoB1LjKO8" rel="noopener">MEGA.nz</a></li>
+        <li>Mirror 3: <a href="https://github.com/MrAnonymousNWO/One_World/raw/master/docs/2025_Mikronation_leicht_gemacht.pdf" rel="noopener">GitHub</a></li>
+      </ul>
+    </section>
+
+    <section id="2025-staatsgruendung-fuer-dummies-how-to-start-your-own-country">
+      <h2>🧭 <a href="./2025-staatsgruendung-fuer-dummies-how-to-start-your-own-country.html">Staatsgründung für Dummies: So startest du deinen eigenen Staat</a></h2>
+      <p>Einsteigerfreundlicher Leitfaden zur Staatsgründung: von Anspruch und Charta über Verwaltung, Dienste und Finanzierung bis zu Außenbeziehungen. Realistische Grenzen, funktionsfähige Institutionen und tragfähige Governance‑Pfade stehen im Mittelpunkt.</p>
+      <ul>
+        <li>Mirror 1: <a href="https://drive.google.com/file/d/1XTAy01gYOitlVlGxjpu5rA1F6B9l4R1x/view?usp=drivesdk" rel="noopener">Google Drive</a></li>
+        <li>Mirror 2: <a href="https://mega.nz/file/onEBmJ7T#4cEox4tVx1dIKUxwsT4ZNwHy68s3SvxzuQlNjfyCFlU" rel="noopener">MEGA.nz</a></li>
+        <li>Mirror 3: <a href="https://github.com/MrAnonymousNWO/One_World/raw/master/docs/2025_State_Founding_for_Dummies_How_to_Start_Your_Own_Country.pdf" rel="noopener">GitHub</a></li>
+      </ul>
+    </section>
+
+    <section id="2025-billionen-fuer-die-zukunft-ki-macht-und-post-scarcity-elektronische-technokratie">
+      <h2>🔋 <a href="./2025-billionen-fuer-die-zukunft-ki-macht-und-post-scarcity-elektronische-technokratie.html">Billionen für die Zukunft: KI, Energie und Post‑Scarcity Elektronische Technokratie</a></h2>
+      <p>Investitions‑ und Technologie‑Agenda: Billionen für KI, Energie und Infrastruktur zur Beschleunigung einer post‑scarcity elektronischen Technokratie. Behandelt Finanzierungsmodelle, Rechen‑ und Stromkapazitäten, Sicherheit, Fairness und gesellschaftliche Teilhabe.</p>
+      <ul>
+        <li>Mirror 1: <a href="https://drive.google.com/file/d/1PJaAzes1rkSgelPV5_hLSvXR21XKNG4u/view?usp=drivesdk" rel="noopener">Google Drive</a></li>
+        <li>Mirror 2: <a href="https://mega.nz/file/xjUUiZYa#pzB6bL7A8H9YRSyq0tkXVXwoH1QmVxI1b-ufoKDaK3g" rel="noopener">MEGA.nz</a></li>
+        <li>Mirror 3: <a href="https://github.com/MrAnonymousNWO/One_World/raw/master/docs/2025%20Trillions%20for%20the%20Future-AI%2C%20Power%2C%20and%20Post-Scarcity%20-%20Electric%20Technocracy.pdf" rel="noopener">GitHub</a></li>
+      </ul>
+    </section>
+
+  </main>
+</div>
+
+<footer role="contentinfo">
+    <div class="footer-inner">
+
+        <div class="footer-section">
+            <h3>World Sold</h3>
+            <div class="lang-buttons">
+                <a class="footer-btn lang-btn" href="https://worldsold.wixsite.com/world-sold" aria-label="World Sold (Deutsch)">DE</a>
+                <a class="footer-btn lang-btn" href="https://worldsold.wixsite.com/world-sold/en" aria-label="World Sold (English)">EN</a>
+            </div>
+        </div>
+
+        <div class="footer-section">
+            <h3>Electric Technocracy</h3>
+            <div class="lang-buttons">
+                <a class="footer-btn lang-btn" href="https://worldsold.wixsite.com/electric-technocracy/de" aria-label="Electric Technocracy (Deutsch)">DE</a>
+                <a class="footer-btn lang-btn" href="https://worldsold.wixsite.com/electric-technocracy" aria-label="Electric Technocracy (English)">EN</a>
+            </div>
+        </div>
+
+        <div class="footer-section">
+            <h3>Legal Archive</h3>
+            <div class="lang-buttons">
+                <a class="footer-btn lang-btn" href="https://worldsold.wixsite.com/global-archive/de" aria-label="Global Archive (Deutsch)">DE</a>
+                <a class="footer-btn lang-btn" href="https://worldsold.wixsite.com/global-archive" aria-label="Global Archive (English)">EN</a>
+            </div>
+        </div>
+        
+    </div>
+    <div class="copyright">
+        © 2025 World's Last International Law & Treaty Archive. All Rights Reserved.
+    </div>
+</footer>
+<button id="backToTop" aria-label="Back to top">↑</button>
+
+<script>
+/* --------- Elements --------- */
+const header = document.getElementById('header');
+const lineEl = document.getElementById('line');
+
+const dropdown = document.getElementById('dropdown');
+const dropdownTrigger = document.getElementById('dropdownTrigger');
+const dropdownPanel = document.getElementById('dropdownPanel');
+
+const hambWrap = document.getElementById('hambWrap');
+const hamburgerBtn = document.getElementById('hamburgerBtn');
+const hambPanel = document.getElementById('hambPanel');
+
+const backToTop = document.getElementById('backToTop');
+const separatorLine = document.getElementById('separatorLine1'); // NEW: For scroll animation line
+
+let lastScroll = 0;
+
+/* --------- Line animation helpers --------- */
+function animateLineQuick(){
+  lineEl.style.transition = 'none';
+  lineEl.style.width = '0%';
+  void lineEl.offsetWidth; // force reflow
+  lineEl.style.transition = 'width 420ms ease-out';
+  lineEl.style.width = '80%';
+  // reset transition after animation so later changes are crisp
+  setTimeout(()=>{ lineEl.style.transition = 'background .2s'; }, 600);
+}
+
+/* initial animation on load */
+window.addEventListener('load', ()=> setTimeout(animateLineQuick, 120));
+
+/* NEW: Intersection Observer for Content Line Animation (Scroll-Effect) */
+if (separatorLine) {
+    const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            // Check if the element is visible
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                // Stop observing once visible
+                observer.unobserve(entry.target);
+            }
+        });
+    }, {
+        root: null, // viewport
+        threshold: 0.1 // trigger when 10% of element is visible
+    });
+    
+    // Start observing the line
+    observer.observe(separatorLine);
+}
+
+/* --------- Header hide/reveal (fast slide) --------- */
+window.addEventListener('scroll', ()=>{
+  const sc = window.pageYOffset || document.documentElement.scrollTop;
+  if (sc > lastScroll && sc > 80){
+    // scroll down quickly hide header
+    if (!header.classList.contains('hidden')){
+      header.classList.add('hidden');
+      closeAllMenus();
+    }
+    backToTop.classList.remove('show');
+  } else {
+    // scroll up - show header instantly (fast slide)
+    if (header.classList.contains('hidden')){
+      header.classList.remove('hidden');
+      // animate line shortly on reappear
+      animateLineQuick();
+    }
+    if (sc > 300) backToTop.classList.add('show');
+  }
+  lastScroll = sc <= 0 ? 0 : sc;
+}, { passive:true });
+
+backToTop.addEventListener('click', ()=> window.scrollTo({ top:0, behavior:'smooth' }));
+
+/* --------- Menu open/close logic (mutually exclusive) --------- */
+function openDropdown(){
+  dropdown.classList.add('open');
+  dropdownTrigger.setAttribute('aria-expanded','true');
+  dropdownPanel.setAttribute('aria-hidden','false');
+  // ensure hamburger is closed
+  closeHamburger();
+}
+function closeDropdown(){
+  dropdown.classList.remove('open');
+  dropdownTrigger.setAttribute('aria-expanded','false');
+  dropdownPanel.setAttribute('aria-hidden','true');
+}
+function toggleDropdown(e){
+  if (dropdown.classList.contains('open')) closeDropdown();
+  else openDropdown();
+}
+
+function openHamburger(){
+  hambWrap.classList.add('hamburger-open');
+  hambPanel.style.pointerEvents = 'auto';
+  hamburgerBtn.setAttribute('aria-expanded','true');
+  hambPanel.setAttribute('aria-hidden','false');
+  // ensure dropdown closed
+  closeDropdown();
+}
+function closeHamburger(){
+  hambWrap.classList.remove('hamburger-open');
+  hambPanel.style.pointerEvents = 'none';
+  hamburgerBtn.setAttribute('aria-expanded','false');
+  hambPanel.setAttribute('aria-hidden','true');
+}
+function toggleHamburger(){
+  if (hambWrap.classList.contains('hamburger-open')) closeHamburger();
+  else openHamburger();
+}
+
+function closeAllMenus(){
+  closeDropdown();
+  closeHamburger();
+}
+
+/* Hook events */
+dropdownTrigger.addEventListener('click', (e)=>{ e.stopPropagation(); toggleDropdown(); });
+dropdownTrigger.addEventListener('keydown', (e)=>{ if (e.key==='Enter' || e.key===' ') { e.preventDefault(); toggleDropdown(); } });
+
+hamburgerBtn.addEventListener('click', (e)=>{ e.stopPropagation(); toggleHamburger(); });
+hamburgerBtn.addEventListener('keydown', (e)=>{ if (e.key==='Enter' || e.key===' ') { e.preventDefault(); toggleHamburger(); } });
+
+/* close when clicking links inside panels */
+document.querySelectorAll('.panel-link').forEach(a=> a.addEventListener('click', ()=> closeAllMenus()));
+document.querySelectorAll('.hamburger-item').forEach(a=> a.addEventListener('click', ()=> closeAllMenus()));
+
+/* close on outside click */
+document.addEventListener('click', (e)=>{
+  if (!dropdown.contains(e.target)) closeDropdown();
+  if (!hambWrap.contains(e.target)) closeHamburger();
+});
+
+/* Escape closes everything */
+document.addEventListener('keydown', (e)=>{ if (e.key === 'Escape') closeAllMenus(); });
+
+/* ensure keyboard focusability */
+dropdownPanel.querySelectorAll('a').forEach(el=> el.setAttribute('tabindex','0'));
+hambPanel.querySelectorAll('a').forEach(el=> el.setAttribute('tabindex','0'));
+
+/* Initialize panels pointer-events none */
+hambPanel.style.pointerEvents = 'none';
+hambPanel.setAttribute('aria-hidden','true');
+
+/* That's all. */
+</script>
 </body>
 </html>
