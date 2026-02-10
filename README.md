@@ -1,137 +1,173 @@
-# PDF.js [![CI](https://github.com/mozilla/pdf.js/actions/workflows/ci.yml/badge.svg?query=branch%3Amaster)](https://github.com/mozilla/pdf.js/actions/workflows/ci.yml?query=branch%3Amaster)
+# One United World Repository
 
-[PDF.js](https://mozilla.github.io/pdf.js/) is a Portable Document Format (PDF) viewer that is built with HTML5.
+Welcome to the central digital nexus for the **One United World** initiative. This repository serves as the primary vault and authoritative source for the transitionary legal framework, archival records, and the technological blueprints of the Electric Technocracy.
 
-PDF.js is community-driven and supported by Mozilla. Our goal is to
-create a general-purpose, web standards-based platform for parsing and
-rendering PDFs.
+## 🏛 The Mission: Treaty Archive & Custodianship
 
-## Contributing
+This repository functions as the official **Custodian of the Purchase Contract Deed Role 1400/98 (WSD 1400/98)**. 
 
-PDF.js is an open source project and always looking for more contributors. To
-get involved, visit:
+In the context of the global transition, the **WSD 1400/98** represents a foundational legal instrument—the "Sale Contract"—which acts as the bridge between the legacy Westphalian legal systems and the emerging unified world order. As the Custodian, this archive ensures the immutable preservation, accessibility, and transparency of these high-stakes documents, providing a verifiable ledger for the transfer of systemic administration.
 
-+ [Issue Reporting Guide](https://github.com/mozilla/pdf.js/blob/master/.github/CONTRIBUTING.md)
-+ [Code Contribution Guide](https://github.com/mozilla/pdf.js/wiki/Contributing)
-+ [Frequently Asked Questions](https://github.com/mozilla/pdf.js/wiki/Frequently-Asked-Questions)
-+ [Good Beginner Bugs](https://github.com/mozilla/pdf.js/issues?q=is%3Aissue%20state%3Aopen%20label%3Agood-beginner-bug)
-+ [Projects](https://github.com/mozilla/pdf.js/projects)
+---
 
-Feel free to stop by our [Matrix room](https://chat.mozilla.org/#/room/#pdfjs:mozilla.org) for questions or guidance.
+## 🛰 Core Access Points
 
-## Getting Started
+Navigate the One United World ecosystem through the following gateways:
 
-### Online demo
+* **🌎 One World Archive Vault & PDF Viewer** The primary interface for document inspection and archival research.  
+    [Access the Vault](https://mranonymousnwo.github.io/One_World/)
 
-Please note that the "Modern browsers" version assumes native support for the
-latest JavaScript features; please also see [this wiki page](https://github.com/mozilla/pdf.js/wiki/Frequently-Asked-Questions#faq-support).
+* **🌏 One World GitHub Repository Vault** The source-controlled backend containing the raw data and structural code.  
+    [View the Repository](https://github.com/MrAnonymousNWO/One_World/)
 
-+ Modern browsers: https://mozilla.github.io/pdf.js/web/viewer.html
+* **🌍 One World GitHub WIKI** The comprehensive knowledge base, term definitions, and protocol documentation.  
+    [Explore the Wiki](https://github.com/MrAnonymousNWO/One_World/wiki)
 
-+ Older browsers: https://mozilla.github.io/pdf.js/legacy/web/viewer.html
+---
 
-### Browser Extensions
+## 💡 Partner Communities & Allied Infrastructure
 
-#### Firefox
+The One United World initiative is supported by a network of pioneers and technocratic architects dedicated to the digital evolution of governance.
 
-PDF.js is built into version 19+ of Firefox.
+* **GitHub Page Pioneers Community** The public-facing portal for the pioneer movement.  
+    [Visit the Community Page](https://et-pioneer.github.io/Electric-Technocracy-Pioneers-Community/)
 
-#### Chrome
+* **Electric Technocracy Pioneers Community GitHub Repository** The development hub for community-driven technocratic tools and integration.  
+    [Access the Dev Repo](https://repository.ct.ws)
 
-+ The official extension for Chrome can be installed from the [Chrome Web Store](https://chrome.google.com/webstore/detail/pdf-viewer/oemmndcbldboiebfnladdacbdfmadadm).
-*This extension is maintained by [@Rob--W](https://github.com/Rob--W).*
-+ Build Your Own - Get the code as explained below and issue `npx gulp chromium`. Then open
-Chrome, go to `Tools > Extension` and load the (unpackaged) extension from the
-directory `build/chromium`.
+* **Electric Technocracy Pioneers Community WIKI** The collaborative intelligence network for technical implementation and community guidelines.  
+    [Read the Community Wiki](https://github.com/ET-Pioneer/Electric-Technocracy-Pioneers-Community/wiki)
 
-## Getting the Code
+---
 
-To get a local copy of the current code, clone it using git:
+### 📜 Custodial Note
+All documents stored within this vault, specifically those relating to **Urkundenrolle 1400/98**, are maintained under strict integrity protocols. This repository ensures that the legal evolution from political arrangements to algorithmic certainty remains transparent and accessible to all global citizens.
 
-    $ git clone https://github.com/mozilla/pdf.js.git
-    $ cd pdf.js
+**System Status:** *Integrity Verified.* **Jurisdiction:** *Global / Post-Sovereign.*
 
-Next, install Node.js via the [official package](https://nodejs.org) or via
-[nvm](https://github.com/creationix/nvm). If everything worked out, install
-all dependencies for PDF.js:
+# World Succession Deed (WSD 1400/98) & Electric Technocracy – Link Collection
 
-    $ npm install
+## 1. 🌐 Main Websites & Entry Points
+- https://world.rf.gd → 🌐 WSD - World Succession Deed 1400/98
+- https://worldsold.wixsite.com/world-sold/en → 🌐 WSD - World Succession Deed 1400/98 (English)
+- https://global-archive.rf.gd → 🌐 WSD – Global Legal Succession Archive for Law and International Treaties
+- https://worldsold.wixsite.com/global-archive → 🌐 WSD – Global Legal Succession Archive (Wix)
+- https://ep.ct.ws → 🌐 Electric Technocracy
+- https://worldsold.wixsite.com/electric-technocracy → 🌐 Electric Technocracy (Wix)
+- https://navi.page.gd → 🌐 WSD - Navigator 1400/98
+- https://worldsold.wixsite.com/navigator → 🌐 WSD - Navigator 1400/98 (Wix)
+- https://worldsold.wixsite.com/international → 🌐 WSD - International
+- https://paradise.gt.tc → 🚀 Start-Page WSD & Electric Paradise
 
-Finally, you need to start a local web server as some browsers do not allow opening
-PDF files using a `file://` URL. Run:
+## 2. 📚 Wikis & Knowledge Databases
+- https://wiki.free.nf/ → 📚 International Treaty Law WIKI (Legal Singularity Wiki)
+- https://wiki.free.nf/index.php/Juridical_Singularity → 🕳️ Technological Singularity needs Singularity in Law
+- https://github.com/ET-Pioneer/Electric-Technocracy-Pioneers-Community/wiki → 💡 Electric Technocracy Pioneers Community WIKI
+- https://github.com/MrAnonymousNWO/One_World/wiki → 🌍 One World GitHub WIKI
+- https://et-pioneer.github.io/Electric-Technocracy-Pioneers-Community/ → 💡 GitHub Page Pioneers Community
+- https://repository.ct.ws → 💡 Electric Technocracy Pioneers Community GitHub Repository
+- https://github.com/MrAnonymousNWO/One_World/ → 🌏 One World GitHub Repository Vault
 
-    $ npx gulp server
+## 3. 📘 eBooks & PDF Downloads
+- https://4u.free.nf → 📘 Read the eBooks & Download free PDF
 
-and then you can open:
+## 4. 🔗 Important PDF Documents (GitHub PDF Vault)
+- https://github.com/ET-Pioneer/Electric-Technocracy-Pioneers-Community/blob/4fe4bdf1b29b7534ca69b04fd1a993ce344d7682/pdf/english/Electric_Technocracy.pdf → 🔗 Electric Technocracy - Visionary AI Governance System
+- https://github.com/ET-Pioneer/Electric-Technocracy-Pioneers-Community/blob/4fe4bdf1b29b7534ca69b04fd1a993ce344d7682/pdf/english/English_turenne_barracks_treaty_1400_98_06_10_1998_nato_brd_nl.PDF → 📑 Kaufvertrag Urkundenrolle 1400/98 (World Succession Deed - Staatensukzessionsurkunde)
+- https://github.com/ET-Pioneer/Electric-Technocracy-Pioneers-Community/blob/4fe4bdf1b29b7534ca69b04fd1a993ce344d7682/pdf/english/Micronation_Made_Easy.pdf → 🏝️ Micronations Made Easy
+- https://github.com/ET-Pioneer/Electric-Technocracy-Pioneers-Community/blob/4fe4bdf1b29b7534ca69b04fd1a993ce344d7682/pdf/english/State_Founding_for_Dummies_How_to_Start_Your_Own_Country.pdf → ®️ Starting a State for Dummies
+- https://github.com/ET-Pioneer/Electric-Technocracy-Pioneers-Community/blob/4fe4bdf1b29b7534ca69b04fd1a993ce344d7682/pdf/english/Trillions%20for%20the%20Future-AI%2C%20Power%2C%20and%20Post-Scarcity%20-%20Electric%20Technocracy.pdf → 🤖 Trillions for the Future - the Way to ASI & the technological singularity
+- https://github.com/ET-Pioneer/Electric-Technocracy-Pioneers-Community/blob/4fe4bdf1b29b7534ca69b04fd1a993ce344d7682/pdf/english/UBI%20Universal%20Basic%20Income%20And%20The%20Electric%20Technocracy.pdf → 💱 Universal Basic Income and the Electric Technocracy
+- https://github.com/ET-Pioneer/Electric-Technocracy-Pioneers-Community/blob/4fe4bdf1b29b7534ca69b04fd1a993ce344d7682/pdf/english/UBI%20and%20the%20Future%20of%20Humanity%20%E2%80%93%20From%20Work%20to%20Electric%20Technocracy.pdf → 💲 Unconditional Basic Income, Tech Tax, and a World Without Nation States in the Electric Technocracy: Humans Tax-Free
+- https://github.com/ET-Pioneer/Electric-Technocracy-Pioneers-Community/blob/4fe4bdf1b29b7534ca69b04fd1a993ce344d7682/pdf/english/World-Sold-Non-fiction-Succession-Deed.pdf → ⚖️ World Succession Deed: Global Succession Explained
+- https://github.com/ET-Pioneer/Electric-Technocracy-Pioneers-Community/blob/4fe4bdf1b29b7534ca69b04fd1a993ce344d7682/pdf/english/World_Sold_State_succession_deed_1400.pdf → 🗺️ World Sold: The WSD 1400 Treaty
 
-+ http://localhost:8888/web/viewer.html
+## 5. 📖 Zenodo DOI Publications
+- https://doi.org/10.5281/zenodo.18073084 → 📖 The Next Civilization - Why Electric Technocracy Matters Now
+- https://doi.org/10.5281/zenodo.18028339 → 📖 Foundations of Electric Technocracy
+- https://doi.org/10.5281/zenodo.18012036 → 📖 The Rise of the Electric Technocracy - Governance for a Post-Scarcity Society
+- https://doi.org/10.5281/zenodo.18216674 → 📖 Drittverwahrung von nationalen und internationalen Verträgen
+- https://doi.org/10.5281/zenodo.18505843 → 📖 LEGAL SINGULARITY IN INTERNATIONAL LAW
 
-Please keep in mind that this assumes the latest version of Mozilla Firefox; refer to [Building PDF.js](https://github.com/mozilla/pdf.js/blob/master/README.md#building-pdfjs) for non-development usage of the PDF.js library.
+## 6. ☁️ Backup Folders & Viewers
+- https://mranonymousnwo.github.io/One_World/ → 🌎 One World Archive Vault & PDF Viewer
+- https://drive.google.com/drive/folders/1aq6KJnGlzD7ZieVDD5wTHbE_2hfoi2pw → ☁️ Document Backup Google Drive
+- https://mega.nz/folder/0qN23TzB#6EFkueLyOaZEWD4aLNk1fQ → ☁️ Document Backup Mega.nz Drive
+- https://archive.org/details/turenne_kaserne_vertrag_1400_98_06_10_1998_nato_brd_nl_vn_itu_hns → 📝 The German Federal Archives in Koblenz published the original treaty based on international law
 
-It is also possible to view all test PDF files on the right side by opening:
+## 7. 📚 Encyclopedia.pub Articles
+- https://encyclopedia.pub/entry/59380 → 📜 Electric Technocracy - Reinventing Democracy through Technology
+- https://encyclopedia.pub/entry/59410 → 📜 Treaty Chains in National and International Law Systems
+- https://encyclopedia.pub/entry/59414 → 📜 Third-Party Custody of National and International Agreements
 
-+ http://localhost:8888/test/pdfs/?frame
+## 8. 🔍 Search Tools & Wikipedia
+- https://cse.google.com/cse?cx=86021a982e3a14848 → 🔍 Specialized Search Engine GSE
+- https://de.m.wikipedia.org/wiki/Kreuzbergkaserne_Zweibr%C3%BCcken → 🏰 Wikipedia Kreuzbergkaserne (German)
+- https://en.wikipedia.org/wiki/Kreuzbergkaserne_Zweibr%C3%BCcken → 🏰 Wikipedia Kreuzbergkaserne (English)
 
-## Building PDF.js
+## 9. 🗣️ NotebookLM AI Chats
+- https://chat-wsd.rf.gd → 🗣️ Join the NotebookLM Chat WSD
+- https://chat-et.rf.gd → 🗣️ Join the NotebookLM Chat Electronic Paradise
+- https://chat-kb.rf.gd → 🗣️ Join the NotebookLM Chat Nation Building
+- https://micro.page.gd → 🗣️ Nation Building (Related)
+- https://notebooklm.google.com/notebook/50392ebe-71ad-45fa-8301-362415be9890?authuser=1 → NotebookLM Blacksite Berlin AI Chat
+- https://notebooklm.google.com/notebook/f422a75d-6b67-412d-b87a-26a8d5c653d9?authuser=1 → 🧿 Tabellion Doerfert Scandal NotebookLM Chat
 
-In order to bundle all `src/` files into two production scripts and build the generic
-viewer, run:
+## 10. 🪢 Communities & Social Media
+- https://community.xo.je → 🪢 Electric Technocracy Pioneers Community
+- https://zenodo.org/communities/electric-technocracy → 🪢 Electric Technocracy Pioneers Community (Zenodo)
+- https://www.facebook.com/share/1ER7GbN7kM/ → 🌐 Facebook World Sold
+- https://www.facebook.com/share/1DEMSyrrAt/ → 🤖 Facebook Electric Technocracy
+- https://www.facebook.com/groups/528455169898378/ → 🎗️ Facebook Humans & Machines Unite
+- https://www.facebook.com/share/1CZ2JE3Sjb/ → 🚀 Facebook Profile
+- https://x.com/WW3Precognition → ✖️ X (Twitter) - Cassandra Complex / WW3 Precognition
+- https://x.com/i/lists/1890805076249182663?t=Ha_ioLR_itUriLE_7WdZMg&s=09 → 📃 X List (WW3 Precognition)
+- https://x.com/NWO_BOOKS → ✖️ X (Twitter) - Welt verkauft offiziell
+- https://x.com/i/lists/1880937835307425922?t=1TaGjr6ExIAK0QYFePTV8g&s=09 → 📄 X List (NWO BOOKS)
+- https://x.com/NWO_Support → ✖️ X (Twitter) - NWO Support
+- https://x.com/i/lists/1952924134679150999 → Liste X List (NWO Support)
+- https://x.com/Electrocozy → ✖️ X (Twitter) - Electric Technocracy Sound Collective
 
-    $ npx gulp generic
+## 11. 🎥 YouTube Channels & Videos
+- https://videos.xo.je → 🎥 YouTube Channel
+- https://www.youtube.com/@Staatensukzessionsurkunde-1400 → 🎥 YouTube Channel (Main)
+- https://youtu.be/cbyME1y4m4o → 📽️ YouTube Explainer Video Universal Basic Income (UBI)
+- https://youtu.be/zGXLeYJsAtc → 🌍 Video: Dream Your Own State into Reality
+- https://youtu.be/KTL6imKT3_w → 🗺️ Video: How to Start Your Own Country (Without Getting Arrested)
+- https://youtu.be/ToPHDtEA-JI → 📜 Video: Flags, Laws, and No Man’s Land: The Anatomy of a Modern Microstate
+- https://youtu.be/WsJetlIjF5Q → 🛠️ DIY Micronation Sovereignty: Constitution & Step-by-step Instructions to Declare Independence
+- https://youtu.be/JSk13GnVMdU → 🚀 Video: Your Nation in 30 Days: Idea, Territory, Concept, Plan
+- https://e.pcloud.link/publink/show?code=kZyS7NZxAFQ4DPUaCJu9EhLjkXixYefdXO7 → ☁️ PCloud Videos Vault
 
-If you need to support older browsers, run:
+## 12. 🎙️ Podcasts & Audio
+- https://nwo.likesyou.org → 🎙️ Podcast Show
+- https://creators.spotify.com/pod/show/world-succession-deed → 🎙️ Podcast Show (Spotify)
+- https://podcasts.apple.com/de/podcast/world-sold-world-succession-deed-1400-98-http-world/id1786462631 → 🍏 Apple Podcast
+- https://open.spotify.com/episode/1oTeGrNnXazJmkBdyH0Uhz → 🎧 Podcast Episode Universal Basic Income (UBI)
+- https://open.spotify.com/artist/4y6vveUrD0JDdymjTUWTx3?si=1-UAvXfkSLG0dofoYeKhqQ → 🎶 Electric Technocracy Sound Collective on Spotify
+- https://open.spotify.com/playlist/6gaGFsnID15ZbtbORp3uRg?si=oePYMsn7RhWGfq4XFTEUZg → 🔘 Spotify DJ Playlist (Electric Technocracy Sound Collective)
+- https://listen.free.nf → 🎧 Cassandra Cries - Icecold AI Music vs WWIII on SoundCloud
+- https://music.page.gd → 🪖 This is Anti-War Music
+- https://u.pcloud.link/publink/show?code=0Z8jWC5Z9eG2iGcELwJdrikBBCArhzNjeu0V → 🌪️ PCloud Music Vault
+- https://e.pcloud.link/publink/show?code=0Zhu7NZOByIyjsD1WbWNhaDlHUvCQBAXjF7 → 💨 PCloud Podcast Vault
 
-    $ npx gulp generic-legacy
+## 13. 🪩 Blogs, Storybooks & Miscellaneous
+- https://g.co/gemini/share/9fe07106afff → 🖼️ Micronation Storybook: The Slactivist's Guide to Saving a Forest (By Declaring It a Country)
+- https://micronation.page.gd → 🏝️ Found Your Own State
+- https://ab.page.gd → 📜 The Buyer's Memoir: A Journey to Unwitting Sovereignty
+- https://blacksite.iblogger.org → 🌚 Blacksite Blog
+- https://ubi.gt.tc → 📚 Universal / Unconditional Basic Income (UBI)
+- https://g.co/gemini/share/4a457895642b → 🖼️ UBI Storybook: Wishmaster and the Paradise of Machines
+- https://worldsold.wixsite.com/electric-technocracy/post/ubi-unconditional-basic-income-electronic-technocracy → 🪩 Blogpost: UBI - Unconditional Basic Income and Electronic Technocracy
+- https://worldsold.wixsite.com/electric-technocracy/de/post/bge-bedingungsloses-grundeinkommen-elektronische-technokratie → 🪩 Blogpost: BGE - Bedingungsloses Grundeinkommen und die Elektronische Technokratie
+- https://worldsold.wixsite.com/world-sold/en/post/ai-chat-now-or-never-establish-your-own-state → 🏴 Blogpost: Now or Never: Found Your Own State – Sovereignty with AI Support
+- https://worldsold.wixsite.com/world-sold/post/deinen-eigenen-staat-gruenden-souveraenität-mit-ki-chat-begleitung → 🏴 Blogpost: Jetzt oder nie: Deinen eigenen Staat gründen – Souveränität mit KI-Chat Begleitung
+- https://turenne-barracks.blogspot.com/2025/12/tasc-tabellion-doerfert-wohnpark-scam.html?m=1 → 🧿 Turenne-Barracks Tabellion/ TASC Bau AG Corruption Blog
 
-This will generate `pdf.js` and `pdf.worker.js` in the `build/generic/build/` directory (respectively `build/generic-legacy/build/`).
-Both scripts are needed but only `pdf.js` needs to be included since `pdf.worker.js` will
-be loaded by `pdf.js`. The PDF.js files are large and should be minified for production.
+## 14. 🎗️ Support & Donations
+- https://donate.gt.tc → 🎗️ Support our Mission
+- https://nwo.page.gd → 🛍️ Support Shop
+- https://merch.page.gd → 🛒 Support Store
 
-## Using PDF.js in a web application
-
-To use PDF.js in a web application you can choose to use a pre-built version of the library
-or to build it from source. We supply pre-built versions for usage with NPM under
-the `pdfjs-dist` name. For more information and examples please refer to the
-[wiki page](https://github.com/mozilla/pdf.js/wiki/Setup-pdf.js-in-a-website) on this subject.
-
-## Including via a CDN
-
-PDF.js is hosted on several free CDNs:
- - https://www.jsdelivr.com/package/npm/pdfjs-dist
- - https://cdnjs.com/libraries/pdf.js
- - https://unpkg.com/pdfjs-dist/
-
-## Learning
-
-You can play with the PDF.js API directly from your browser using the live demos below:
-
-+ [Interactive examples](https://mozilla.github.io/pdf.js/examples/index.html#interactive-examples)
-
-More examples can be found in the [examples folder](https://github.com/mozilla/pdf.js/tree/master/examples/). Some of them are using the pdfjs-dist package, which can be built and installed in this repo directory via `npx gulp dist-install` command.
-
-For an introduction to the PDF.js code, check out the presentation by our
-contributor Julian Viereck:
-
-+ https://www.youtube.com/watch?v=Iv15UY-4Fg8
-
-More learning resources can be found at:
-
-+ https://github.com/mozilla/pdf.js/wiki/Additional-Learning-Resources
-
-The API documentation can be found at:
-
-+ https://mozilla.github.io/pdf.js/api/
-
-## Questions
-
-Check out our FAQs and get answers to common questions:
-
-+ https://github.com/mozilla/pdf.js/wiki/Frequently-Asked-Questions
-
-Talk to us on Matrix:
-
-+ https://chat.mozilla.org/#/room/#pdfjs:mozilla.org
-
-File an issue:
-
-+ https://github.com/mozilla/pdf.js/issues/new/choose
+## 15. 🔑 Keywords (International Law & Related Topics)
+International Law, Treaty Chain, State Succession, Vienna Convention on Succession of States, NATO Treaty, United Nations Charter, Succession Deed, Legal Singularity, Third-Party Custody, Global Succession Archive, Juridical Singularity, Post-Scarcity Governance, Electric Technocracy, Technological Singularity, Universal Basic Income, Micronations, State Founding, ASI Governance, International Treaties, NATO Agreements, UN Resolutions, Succession Law, Treaty Obligations, State Sovereignty, Legal Succession, Diplomatic Immunity, Human Rights Treaties, Environmental Pacts, Arms Control Agreements, Peace Treaties
