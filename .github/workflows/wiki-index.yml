@@ -1,0 +1,41 @@
+name: Build Wiki Index
+
+on:
+  push:
+    branches: [ main ]
+  schedule:
+    - cron: "0 */12 * * *"   # alle 12 Stunden
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout main repo
+        uses: actions/checkout@v4
+
+      - name: Checkout wiki repo
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ github.repository }}.wiki
+          path: wiki
+
+      - name: Generate wiki index
+        run: |
+          echo "<h1>Wiki Index</h1>" > docs/wiki-index.html
+          echo "<ul>" >> docs/wiki-index.html
+          for file in wiki/*.md; do
+            name=$(basename "$file" .md)
+            url="https://github.com/${{ github.repository }}/wiki/${name// /-}"
+            echo "<li><a href=\"$url\">$name</a></li>" >> docs/wiki-index.html
+          done
+          echo "</ul>" >> docs/wiki-index.html
+
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add docs/wiki-index.html
+          git commit -m "Update wiki index" || echo "No changes"
+          git push
