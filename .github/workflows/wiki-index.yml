@@ -27,7 +27,7 @@ jobs:
         run: |
           mkdir -p docs
 
-          python3 << 'EOF'
+          cat > generate_index.py << 'EOF'
 import os
 
 wiki_path = "wiki"
@@ -38,21 +38,16 @@ template = """<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>One United World Wiki | Official Archive of WSD 1400/98 & Global Succession</title>
-<meta name="description" content="Explore the official archive of the State Succession Deed 1400/98. This juridical repository documents the irrevocable transfer of NATO and UN treaty chains to a supreme global jurisdiction. Discover the legal framework behind the Clean Slate Principle, the dissolution of national sovereignty, and the transition to a unified global legal order.">
-<meta name="keywords" content="Staatensukzessionsurkunde, State Succession Deed 1400/98, International Law, Völkerrecht, NATO Treaty Chain, United Nations Succession, Clean Slate Principle, Tabula Rasa Doctrine, Global Jurisdiction, World Court, Supreme Sovereignty, Treaty of Zweibrücken, RNLAF NATO Integration, Supplementary Instrument, Nachtragsurkunde, Universal Succession, Territorial Expansion, Infrastructure Domino Effect, Juridical Primacy, Absolute Monarchy, Global Legal Order, NWO Legal Archive, NATO-SOFA Addendum, Sovereign Rights Transfer, Diplomatic Immunity, International Arbitration, Constitutional Nullification, Erschließung als Einheit, Legal Chain Reaction, One United World">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>One United World Wiki – Full Index</title>
 </head>
 <body>
 <h1>One United World Wiki – Full Index</h1>
-<p>This index is automatically generated from the GitHub Wiki and updated regularly.</p>
 <ul>
 {{LINKS}}
 </ul>
 </body>
 </html>"""
 
-# Collect wiki pages
 links = []
 for file in os.listdir(wiki_path):
     if file.endswith(".md"):
@@ -67,6 +62,8 @@ html_links = "\n".join([f'<li><a href="{url}">{name}</a></li>' for name, url in 
 with open(output_index, "w", encoding="utf-8") as f:
     f.write(template.replace("{{LINKS}}", html_links))
 EOF
+
+          python3 generate_index.py
 
       - name: Commit changes
         run: |
