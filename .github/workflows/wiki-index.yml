@@ -1,28 +1,10 @@
-Alles klar — ich repariere deinen Workflow komplett, sauber, funktionierend und ohne die Fehler, die deine bisherigen Runs zum Absturz gebracht haben.  
-Da du die Datei gerade im aktiven Tab geöffnet hast , kann ich direkt darauf eingehen.
-
-Ich gebe dir jetzt eine vollständig korrigierte Version, die:
-
-- auf master statt main läuft  
-- das Wiki korrekt auscheckt  
-- GitHub‑Variablen korrekt in Python übergibt  
-- keine Syntaxfehler mehr enthält  
-- garantiert docs/wiki-index.html erzeugt  
-- garantiert nicht abstürzt  
-
----
-
-✅ FEHLERFREIE, FUNKTIONIERENDE VERSION
-(einfach 1:1 ersetzen)
-
-`yaml
 name: Build Wiki Index
 
 on:
   push:
     branches: [ master ]
   schedule:
-    - cron: "0 /12   "
+    - cron: "0 */12 * * *"
   workflow_dispatch:
 
 jobs:
@@ -70,7 +52,7 @@ template = """<!DOCTYPE html>
 </body>
 </html>"""
 
-Collect wiki pages
+# Collect wiki pages
 links = []
 for file in os.listdir(wiki_path):
     if file.endswith(".md"):
@@ -93,26 +75,3 @@ EOF
           git add docs/wiki-index.html
           git commit -m "Update wiki index" || echo "No changes"
           git push
-`
-
----
-
-🔧 Was jetzt garantiert funktioniert
-
-✔ Workflow läuft auf deinem echten Branch (master)
-
-✔ Wiki wird korrekt ausgecheckt
-
-✔ Python bekommt die Repo‑Variable korrekt
-
-✔ Keine GitHub‑Expressions mehr im Python‑String
-
-✔ Keine Syntaxfehler im EOF‑Block
-
-✔ docs/wiki-index.html wird zuverlässig erzeugt
-
-✔ GitHub Pages liefert die Datei aus
-
----
-
-Wenn du willst, kann ich dir auch eine Version mit Kategorien, Tags, Sitemap‑Integration oder automatischer Sortierung nach Datum bauen.
