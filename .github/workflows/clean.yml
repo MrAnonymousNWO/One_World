@@ -27,13 +27,25 @@ jobs:
           sudo apt-get update -y
           sudo apt-get install -y pandoc
 
-      - name: Convert Markdown to HTML
+      - name: Convert Wiki pages to HTML
         run: |
-          for file in wiki_temp/*.md; do
-            [ -e "$file" ] || continue
-            base="${file##*/}"
-            base="${base%.md}"
-            pandoc "$file" -f markdown -t html -o "docs/wiki_encyclopedia/${base}.html"
+          mkdir -p docs/wiki_encyclopedia
+          exts="md mediawiki rst org txt"
+          for ext in $exts; do
+            while IFS= read -r file; do
+              [ -e "$file" ] || continue
+              rel="${file#wiki_temp/}"
+              base="${rel%.$ext}"
+              out="docs/wiki_encyclopedia/${base}.html"
+              mkdir -p "$(dirname "$out")"
+              case "$ext" in
+                md)        pandoc "$file" -f markdown  -t html -o "$out" ;;
+                mediawiki) pandoc "$file" -f mediawiki -t html -o "$out" ;;
+                rst)       pandoc "$file" -f rst       -t html -o "$out" ;;
+                org)       pandoc "$file" -f org       -t html -o "$out" ;;
+                txt)       pandoc "$file" -f markdown  -t html -o "$out" ;;
+              esac
+            done < <(find wiki_temp -type f -name "*.$ext")
           done
 
       - name: Remove wiki clone
@@ -44,5 +56,5 @@ jobs:
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Actions"
           git add docs/wiki_encyclopedia || true
-          git commit -m "Rendered wiki HTML (minimal)" || echo "No changes"
+          git commit -m "Rendered wiki HTML (recursive)" || echo "No changes"
           git push
