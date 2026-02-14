@@ -1,4 +1,4 @@
-name: "Wiki Indexing Clean"
+name: "Wiki HTML Minimal Render"
 
 on:
   workflow_dispatch:
@@ -14,24 +14,35 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Prepare output directory
+        run: |
+          rm -rf docs/wiki_encyclopedia
+          mkdir -p docs/wiki_encyclopedia
+
       - name: Clone Wiki
         run: git clone --depth=1 https://github.com/MrAnonymousNWO/One_World.wiki.git wiki_temp
 
-      - name: Install converters
+      - name: Install Pandoc
         run: |
           sudo apt-get update -y
-          sudo apt-get install -y pandoc asciidoctor
+          sudo apt-get install -y pandoc
 
-      - name: Run conversion script
-        run: bash scripts/wiki_convert.sh
+      - name: Convert Markdown to HTML
+        run: |
+          for file in wiki_temp/*.md; do
+            [ -e "$file" ] || continue
+            base="${file##*/}"
+            base="${base%.md}"
+            pandoc "$file" -f markdown -t html -o "docs/wiki_encyclopedia/${base}.html"
+          done
 
-      - name: Cleanup
+      - name: Remove wiki clone
         run: rm -rf wiki_temp
 
-      - name: Commit and push
+      - name: Commit and push generated HTML
         run: |
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Actions"
-          git add docs
-          git commit -m "Clean wiki indexing" || echo "No changes"
+          git add docs/wiki_encyclopedia || true
+          git commit -m "Rendered wiki HTML (minimal)" || echo "No changes"
           git push
