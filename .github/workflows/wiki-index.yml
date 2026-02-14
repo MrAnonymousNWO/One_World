@@ -1,74 +1,129 @@
-name: Build Wiki Index
+name: "Full Indexing: Render ALL Wiki Formats"
 
 on:
   push:
-    branches: [ master ]
+    branches: ["master"]
   schedule:
-    - cron: "0 */12 * * *"
+    - cron: "0 3 * * *"
   workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout main repo
-        uses: actions/checkout@v4
-
-      - name: Checkout wiki repo
+      - name: Checkout repository (no submodules)
         uses: actions/checkout@v4
         with:
-          repository: ${{ github.repository }}.wiki
-          path: wiki
+          submodules: false
 
-      - name: Generate wiki index
-        env:
-          REPO: ${{ github.repository }}
+      - name: Ensure .nojekyll exists
+        run: echo "" > docs/.nojekyll
+
+      - name: Prepare wiki output directory
         run: |
-          mkdir -p docs
+          rm -rf docs/wiki_encyclopedia
+          mkdir -p docs/wiki_encyclopedia
 
-          cat > generate_index.py << 'EOF'
-import os
-
-wiki_path = "wiki"
-output_index = "docs/wiki-index.html"
-repo = os.environ["REPO"]
-
-template = """<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<title>One United World Wiki – Full Index</title>
-</head>
-<body>
-<h1>One United World Wiki – Full Index</h1>
-<ul>
-{{LINKS}}
-</ul>
-</body>
-</html>"""
-
-links = []
-for file in os.listdir(wiki_path):
-    if file.endswith(".md"):
-        name = file[:-3]
-        url_name = name.replace(" ", "-")
-        url = f"https://github.com/{repo}/wiki/{url_name}"
-        links.append((name, url))
-
-links.sort(key=lambda x: x[0].lower())
-html_links = "\n".join([f'<li><a href="{url}">{name}</a></li>' for name, url in links])
-
-with open(output_index, "w", encoding="utf-8") as f:
-    f.write(template.replace("{{LINKS}}", html_links))
-EOF
-
-          python3 generate_index.py
-
-      - name: Commit changes
+      # 🔥 TEMPORÄRES KLONEN DES WIKIS
+      - name: Clone Wiki temporarily
         run: |
-          git config user.name "github-actions"
-          git config user.email "actions@github.com"
-          git add docs/wiki-index.html
-          git commit -m "Update wiki index" || echo "No changes"
+          git clone --depth=1 https://github.com/MrAnonymousNWO/One_World.wiki.git wiki_temp
+
+      - name: Install converters (Pandoc + Asciidoctor)
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y pandoc asciidoctor
+
+      - name: Convert ALL wiki formats to HTML using template
+        run: |
+          TEMPLATE="docs/wiki_encyclopedia.html"
+          EXTENSIONS="md mediawiki creole org rst textile pod rdoc txt adoc"
+
+          for ext in $EXTENSIONS; do
+            shopt -s nullglob
+            for file in wiki_temp/*.$ext; do
+              base="${file##*/}"
+              base="${base%.$ext}"
+              output="docs/wiki_encyclopedia/${base}.html"
+
+              case "$ext" in
+                adoc) asciidoctor -o temp.html "$file" ;;
+                md) pandoc "$file" -f markdown -t html -o temp.html ;;
+                mediawiki) pandoc "$file" -f mediawiki -t html -o temp.html ;;
+                creole) pandoc "$file" -f creole -t html -o temp.html ;;
+                org) pandoc "$file" -f org -t html -o temp.html ;;
+                rst) pandoc "$file" -f rst -t html -o temp.html ;;
+                textile) pandoc "$file" -f textile -t html -o temp.html ;;
+                pod) pandoc "$file" -f pod -t html -o temp.html ;;
+                rdoc) pandoc "$file" -f rdoc -t html -o temp.html ;;
+                txt) pandoc "$file" -f markdown -t html -o temp.html ;;
+              esac
+
+              awk -v content="$(cat temp.html)" '
+                /<!-- WORKFLOW WILL INSERT WIKI ARTICLE CONTENT HERE -->/ {
+                  print content
+                  next
+                }
+                { print }
+              ' "$TEMPLATE" > "$output"
+            done
+            shopt -u nullglob
+          done
+
+      # 🔥 TEMPORÄRES WIKI WIRD GELÖSCHT
+      - name: Cleanup temporary wiki
+        run: rm -rf wiki_temp
+
+      - name: Generate directory listing using template
+        run: |
+          TEMPLATE="docs/directory.html"
+          OUTPUT="docs/directory.html"
+
+          FILELIST=$(find docs -type f \
+            ! -path "docs/.git/*" \
+            ! -path "docs/.github/*" \
+            | sed 's|^docs/||' | sort)
+
+          awk -v content="$FILELIST" '
+            /<!-- WORKFLOW WILL INSERT DIRECTORY CONTENT HERE -->/ {
+              print content
+              next
+            }
+            { print }
+          ' "$TEMPLATE" > "$OUTPUT"
+
+      # 🔥 SITEMAP → docs/dir-sitemap.xml
+      - name: Generate dir-sitemap.xml
+        run: |
+          BASE_URL="https://mranonymousnwo.github.io/One_World"
+
+          {
+            echo '<?xml version="1.0" encoding="UTF-8"?>'
+            echo '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
+          } > docs/dir-sitemap.xml
+
+          find docs -type f \
+            ! -path "docs/.git/*" \
+            ! -path "docs/.github/*" \
+            | while read file; do
+                clean="${file#docs/}"
+                url="$BASE_URL/$clean"
+                esc_url=$(printf '%s' "$url" | sed 's/&/\&amp;/g; s/</\&lt;/g')
+                lastmod=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+                echo "<url><loc>$esc_url</loc><lastmod>$lastmod</lastmod></url>" >> docs/dir-sitemap.xml
+              done
+
+          echo '</urlset>' >> docs/dir-sitemap.xml
+
+      - name: Commit and push generated files
+        run: |
+          git config --local user.email "actions@github.com"
+          git config --local user.name "GitHub Actions"
+
+          git add docs
+          git commit -m "Automated full wiki indexing (One_World)" || echo "No changes to commit"
           git push
