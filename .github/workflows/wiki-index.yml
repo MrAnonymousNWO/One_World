@@ -41,7 +41,7 @@ jobs:
 
       - name: Convert ALL wiki formats to HTML using template
         run: |
-          TEMPLATE="docs/wiki_encyclopedia.html"
+         TEMPLATE="docs/wiki_encyclopedia.html"
           EXTENSIONS="md mediawiki creole org rst textile pod rdoc txt adoc"
           
           for ext in $EXTENSIONS; do
