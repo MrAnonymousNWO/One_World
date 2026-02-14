@@ -1,4 +1,4 @@
-name: "Wiki HTML Render (Minimal)"
+name: "One World – Full Wiki Encyclopedia Render"
 
 on:
   workflow_dispatch:
@@ -19,7 +19,7 @@ jobs:
           rm -rf docs/wiki_encyclopedia
           mkdir -p docs/wiki_encyclopedia
 
-      - name: Clone Wiki
+      - name: Clone One_World Wiki
         run: git clone --depth=1 https://github.com/MrAnonymousNWO/One_World.wiki.git wiki_temp
 
       - name: Install converters
@@ -27,7 +27,7 @@ jobs:
           sudo apt-get update -y
           sudo apt-get install -y pandoc asciidoctor
 
-      - name: Convert ALL wiki formats to HTML
+      - name: Render ALL wiki formats to HTML (recursive)
         run: |
           TEMPLATE="docs/wiki_encyclopedia.html"
           EXT="md mediawiki creole org rst textile pod rdoc txt adoc"
@@ -37,6 +37,7 @@ jobs:
               rel="${file#wiki_temp/}"
               base="${rel%.$ext}"
               out="docs/wiki_encyclopedia/${base}.html"
+
               mkdir -p "$(dirname "$out")"
 
               case "$ext" in
@@ -62,13 +63,20 @@ jobs:
             done
           done
 
+      - name: Generate sidebar index
+        run: |
+          INDEX="docs/wiki_encyclopedia/sidebar.txt"
+          find docs/wiki_encyclopedia -type f -name "*.html" \
+            | sed 's|docs/wiki_encyclopedia/||' \
+            | sort > "$INDEX"
+
       - name: Remove wiki clone
         run: rm -rf wiki_temp temp.html
 
-      - name: Commit and push generated HTML
+      - name: Commit and push encyclopedia
         run: |
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Actions"
           git add docs/wiki_encyclopedia || true
-          git commit -m "Rendered wiki HTML" || echo "No changes"
+          git commit -m "Full Wiki Encyclopedia Render" || echo "No changes"
           git push
