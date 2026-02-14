@@ -22,7 +22,6 @@ jobs:
 
       - name: Ensure .nojekyll exists
         run: |
-          mkdir -p docs
           echo "" > docs/.nojekyll
 
       - name: Prepare wiki output directory
@@ -102,7 +101,7 @@ jobs:
       - name: Generate dir-sitemap.xml
         shell: bash
         run: |
-          BASE_URL="https://mranonymousnwo.github.io/One_World"
+          BASE_URL="https://mranonymousnwo.github.io/OneWorld"
 
           {
             echo '<?xml version="1.0" encoding="UTF-8"?>'
