@@ -22,6 +22,7 @@ jobs:
 
       - name: Ensure .nojekyll exists
         run: |
+          mkdir -p docs
           echo "" > docs/.nojekyll
 
       - name: Prepare wiki output directory
