@@ -21,7 +21,8 @@ jobs:
           submodules: false
 
       - name: Ensure .nojekyll exists
-        run: echo "" > docs/.nojekyll
+        run: |
+          echo "" > docs/.nojekyll
 
       - name: Prepare wiki output directory
         run: |
@@ -38,6 +39,7 @@ jobs:
           sudo apt-get install -y pandoc asciidoctor
 
       - name: Convert ALL wiki formats to HTML using template
+        shell: bash
         run: |
           TEMPLATE="docs/wiki_encyclopedia.html"
           EXTENSIONS="md mediawiki creole org rst textile pod rdoc txt adoc"
@@ -74,9 +76,11 @@ jobs:
           done
 
       - name: Cleanup temporary wiki
-        run: rm -rf wiki_temp
+        run: |
+          rm -rf wiki_temp
 
       - name: Generate directory listing using template
+        shell: bash
         run: |
           TEMPLATE="docs/directory.html"
           OUTPUT="docs/directory.html"
@@ -95,6 +99,7 @@ jobs:
           ' "$TEMPLATE" > "$OUTPUT"
 
       - name: Generate dir-sitemap.xml
+        shell: bash
         run: |
           BASE_URL="https://mranonymousnwo.github.io/One_World"
 
