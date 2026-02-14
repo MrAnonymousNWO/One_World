@@ -10,23 +10,143 @@
 <meta name="author" content="Electric Technocracy Pioneers Community">
 <link rel="canonical" href="https://mranonymousnwo.github.io/One_World/encyclopedia.html">
 
+<!-- Markdown Renderer -->
+<script src="https://cdn.jsdelivr.net/npm/showdown@2.1.0/dist/showdown.min.js"></script>
+
 <style>
-/* --- dein komplettes CSS bleibt unverändert --- */
-body { margin:0; font-family:Georgia,serif; background:#f5f5f5; color:#222; display:flex; }
-#sidebar { width:260px; background:#111; color:#fff; height:100vh; overflow-y:auto; position:fixed; left:0; top:0; padding:20px; box-sizing:border-box; }
-#sidebar a { display:block; color:#fff; text-decoration:none; padding:6px 0; opacity:0.85; }
-#sidebar a:hover { opacity:1; }
-#mobile-toggle { display:none; position:fixed; top:15px; left:15px; background:#111; color:#fff; padding:10px 14px; border-radius:6px; cursor:pointer; z-index:999; }
-@media(max-width:900px){ #sidebar{transform:translateX(-100%);transition:0.3s;} #sidebar.open{transform:translateX(0);} #mobile-toggle{display:block;} }
-#content { margin-left:260px; padding:30px; max-width:900px; }
-@media(max-width:900px){ #content{margin-left:0;padding:20px;} }
-header { background:#0f0f0f; color:#fff; padding:25px; border-radius:10px; }
-.button-bar { margin:20px 0; display:flex; flex-wrap:wrap; gap:10px; }
-.button-bar a { background:#222; color:#fff; padding:10px 14px; border-radius:6px; text-decoration:none; }
-#index-intro, #index-list { background:#fff; padding:30px; border-radius:10px; box-shadow:0 0 10px rgba(0,0,0,0.05); margin-bottom:25px; }
-#index-links a { display:block; color:#333; text-decoration:none; padding:4px 0; }
-#index-links a:hover { text-decoration:underline; }
-footer { margin-top:40px; padding:20px; background:#0f0f0f; color:#fff; text-align:center; border-radius:10px; }
+/* -------------------- GLOBAL -------------------- */
+body {
+    margin: 0;
+    font-family: Georgia, serif;
+    background: #f5f5f5;
+    color: #222;
+    display: flex;
+}
+
+/* -------------------- SIDEBAR -------------------- */
+#sidebar {
+    width: 260px;
+    background: #111;
+    color: #fff;
+    height: 100vh;
+    overflow-y: auto;
+    position: fixed;
+    left: 0;
+    top: 0;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+#sidebar h2 {
+    font-size: 1.2rem;
+    margin-top: 0;
+}
+
+#sidebar a {
+    display: block;
+    color: #fff;
+    text-decoration: none;
+    padding: 6px 0;
+    opacity: 0.85;
+    font-size: 0.9rem;
+}
+#sidebar a:hover {
+    opacity: 1;
+}
+
+/* -------------------- MOBILE SIDEBAR -------------------- */
+#mobile-toggle {
+    display: none;
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    background: #111;
+    color: #fff;
+    padding: 10px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    z-index: 999;
+}
+
+@media (max-width: 900px) {
+    #sidebar {
+        transform: translateX(-100%);
+        transition: 0.3s;
+    }
+    #sidebar.open {
+        transform: translateX(0);
+    }
+    #mobile-toggle {
+        display: block;
+    }
+}
+
+/* -------------------- MAIN CONTENT -------------------- */
+#content {
+    margin-left: 260px;
+    padding: 30px;
+    max-width: 900px;
+}
+
+@media (max-width: 900px) {
+    #content {
+        margin-left: 0;
+        padding: 20px;
+    }
+}
+
+/* -------------------- HEADER -------------------- */
+header {
+    background: #0f0f0f;
+    color: #fff;
+    padding: 25px;
+    border-radius: 10px;
+}
+header h1 {
+    margin: 0;
+    font-size: 2rem;
+}
+header p {
+    opacity: 0.8;
+}
+
+/* -------------------- BUTTON BAR -------------------- */
+.button-bar {
+    margin: 20px 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.button-bar a {
+    background: #222;
+    color: #fff;
+    padding: 10px 14px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+.button-bar a:hover {
+    background: #444;
+}
+
+/* -------------------- ARTICLE -------------------- */
+article {
+    background: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    margin-top: 25px;
+}
+
+/* -------------------- FOOTER -------------------- */
+footer {
+    margin-top: 40px;
+    padding: 20px;
+    background: #0f0f0f;
+    color: #fff;
+    text-align: center;
+    border-radius: 10px;
+}
 </style>
 
 <script>
@@ -36,7 +156,7 @@ function toggleSidebar() {
 
 document.addEventListener("DOMContentLoaded", () => {
     const sidebar = document.getElementById("sidebar-links");
-    const indexList = document.getElementById("index-links");
+    const article = document.querySelector("article");
 
     // GitHub API: list files in docs/wiki_encyclopedia
     const api = "https://api.github.com/repos/MrAnonymousNWO/One_World/contents/docs/wiki_encyclopedia";
@@ -44,40 +164,50 @@ document.addEventListener("DOMContentLoaded", () => {
     fetch(api)
         .then(r => r.json())
         .then(files => {
-            // akzeptiere .md und .html
-            const wikiFiles = files.filter(f =>
-                f.name.endsWith(".md") || f.name.endsWith(".html")
-            );
+            const mdFiles = files.filter(f => f.name.endsWith(".md"));
+            mdFiles.sort((a, b) => a.name.localeCompare(b.name));
 
-            // alphabetisch sortieren
-            wikiFiles.sort((a, b) => a.name.localeCompare(b.name));
-
-            wikiFiles.forEach(f => {
-                const isMd = f.name.endsWith(".md");
-
-                // Basisname ohne Endung
-                const base = f.name.replace(/\.md$|\.html$/, "");
+            // Sidebar + click handler
+            mdFiles.forEach(f => {
+                const base = f.name.replace(".md", "");
                 const label = base.replace(/_/g, " ");
 
-                // GitHub Pages rendert:
-                // docs/wiki_encyclopedia/Home.md → /One_World/wiki_encyclopedia/Home
-                const href = "wiki_encyclopedia/" + (isMd ? base : f.name);
+                const link = document.createElement("a");
+                link.href = "#";
+                link.textContent = label;
 
-                // Sidebar
-                const a1 = document.createElement("a");
-                a1.href = href;
-                a1.textContent = label;
-                sidebar.appendChild(a1);
+                link.onclick = () => loadArticle(base);
 
-                // Index
-                const a2 = document.createElement("a");
-                a2.href = href;
-                a2.textContent = label;
-                indexList.appendChild(a2);
+                sidebar.appendChild(link);
             });
-        })
-        .catch(err => console.error("API error:", err));
+
+            // Load default article
+            loadArticle("Home");
+        });
 });
+
+// Load and render Markdown
+function loadArticle(name) {
+    const article = document.querySelector("article");
+    const url = `https://raw.githubusercontent.com/MrAnonymousNWO/One_World/main/docs/wiki_encyclopedia/${name}.md`;
+
+    fetch(url)
+        .then(r => r.text())
+        .then(md => {
+            const converter = new showdown.Converter({
+                tables: true,
+                ghCompatibleHeaderId: true,
+                simplifiedAutoLink: true,
+                strikethrough: true,
+                tasklists: true
+            });
+
+            article.innerHTML = converter.makeHtml(md);
+        })
+        .catch(() => {
+            article.innerHTML = "<p style='color:red'>Article not found.</p>";
+        });
+}
 </script>
 
 </head>
@@ -85,11 +215,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
 <div id="mobile-toggle" onclick="toggleSidebar()">☰ Menu</div>
 
+<!-- SIDEBAR -->
 <div id="sidebar">
     <h2>📚 All Wiki Articles</h2>
     <div id="sidebar-links"></div>
 </div>
 
+<!-- MAIN CONTENT -->
 <div id="content">
 
 <header>
@@ -102,18 +234,9 @@ document.addEventListener("DOMContentLoaded", () => {
     <a href="https://github.com/MrAnonymousNWO/One_World/wiki">🌍 One World Wiki</a>
 </div>
 
-<section id="index-intro">
-    <h2>Encyclopedia Index</h2>
-    <p>
-        All wiki articles stored in <code>docs/wiki_encyclopedia/</code> appear automatically below.
-        GitHub Pages renders <strong>.md</strong> files as HTML, so no conversion is required.
-    </p>
-</section>
-
-<section id="index-list">
-    <h3>📑 All Articles</h3>
-    <div id="index-links"></div>
-</section>
+<article>
+Loading…
+</article>
 
 <footer>
     Electric Technocracy Pioneers Community — Open Knowledge for Global Accessibility
