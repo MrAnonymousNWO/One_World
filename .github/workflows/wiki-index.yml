@@ -31,7 +31,7 @@ jobs:
 
       - name: Clone Wiki temporarily
         run: |
-          git clone --depth=1 https://github.com/MrAnonymousNWO/One_World.wiki.git wiki_temp
+          git clone --depth=1 https://github.com/MrAnonymousNWO/OneWorld.wiki.git wiki_temp
 
       - name: Install converters (Pandoc + Asciidoctor)
         run: |
@@ -101,7 +101,7 @@ jobs:
       - name: Generate dir-sitemap.xml
         shell: bash
         run: |
-          BASE_URL="https://mranonymousnwo.github.io/One_World"
+          BASE_URL="https://mranonymousnwo.github.io/OneWorld"
 
           {
             echo '<?xml version="1.0" encoding="UTF-8"?>'
