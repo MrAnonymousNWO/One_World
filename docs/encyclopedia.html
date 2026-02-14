@@ -188,44 +188,33 @@ document.addEventListener("DOMContentLoaded", () => {
     const sidebarContainer = document.getElementById("sidebar-links");
     const indexContainer = document.getElementById("index-links");
 
-    const folder = "wiki_encyclopedia/";
+    // GitHub API: list files in docs/wiki_encyclopedia
+    const api = "https://api.github.com/repos/MrAnonymousNWO/One_World/contents/docs/wiki_encyclopedia";
 
-    fetch(folder)
-        .then(response => response.text())
-        .then(text => {
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(text, "text/html");
-            const links = [...doc.querySelectorAll("a")];
+    fetch(api)
+        .then(r => r.json())
+        .then(files => {
+            const htmlFiles = files.filter(f => f.name.endsWith(".html"));
 
-            const items = [];
+            htmlFiles.sort((a, b) => a.name.localeCompare(b.name));
 
-            links.forEach(link => {
-                const href = link.getAttribute("href");
-                if (!href || !href.endsWith(".html")) return;
+            htmlFiles.forEach(f => {
+                const label = f.name.replace(".html", "").replace(/_/g, " ");
 
-                const name = href.replace(".html", "");
-                const label = decodeURIComponent(name).replace(/_/g, " ");
+                // Sidebar
+                const a1 = document.createElement("a");
+                a1.href = "wiki_encyclopedia/" + f.name;
+                a1.textContent = label;
+                sidebarContainer.appendChild(a1);
 
-                items.push({ href, label });
-            });
-
-            items.sort((a, b) => a.label.localeCompare(b.label, "en"));
-
-            items.forEach(item => {
-                const side = document.createElement("a");
-                side.href = folder + item.href;
-                side.textContent = item.label;
-                sidebarContainer.appendChild(side);
-
-                const idx = document.createElement("a");
-                idx.href = folder + item.href;
-                idx.textContent = item.label;
-                indexContainer.appendChild(idx);
+                // Index list
+                const a2 = document.createElement("a");
+                a2.href = "wiki_encyclopedia/" + f.name;
+                a2.textContent = label;
+                indexContainer.appendChild(a2);
             });
         })
-        .catch(err => {
-            console.error("Failed to load wiki_encyclopedia directory listing:", err);
-        });
+        .catch(err => console.error("API error:", err));
 });
 </script>
 
