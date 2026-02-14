@@ -1,4 +1,4 @@
-name: "One World – Full Wiki Encyclopedia Render"
+name: "One World – Full Wiki Render to docs/"
 
 on:
   workflow_dispatch:
@@ -14,10 +14,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Prepare output directory
+      - name: Prepare docs output directory
         run: |
-          rm -rf docs/wiki_encyclopedia
-          mkdir -p docs/wiki_encyclopedia
+          rm -rf docs
+          mkdir -p docs
 
       - name: Clone One_World Wiki
         run: git clone --depth=1 https://github.com/MrAnonymousNWO/One_World.wiki.git wiki_temp
@@ -27,18 +27,17 @@ jobs:
           sudo apt-get update -y
           sudo apt-get install -y pandoc asciidoctor
 
-      - name: Render ALL wiki formats to HTML (recursive)
+      - name: Convert ALL wiki formats to HTML (FLAT STRUCTURE → docs/)
         run: |
           TEMPLATE="docs/wiki_encyclopedia.html"
           EXT="md mediawiki creole org rst textile pod rdoc txt adoc"
 
           for ext in $EXT; do
-            find wiki_temp -type f -name "*.$ext" | while read file; do
-              rel="${file#wiki_temp/}"
-              base="${rel%.$ext}"
-              out="docs/wiki_encyclopedia/${base}.html"
-
-              mkdir -p "$(dirname "$out")"
+            shopt -s nullglob
+            for file in wiki_temp/*.$ext; do
+              base="${file##*/}"
+              base="${base%.$ext}"
+              out="docs/${base}.html"
 
               case "$ext" in
                 adoc) asciidoctor -o temp.html "$file" ;;
@@ -61,22 +60,16 @@ jobs:
                 { print }
               ' "$TEMPLATE" > "$out"
             done
+            shopt -u nullglob
           done
 
-      - name: Generate sidebar index
-        run: |
-          INDEX="docs/wiki_encyclopedia/sidebar.txt"
-          find docs/wiki_encyclopedia -type f -name "*.html" \
-            | sed 's|docs/wiki_encyclopedia/||' \
-            | sort > "$INDEX"
-
-      - name: Remove wiki clone
+      - name: Cleanup
         run: rm -rf wiki_temp temp.html
 
-      - name: Commit and push encyclopedia
+      - name: Commit and push rendered docs
         run: |
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Actions"
-          git add docs/wiki_encyclopedia || true
-          git commit -m "Full Wiki Encyclopedia Render" || echo "No changes"
+          git add docs || true
+          git commit -m "Rendered One_World Wiki to docs/" || echo "No changes"
           git push
