@@ -28,7 +28,6 @@ jobs:
           rm -rf docs/wiki_encyclopedia
           mkdir -p docs/wiki_encyclopedia
 
-      # 🔥 TEMPORÄRES KLONEN DES WIKIS
       - name: Clone Wiki temporarily
         run: |
           git clone --depth=1 https://github.com/MrAnonymousNWO/One_World.wiki.git wiki_temp
@@ -74,7 +73,6 @@ jobs:
             shopt -u nullglob
           done
 
-      # 🔥 TEMPORÄRES WIKI WIRD GELÖSCHT
       - name: Cleanup temporary wiki
         run: rm -rf wiki_temp
 
@@ -96,7 +94,6 @@ jobs:
             { print }
           ' "$TEMPLATE" > "$OUTPUT"
 
-      # 🔥 SITEMAP → docs/dir-sitemap.xml
       - name: Generate dir-sitemap.xml
         run: |
           BASE_URL="https://mranonymousnwo.github.io/One_World"
