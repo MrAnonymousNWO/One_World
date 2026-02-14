@@ -21,8 +21,7 @@ jobs:
           submodules: false
 
       - name: Ensure .nojekyll exists
-        run: |
-          echo "" > docs/.nojekyll
+        run: echo "" > docs/.nojekyll
 
       - name: Prepare wiki output directory
         run: |
@@ -30,102 +29,29 @@ jobs:
           mkdir -p docs/wiki_encyclopedia
 
       - name: Clone Wiki temporarily
-        run: |
-          git clone --depth=1 https://github.com/MrAnonymousNWO/One_World.wiki.git wiki_temp
+        run: git clone --depth=1 https://github.com/MrAnonymousNWO/One_World.wiki.git wiki_temp
 
       - name: Install converters (Pandoc + Asciidoctor)
         run: |
           sudo apt-get update -y
           sudo apt-get install -y pandoc asciidoctor
 
-      - name: Convert ALL wiki formats to HTML using template
-        shell: bash
-        run: |
-          TEMPLATE="docs/wiki_encyclopedia.html"
-          EXTENSIONS="md mediawiki creole org rst textile pod rdoc txt adoc"
-
-          for ext in $EXTENSIONS; do
-            shopt -s nullglob
-            for file in wiki_temp/*.$ext; do
-              base="${file##*/}"
-              base="${base%.$ext}"
-              output="docs/wiki_encyclopedia/${base}.html"
-
-              case "$ext" in
-                adoc) asciidoctor -o temp.html "$file" ;;
-                md) pandoc "$file" -f markdown -t html -o temp.html ;;
-                mediawiki) pandoc "$file" -f mediawiki -t html -o temp.html ;;
-                creole) pandoc "$file" -f creole -t html -o temp.html ;;
-                org) pandoc "$file" -f org -t html -o temp.html ;;
-                rst) pandoc "$file" -f rst -t html -o temp.html ;;
-                textile) pandoc "$file" -f textile -t html -o temp.html ;;
-                pod) pandoc "$file" -f pod -t html -o temp.html ;;
-                rdoc) pandoc "$file" -f rdoc -t html -o temp.html ;;
-                txt) pandoc "$file" -f markdown -t html -o temp.html ;;
-              esac
-
-              awk -v content="$(cat temp.html)" '
-                /<!-- WORKFLOW WILL INSERT WIKI ARTICLE CONTENT HERE -->/ {
-                  print content
-                  next
-                }
-                { print }
-              ' "$TEMPLATE" > "$output"
-            done
-            shopt -u nullglob
-          done
+      - name: Run wiki conversion script
+        run: bash scripts/wiki_convert.sh
 
       - name: Cleanup temporary wiki
-        run: |
-          rm -rf wiki_temp
+        run: rm -rf wiki_temp
 
       - name: Generate directory listing using template
-        shell: bash
-        run: |
-          TEMPLATE="docs/directory.html"
-          OUTPUT="docs/directory.html"
-
-          FILELIST=$(find docs -type f \
-            ! -path "docs/.git/*" \
-            ! -path "docs/.github/*" \
-            | sed 's|^docs/||' | sort)
-
-          awk -v content="$FILELIST" '
-            /<!-- WORKFLOW WILL INSERT DIRECTORY CONTENT HERE -->/ {
-              print content
-              next
-            }
-            { print }
-          ' "$TEMPLATE" > "$OUTPUT"
+        run: bash scripts/generate_directory.sh
 
       - name: Generate dir-sitemap.xml
-        shell: bash
-        run: |
-          BASE_URL="https://mranonymousnwo.github.io/OneWorld"
-
-          {
-            echo '<?xml version="1.0" encoding="UTF-8"?>'
-            echo '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
-          } > docs/dir-sitemap.xml
-
-          find docs -type f \
-            ! -path "docs/.git/*" \
-            ! -path "docs/.github/*" \
-            | while read file; do
-                clean="${file#docs/}"
-                url="$BASE_URL/$clean"
-                esc_url=$(printf '%s' "$url" | sed 's/&/\&amp;/g; s/</\&lt;/g')
-                lastmod=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
-                echo "<url><loc>$esc_url</loc><lastmod>$lastmod</lastmod></url>" >> docs/dir-sitemap.xml
-              done
-
-          echo '</urlset>' >> docs/dir-sitemap.xml
+        run: bash scripts/generate_sitemap.sh
 
       - name: Commit and push generated files
         run: |
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Actions"
-
           git add docs
           git commit -m "Automated full wiki indexing (One_World)" || echo "No changes to commit"
           git push
