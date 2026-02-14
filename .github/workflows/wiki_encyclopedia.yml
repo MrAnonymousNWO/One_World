@@ -1,0 +1,74 @@
+name: "Wiki HTML Render (Minimal)"
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Prepare output directory
+        run: |
+          rm -rf docs/wiki_encyclopedia
+          mkdir -p docs/wiki_encyclopedia
+
+      - name: Clone Wiki
+        run: git clone --depth=1 https://github.com/MrAnonymousNWO/One_World.wiki.git wiki_temp
+
+      - name: Install converters
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y pandoc asciidoctor
+
+      - name: Convert ALL wiki formats to HTML
+        run: |
+          TEMPLATE="docs/wiki_encyclopedia.html"
+          EXT="md mediawiki creole org rst textile pod rdoc txt adoc"
+
+          for ext in $EXT; do
+            find wiki_temp -type f -name "*.$ext" | while read file; do
+              rel="${file#wiki_temp/}"
+              base="${rel%.$ext}"
+              out="docs/wiki_encyclopedia/${base}.html"
+              mkdir -p "$(dirname "$out")"
+
+              case "$ext" in
+                adoc) asciidoctor -o temp.html "$file" ;;
+                md) pandoc "$file" -f markdown -t html -o temp.html ;;
+                mediawiki) pandoc "$file" -f mediawiki -t html -o temp.html ;;
+                creole) pandoc "$file" -f creole -t html -o temp.html ;;
+                org) pandoc "$file" -f org -t html -o temp.html ;;
+                rst) pandoc "$file" -f rst -t html -o temp.html ;;
+                textile) pandoc "$file" -f textile -t html -o temp.html ;;
+                pod) pandoc "$file" -f pod -t html -o temp.html ;;
+                rdoc) pandoc "$file" -f rdoc -t html -o temp.html ;;
+                txt) pandoc "$file" -f markdown -t html -o temp.html ;;
+              esac
+
+              awk -v content="$(cat temp.html)" '
+                /<!-- WORKFLOW WILL INSERT WIKI ARTICLE CONTENT HERE -->/ {
+                  print content
+                  next
+                }
+                { print }
+              ' "$TEMPLATE" > "$out"
+            done
+          done
+
+      - name: Remove wiki clone
+        run: rm -rf wiki_temp temp.html
+
+      - name: Commit and push generated HTML
+        run: |
+          git config --local user.email "actions@github.com"
+          git config --local user.name "GitHub Actions"
+          git add docs/wiki_encyclopedia || true
+          git commit -m "Rendered wiki HTML" || echo "No changes"
+          git push
