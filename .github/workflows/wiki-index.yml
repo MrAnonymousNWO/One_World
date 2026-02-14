@@ -40,17 +40,18 @@ jobs:
           sudo apt-get install -y pandoc asciidoctor
 
       - name: Convert ALL wiki formats to HTML using template
+        shell: bash
         run: |
-         TEMPLATE="docs/wiki_encyclopedia.html"
+          TEMPLATE="docs/wiki_encyclopedia.html"
           EXTENSIONS="md mediawiki creole org rst textile pod rdoc txt adoc"
-          
+
           for ext in $EXTENSIONS; do
             shopt -s nullglob
             for file in wiki_temp/*.$ext; do
               base="${file##*/}"
               base="${base%.$ext}"
               output="docs/wiki_encyclopedia/${base}.html"
-              
+
               case "$ext" in
                 adoc) asciidoctor -o temp.html "$file" ;;
                 md) pandoc "$file" -f markdown -t html -o temp.html ;;
@@ -63,7 +64,7 @@ jobs:
                 rdoc) pandoc "$file" -f rdoc -t html -o temp.html ;;
                 txt) pandoc "$file" -f markdown -t html -o temp.html ;;
               esac
-              
+
               awk -v content="$(cat temp.html)" '
                 /<!-- WORKFLOW WILL INSERT WIKI ARTICLE CONTENT HERE -->/ {
                   print content
@@ -80,15 +81,16 @@ jobs:
           rm -rf wiki_temp
 
       - name: Generate directory listing using template
+        shell: bash
         run: |
           TEMPLATE="docs/directory.html"
           OUTPUT="docs/directory.html"
-          
+
           FILELIST=$(find docs -type f \
             ! -path "docs/.git/*" \
             ! -path "docs/.github/*" \
             | sed 's|^docs/||' | sort)
-          
+
           awk -v content="$FILELIST" '
             /<!-- WORKFLOW WILL INSERT DIRECTORY CONTENT HERE -->/ {
               print content
@@ -98,14 +100,15 @@ jobs:
           ' "$TEMPLATE" > "$OUTPUT"
 
       - name: Generate dir-sitemap.xml
+        shell: bash
         run: |
           BASE_URL="https://mranonymousnwo.github.io/One_World"
-          
+
           {
             echo '<?xml version="1.0" encoding="UTF-8"?>'
             echo '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
           } > docs/dir-sitemap.xml
-          
+
           find docs -type f \
             ! -path "docs/.git/*" \
             ! -path "docs/.github/*" \
@@ -116,14 +119,14 @@ jobs:
                 lastmod=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
                 echo "<url><loc>$esc_url</loc><lastmod>$lastmod</lastmod></url>" >> docs/dir-sitemap.xml
               done
-          
+
           echo '</urlset>' >> docs/dir-sitemap.xml
 
       - name: Commit and push generated files
         run: |
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Actions"
-          
+
           git add docs
           git commit -m "Automated full wiki indexing (One_World)" || echo "No changes to commit"
           git push
