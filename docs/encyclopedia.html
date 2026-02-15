@@ -1,213 +1,1351 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>One United World Encyclopedia</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="One United World Encyclopedia is an open scientific research hub and free‑access wiki repository for exploring Global State Succession, End of International Law, United Nations End, NATO Truppenstatut, Electric Technocracy, AI Governance, the Judicial Singularity, the Technological Singularity, Artificial Superintelligence (ASI), AGI, Direct Digital Democracy (DDD), Universal Basic Income, and a United World of Abundance beyond nation‑states.">
+    <meta name="keywords" content="International Law, Treaty, Law, NATO, United Nations, Treaty Chain, Artificial, intelligence, ASI, AGI, Superintelligence, Technocracy, Governance, Government, Digital, Electric, Direct Digital Democracy, Judicial Singularity, Singularity, Technology, Longevity, State Succession, World Succession Deed, Kaufvertrag Urkundenrolle, 1400/98, Encyclopedia, Wiki">
+    <meta name="author" content="Electric Technocracy Pioneers Community">
+    <meta property="og:title" content="One United World Encyclopedia">
+    <meta property="og:description" content="Open scientific research hub for Global State Succession, Electric Technocracy, AI Governance, and future governance models.">
+    <meta property="og:image" content="https://raw.githubusercontent.com/MrAnonymousNWO/One_World/master/images/One_United_World_Wiki.png">
+    <meta property="og:url" content="https://mranonymousnwo.github.io/One_World/encyclopedia.html">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="One United World Encyclopedia">
+    <meta name="twitter:description" content="Open scientific research hub for Global State Succession, Electric Technocracy, AI Governance, and future governance models.">
+    <meta name="twitter:image" content="https://raw.githubusercontent.com/MrAnonymousNWO/One_World/master/images/One_United_World_Wiki.png">
+    
+    <!-- SEO & Favicon Tags -->
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="One World" />
+    <link rel="manifest" href="/site.webmanifest" />
+    
+    <title>One United World Encyclopedia</title>
+    
+    <!-- Markdown Renderer -->
+    <script src="https://cdn.jsdelivr.net/npm/showdown@2.1.0/dist/showdown.min.js"></script>
+    
+    <style>
+        /* ==================== GLOBAL ==================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Georgia, serif;
+            background: #fff;
+            color: #222;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            overflow-x: hidden;
+        }
+        
+        /* ==================== HEADER ==================== */
+        header {
+            background: #000000;
+            color: #fff;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 3px solid #005BBB;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            min-height: 70px;
+            transition: transform 0.3s ease;
+        }
+        
+        header.hidden {
+            transform: translateY(-100%);
+        }
+        
+        /* Left Hamburger - Articles & Search */
+        .hamburger-left {
+            background: none;
+            border: none;
+            color: #005BBB;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 10px;
+        }
+        
+        .hamburger-left:hover {
+            color: #fff;
+            background-color: rgba(0, 91, 187, 0.2);
+            border-radius: 6px;
+        }
+        
+        /* Logo Center */
+        .header-logo {
+            flex: 1;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .header-logo img {
+            max-height: 50px;
+            width: auto;
+            transition: all 0.3s ease;
+        }
+        
+        .header-logo img:hover {
+            transform: scale(1.05);
+        }
+        
+        /* Right Hamburger - Control Menu */
+        .hamburger-right {
+            background: none;
+            border: none;
+            color: #005BBB;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 10px;
+        }
+        
+        .hamburger-right:hover {
+            color: #fff;
+            background-color: rgba(0, 91, 187, 0.2);
+            border-radius: 6px;
+        }
+        
+        /* ==================== MAIN CONTAINER ==================== */
+        .main-container {
+            display: flex;
+            flex: 1;
+            margin-top: 70px;
+            width: 100%;
+            overflow-x: hidden;
+        }
+        
+        /* ==================== SIDEBAR (LEFT) - ARTICLES ==================== */
+        #sidebar {
+            width: 260px;
+            background: #1A1A1A;
+            color: #fff;
+            padding: 20px;
+            overflow-y: auto;
+            border-right: 3px solid #005BBB;
+            display: flex;
+            flex-direction: column;
+            height: calc(100vh - 70px);
+        }
+        
+        #sidebar h2 {
+            margin-bottom: 1rem;
+            color: #005BBB;
+            border-bottom: 2px solid #005BBB;
+            padding-bottom: 0.75rem;
+            font-size: 1.1rem;
+        }
+        
+        #searchBox {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 1rem;
+            border-radius: 6px;
+            border: 2px solid #005BBB;
+            background: #fff;
+            color: #222;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        #searchBox:focus {
+            outline: none;
+            border-color: #0073E6;
+            box-shadow: 0 0 8px rgba(0, 91, 187, 0.3);
+        }
+        
+        #sidebar-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            flex: 1;
+        }
+        
+        #sidebar a {
+            display: block;
+            color: #fff;
+            text-decoration: none;
+            padding: 8px 12px;
+            opacity: 0.85;
+            margin-bottom: 4px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+        
+        #sidebar a:hover {
+            opacity: 1;
+            background-color: #005BBB;
+            padding-left: 16px;
+        }
+        
+        #sidebar a.active {
+            background-color: #005BBB;
+            opacity: 1;
+            font-weight: 600;
+        }
+        
+        #search-results {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .search-result {
+            margin-bottom: 10px;
+            padding: 10px;
+            background: rgba(0, 91, 187, 0.1);
+            border-left: 3px solid #005BBB;
+            border-radius: 4px;
+        }
+        
+        .search-result a {
+            color: #fff;
+            font-weight: bold;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            padding: 0;
+            margin: 0;
+            opacity: 1;
+            background: none;
+        }
+        
+        .search-result a:hover {
+            color: #0073E6;
+        }
+        
+        .search-snippet {
+            font-size: 0.75rem;
+            opacity: 0.7;
+            margin-top: 5px;
+            color: #ccc;
+        }
+        
+        /* ==================== CONTENT AREA ==================== */
+        #content {
+            flex: 1;
+            padding: 30px;
+            max-width: 900px;
+            margin: 0 auto;
+            width: 100%;
+            overflow-y: auto;
+            overflow-x: hidden;
+            box-sizing: border-box;
+        }
+        
+        /* ==================== BREADCRUMB ==================== */
+        #breadcrumb {
+            margin: 15px 0;
+            font-size: 0.95rem;
+            color: #666;
+        }
+        
+        #breadcrumb a {
+            color: #005BBB;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        #breadcrumb a:hover {
+            color: #004494;
+            text-decoration: underline;
+        }
+        
+        /* ==================== HERO BOX ==================== */
+        .hero-box {
+            background: #000000;
+            border: 3px solid #c0c0c0;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 0 0 30px 0;
+            text-align: center;
+            box-shadow: 0 4px 16px rgba(0, 91, 187, 0.15);
+            overflow-x: hidden;
+        }
+        
+        .hero-box h1 {
+            color: #c0c0c0;
+            font-size: 2.2rem;
+            margin-bottom: 25px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+        
+        .hero-video {
+            width: 300px;
+            height: auto;
+            margin: 0 auto 20px auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(192, 192, 192, 0.2);
+            display: block;
+        }
+        
+        .hero-text {
+            color: #c0c0c0;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            font-style: italic;
+            margin-top: 20px;
+        }
+        
+        /* ==================== ARTICLE ==================== */
+        article {
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 16px rgba(0, 91, 187, 0.15);
+            margin-top: 25px;
+            border-top: 5px solid #005BBB;
+            overflow-x: hidden;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+        
+        article h1 {
+            color: #005BBB;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 3px solid #005BBB;
+        }
+        
+        article h2 {
+            color: #004494;
+            font-size: 1.6rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid #005BBB;
+        }
+        
+        article h3 {
+            color: #005BBB;
+            font-size: 1.3rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+        
+        article h4, article h5, article h6 {
+            color: #004494;
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        article p {
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+        
+        article a {
+            color: #005BBB;
+            text-decoration: none;
+            font-weight: 500;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        article a:hover {
+            color: #004494;
+            border-bottom-color: #005BBB;
+        }
+        
+        article ul, article ol {
+            margin-left: 2rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        article li {
+            margin-bottom: 0.5rem;
+            line-height: 1.8;
+        }
+        
+        article blockquote {
+            background-color: #E8F0FF;
+            border-left: 5px solid #005BBB;
+            padding: 20px;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+            font-style: italic;
+            color: #004494;
+        }
+        
+        article code {
+            background-color: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #d63384;
+            word-break: break-all;
+            overflow-x: auto;
+        }
+        
+        article pre {
+            background-color: #f4f4f4;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            border-left: 5px solid #005BBB;
+            max-width: 100%;
+            box-sizing: border-box;
+        }
+        
+        article table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            table-layout: auto;
+            overflow-x: auto;
+        }
+        
+        article table th {
+            background-color: #005BBB;
+            color: #fff;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        article table td {
+            padding: 12px;
+            border-bottom: 1px solid #E0E0E0;
+        }
+        
+        article table tr:hover {
+            background-color: #E8F0FF;
+        }
+        
+        article img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            box-shadow: 0 4px 16px rgba(0, 91, 187, 0.15);
+            display: block;
+        }
+        
+        /* ==================== FOOTER WITH NATO BLUE BLOCKS ==================== */
+        footer {
+            margin-top: 40px;
+            padding: 40px;
+            background: linear-gradient(135deg, #1A1A1A 0%, #2A2A2A 100%);
+            color: #fff;
+            border-radius: 10px;
+            border-top: 5px solid #005BBB;
+            overflow-x: hidden;
+            box-sizing: border-box;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+        
+        .footer-section {
+            background: rgba(0, 91, 187, 0.08);
+            border: 2px solid #005BBB;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0, 91, 187, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .footer-section:hover {
+            background: rgba(0, 91, 187, 0.12);
+            box-shadow: 0 6px 16px rgba(0, 91, 187, 0.15);
+            transform: translateY(-2px);
+        }
+        
+        .footer-section h3 {
+            color: #005BBB;
+            font-size: 1.1rem;
+            margin: 0 0 1rem 0;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid #005BBB;
+            font-weight: 600;
+        }
+        
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        
+        .footer-links a {
+            color: #0073E6;
+            text-decoration: none;
+            padding: 8px 12px;
+            transition: all 0.3s ease;
+            display: block;
+            font-size: 0.95rem;
+            border-radius: 4px;
+            background: rgba(0, 115, 230, 0.05);
+        }
+        
+        .footer-links a:hover {
+            color: #fff;
+            background: #005BBB;
+            padding-left: 16px;
+        }
+        
+        .footer-bottom {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 0;
+            border-top: 1px solid rgba(0, 91, 187, 0.3);
+            opacity: 0.9;
+            font-size: 0.9rem;
+        }
+        
+        /* ==================== BACK TO TOP BUTTON ==================== */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background-color: #005BBB;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 16px rgba(0, 91, 187, 0.15);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 99;
+            font-weight: bold;
+        }
+        
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            background-color: #004494;
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0, 91, 187, 0.25);
+        }
+        
+        /* ==================== CONTROL MENU (RIGHT SIDEBAR) ==================== */
+        #control-menu {
+            position: fixed;
+            top: 70px;
+            right: 0;
+            width: 300px;
+            height: calc(100vh - 70px);
+            background: #1A1A1A;
+            color: #fff;
+            padding: 20px;
+            overflow-y: auto;
+            border-left: 3px solid #005BBB;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            z-index: 101;
+        }
+        
+        #control-menu.open {
+            transform: translateX(0);
+        }
+        
+        #control-menu h2 {
+            margin-bottom: 1rem;
+            color: #005BBB;
+            border-bottom: 2px solid #005BBB;
+            padding-bottom: 0.75rem;
+            font-size: 1.1rem;
+        }
+        
+        #control-menu h3 {
+            color: #005BBB;
+            font-size: 0.95rem;
+            margin: 1rem 0 0.75rem 0;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #005BBB;
+        }
+        
+        #control-menu a {
+            display: block;
+            color: #fff;
+            text-decoration: none;
+            padding: 8px 12px;
+            opacity: 0.85;
+            margin-bottom: 6px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+        
+        #control-menu a:hover {
+            opacity: 1;
+            background-color: #005BBB;
+            padding-left: 16px;
+        }
+        
+        /* ==================== MOBILE MENU (LEFT SIDEBAR) ==================== */
+        #mobile-menu {
+            position: fixed;
+            top: 70px;
+            left: 0;
+            width: 300px;
+            height: calc(100vh - 70px);
+            background: #1A1A1A;
+            color: #fff;
+            padding: 20px;
+            overflow-y: auto;
+            border-right: 3px solid #005BBB;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+            z-index: 101;
+        }
+        
+        #mobile-menu.open {
+            transform: translateX(0);
+        }
+        
+        #mobile-menu h2 {
+            margin-bottom: 1rem;
+            color: #005BBB;
+            border-bottom: 2px solid #005BBB;
+            padding-bottom: 0.75rem;
+            font-size: 1.1rem;
+        }
+        
+        #mobile-search {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 1rem;
+            border-radius: 6px;
+            border: 2px solid #005BBB;
+            background: #fff;
+            color: #222;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        #mobile-search:focus {
+            outline: none;
+            border-color: #0073E6;
+            box-shadow: 0 0 8px rgba(0, 91, 187, 0.3);
+        }
+        
+        #mobile-sidebar-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+        
+        #mobile-sidebar-links a {
+            display: block;
+            color: #fff;
+            text-decoration: none;
+            padding: 8px 12px;
+            opacity: 0.85;
+            margin-bottom: 4px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+        
+        #mobile-sidebar-links a:hover {
+            opacity: 1;
+            background-color: #005BBB;
+            padding-left: 16px;
+        }
+        
+        #mobile-sidebar-links a.active {
+            background-color: #005BBB;
+            opacity: 1;
+            font-weight: 600;
+        }
+        
+        /* ==================== SCROLLBAR ==================== */
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f5f5f5;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #005BBB;
+            border-radius: 6px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #004494;
+        }
+        
+        /* ==================== RESPONSIVE DESIGN ==================== */
+        @media (max-width: 1024px) {
+            #sidebar {
+                display: none;
+            }
+            
+            .main-container {
+                flex-direction: column;
+            }
+            
+            #content {
+                padding: 20px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            header {
+                min-height: 60px;
+                padding: 10px 15px;
+            }
+            
+            .header-logo img {
+                max-height: 40px;
+            }
+            
+            .hamburger-left, .hamburger-right {
+                font-size: 1.3rem;
+                padding: 8px;
+            }
+            
+            .main-container {
+                margin-top: 60px;
+            }
+            
+            #sidebar {
+                height: calc(100vh - 60px);
+            }
+            
+            #mobile-menu {
+                top: 60px;
+                height: calc(100vh - 60px);
+            }
+            
+            #control-menu {
+                top: 60px;
+                height: calc(100vh - 60px);
+            }
+            
+            #content {
+                padding: 15px;
+            }
+            
+            article {
+                padding: 20px;
+            }
+            
+            article h1 {
+                font-size: 1.5rem;
+            }
+            
+            article h2 {
+                font-size: 1.3rem;
+            }
+            
+            .hero-box {
+                padding: 20px;
+                margin: 0 0 20px 0;
+            }
+            
+            .hero-box h1 {
+                font-size: 1.8rem;
+                margin-bottom: 15px;
+            }
+            
+            .hero-video {
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .hero-text {
+                font-size: 1rem;
+            }
+            
+            .hero-box h1 {
+                font-size: 1.8rem;
+                margin-bottom: 15px;
+            }
+            
+            .hero-video {
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            footer {
+                padding: 20px;
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .footer-section {
+                padding: 15px;
+            }
+            
+            .footer-section h3 {
+                font-size: 1rem;
+            }
+            
+            .footer-links {
+                gap: 0.5rem;
+            }
+            
+            .footer-links a {
+                padding: 6px 10px;
+                font-size: 0.9rem;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .back-to-top {
+                width: 45px;
+                height: 45px;
+                bottom: 20px;
+                right: 20px;
+                font-size: 1.2rem;
+            }
+            
+            header {
+                min-height: 50px;
+            }
+            
+            .header-logo img {
+                max-height: 35px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header id="header">
+        <!-- Left Hamburger - Articles & Search -->
+        <button class="hamburger-left" id="hamburger-left" aria-label="Toggle articles menu">☰</button>
+        
+        <!-- Logo Center -->
+        <div class="header-logo">
+            <img src="https://raw.githubusercontent.com/MrAnonymousNWO/One_World/master/images/One_United_World_Wiki.png" alt="One United World Encyclopedia Logo">
+        </div>
+        
+        <!-- Right Hamburger - Control Menu -->
+        <button class="hamburger-right" id="hamburger-right" aria-label="Toggle control menu">☰</button>
+    </header>
+    
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Sidebar (LEFT) - Articles -->
+        <div id="sidebar">
+            <h2>📚 Articles</h2>
+            <input id="searchBox" type="text" placeholder="Search…">
+            <div id="sidebar-links"></div>
+            <div id="search-results"></div>
+        </div>
+        
+        <!-- Content Area -->
+        <div id="content">
+            <div id="breadcrumb"></div>
+            
+            <!-- Hero Box -->
+            <div class="hero-box">
+                <h1>One United World Encyclopedia</h1>
+                <video class="hero-video" controls autoplay muted>
+                    <source src="https://raw.githubusercontent.com/MrAnonymousNWO/One_World/5fed735d23466a180ea2866c5c3039794a565323/docs/video/one_video.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <p class="hero-text">- International Treaties & World Succession Explained -<br>Explore comprehensive insights into international law, global treaties, succession principles, and the evolving architecture of cross‑border governance.</p>
+            </div>
+            
+            <article id="article">Loading…</article>
+            
+            <!-- Footer -->
+            <footer>
+                <div class="footer-section">
+                    <h3>👓 Read More About It</h3>
+                    <div class="footer-links">
+                        <div>
+                            <a href="https://world.rf.gd" target="_blank">🌐 WSD - World Succession Deed 1400/98</a>
+                            <a href="https://worldsold.wixsite.com/world-sold/en" target="_blank">🌐 WSD - World Sold (EN)</a>
+                            <a href="https://global-archive.rf.gd" target="_blank">🌐 WSD – Global Legal Succession Archive</a>
+                            <a href="https://worldsold.wixsite.com/global-archive" target="_blank">🌐 Global Archive (Wix)</a>
+                            <a href="https://ep.ct.ws" target="_blank">🌐 Electric Technocracy</a>
+                            <a href="https://worldsold.wixsite.com/electric-technocracy" target="_blank">🌐 Electric Technocracy (Wix)</a>
+                            <a href="https://navi.page.gd" target="_blank">🌐 WSD - Navigator 1400/98</a>
+                            <a href="https://worldsold.wixsite.com/navigator" target="_blank">🌐 Navigator (Wix)</a>
+                            <a href="https://worldsold.wixsite.com/international" target="_blank">🌐 WSD - International</a>
+                        </div>
+                        <div>
+                            <a href="https://wiki.free.nf/" target="_blank">📚 International Treaty Law WIKI</a>
+                            <a href="https://4u.free.nf" target="_blank">📘 Read eBooks & Download free PDF</a>
+                            <a href="https://videos.xo.je" target="_blank">🎥 YouTube Channel</a>
+                            <a href="https://www.youtube.com/@Staatensukzessionsurkunde-1400" target="_blank">🎥 YouTube - Staatensukzessionsurkunde</a>
+                            <a href="https://nwo.likesyou.org" target="_blank">🎙️ Podcast Show</a>
+                            <a href="https://creators.spotify.com/pod/show/world-succession-deed" target="_blank">🎙️ Spotify Podcast</a>
+                            <a href="https://podcasts.apple.com/de/podcast/world-sold-world-succession-deed-1400-98-http-world/id1786462631" target="_blank">🍏 Apple Podcast</a>
+                            <a href="https://paradise.gt.tc" target="_blank">🚀 Start-Page WSD & Electric Paradise</a>
+                            <a href="https://wiki.free.nf/index.php/Juridical_Singularity" target="_blank">🕳️ Technological Singularity Needs Legal Singularity</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>🪢 Electric Technocracy Pioneers Community</h3>
+                    <div class="footer-links">
+                        <div>
+                            <a href="https://community.xo.je" target="_blank">🪢 Community Hub</a>
+                            <a href="https://zenodo.org/communities/electric-technocracy" target="_blank">📚 Zenodo Community</a>
+                            <a href="https://et-pioneer.github.io/Electric-Technocracy-Pioneers-Community/" target="_blank">💡 GitHub Page Pioneers Community</a>
+                            <a href="https://repository.ct.ws" target="_blank">💡 GitHub Repository</a>
+                            <a href="https://github.com/ET-Pioneer/Electric-Technocracy-Pioneers-Community/wiki" target="_blank">💡 Community WIKI</a>
+                            <a href="https://www.tumblr.com/juridical-singularity" target="_blank">Electric Technocracy Pioneers Tumblr</a>
+                            <a href="https://www.tumblr.com/communities/international-law-community" target="_blank">International Treaty Law Community Tumblr</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>📖 Key Publications</h3>
+                    <div class="footer-links">
+                        <div>
+                            <a href="https://doi.org/10.5281/zenodo.18073084" target="_blank">📖 The Next Civilization - Why Electric Technocracy Matters Now</a>
+                            <a href="https://doi.org/10.5281/zenodo.18028339" target="_blank">📖 Foundations of Electric Technocracy</a>
+                            <a href="https://doi.org/10.5281/zenodo.18012036" target="_blank">📖 The Rise of the Electric Technocracy</a>
+                            <a href="https://doi.org/10.5281/zenodo.18216674" target="_blank">📖 Drittverwahrung von nationalen und internationalen Verträgen</a>
+                            <a href="https://doi.org/10.5281/zenodo.18505843" target="_blank">📖 LEGAL SINGULARITY IN INTERNATIONAL LAW</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>🔗 GitHub PDF Vault</h3>
+                    <div class="footer-links">
+                        <div>
+                            <a href="https://github.com/ET-Pioneer/Electric-Technocracy-Pioneers-Community/blob/4fe4bdf1b29b7534ca69b04fd1a993ce344d7682/pdf/english/Electric_Technocracy.pdf" target="_blank">🔗 Electric Technocracy - Visionary AI Governance System</a>
+                            <a href="https://github.com/ET-Pioneer/Electric-Technocracy-Pioneers-Community/blob/4fe4bdf1b29b7534ca69b04fd1a993ce344d7682/pdf/english/English_turenne_barracks_treaty_1400_98_06_10_1998_nato_brd_nl.PDF" target="_blank">📑 Kaufvertrag Urkundenrolle 1400/98</a>
+                            <a href="https://github.com/ET-Pioneer/Electric-Technocracy-Pioneers-Community/blob/4fe4bdf1b29b7534ca69b04fd1a993ce344d7682/pdf/english/Micronation_Made_Easy.pdf" target="_blank">🏝️ Micronations Made Easy</a>
+                            <a href="https://github.com/ET-Pioneer/Electric-Technocracy-Pioneers-Community/blob/4fe4bdf1b29b7534ca69b04fd1a993ce344d7682/pdf/english/State_Founding_for_Dummies_How_to_Start_Your_Own_Country.pdf" target="_blank">®️ Starting a State for Dummies</a>
+                            <a href="https://github.com/ET-Pioneer/Electric-Technocracy-Pioneers-Community/blob/4fe4bdf1b29b7534ca69b04fd1a993ce344d7682/pdf/english/Trillions%20for%20the%20Future-AI%2C%20Power%2C%20and%20Post-Scarcity%20-%20Electric%20Technocracy.pdf" target="_blank">🤖 Trillions for the Future - ASI & Technological Singularity</a>
+                            <a href="https://github.com/ET-Pioneer/Electric-Technocracy-Pioneers-Community/blob/4fe4bdf1b29b7534ca69b04fd1a993ce344d7682/pdf/english/UBI%20Universal%20Basic%20Income%20And%20The%20Electric%20Technocracy.pdf" target="_blank">💱 Universal Basic Income and the Electric Technocracy</a>
+                            <a href="https://github.com/ET-Pioneer/Electric-Technocracy-Pioneers-Community/blob/4fe4bdf1b29b7534ca69b04fd1a993ce344d7682/pdf/english/UBI%20and%20the%20Future%20of%20Humanity%20%E2%80%93%20From%20Work%20to%20Electric%20Technocracy.pdf" target="_blank">💲 Unconditional Basic Income, Tech Tax</a>
+                            <a href="https://github.com/ET-Pioneer/Electric-Technocracy-Pioneers-Community/blob/4fe4bdf1b29b7534ca69b04fd1a993ce344d7682/pdf/english/World-Sold-Non-fiction-Succession-Deed.pdf" target="_blank">⚖️ World Succession Deed: Global Succession Explained</a>
+                            <a href="https://github.com/ET-Pioneer/Electric-Technocracy-Pioneers-Community/blob/4fe4bdf1b29b7534ca69b04fd1a993ce344d7682/pdf/english/World_Sold_State_succession_deed_1400.pdf" target="_blank">🗺️ World Sold: The WSD 1400 Treaty</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>🌎 One World Archive</h3>
+                    <div class="footer-links">
+                        <div>
+                            <a href="https://mranonymousnwo.github.io/One_World/" target="_blank">🌎 Archive Vault & PDF Viewer</a>
+                            <a href="https://github.com/MrAnonymousNWO/One_World/" target="_blank">🌏 GitHub Repository Vault</a>
+                            <a href="https://github.com/MrAnonymousNWO/One_World/wiki" target="_blank">🌍 GitHub WIKI</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>🔎 Search & Navigation</h3>
+                    <div class="footer-links">
+                        <div>
+                            <a href="https://et-pioneer.github.io/Electric-Technocracy-Pioneers-Community/search#gsc.tab=0" target="_blank">🔎 Unified Search Engine</a>
+                            <a href="https://cse.google.com/cse?cx=86021a982e3a14848" target="_blank">🔍 Specialized Search Engine GSE</a>
+                            <a href="https://de.m.wikipedia.org/wiki/Kreuzbergkaserne_Zweibr%C3%BCcken" target="_blank">🏰 Wikipedia Kreuzbergkaserne (DE)</a>
+                            <a href="https://en.wikipedia.org/wiki/Kreuzbergkaserne_Zweibr%C3%BCcken" target="_blank">🏰 Wikipedia Kreuzbergkaserne (EN)</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>🎵 Music & Sound</h3>
+                    <div class="footer-links">
+                        <div>
+                            <a href="https://open.spotify.com/artist/4y6vveUrD0JDdymjTUWTx3?si=1-UAvXfkSLG0dofoYeKhqQ" target="_blank">🎶 Electric Technocracy Sound Collective Spotify</a>
+                            <a href="https://open.spotify.com/playlist/6gaGFsnID15ZbtbORp3uRg?si=oePYMsn7RhWGfq4XFTEUZg" target="_blank">🔘 Spotify DJ Playlist</a>
+                            <a href="https://listen.free.nf" target="_blank">🎧 Cassandra Cries - SoundCloud</a>
+                            <a href="https://music.page.gd" target="_blank">🪖 Anti-War Music</a>
+                            <a href="https://u.pcloud.link/publink/show?code=0Z8jWC5Z9eG2iGcELwJdrikBBCArhzNjeu0V" target="_blank">🌪️ PCloud Music Vault</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>🗣️ AI Chat & Interactive</h3>
+                    <div class="footer-links">
+                        <div>
+                            <a href="https://chat-wsd.rf.gd" target="_blank">🗣️ NotebookLM Chat WSD</a>
+                            <a href="https://chat-et.rf.gd" target="_blank">🗣️ NotebookLM Chat Electronic Paradise</a>
+                            <a href="https://chat-kb.rf.gd" target="_blank">🗣️ NotebookLM Chat Nation Building</a>
+                            <a href="https://micro.page.gd" target="_blank">🏝️ Micronation Hub</a>
+                            <a href="https://notebooklm.google.com/notebook/f422a75d-6b67-412d-b87a-26a8d5c653d9?authuser=1" target="_blank">🌚 NotebookLM Blacksite Berlin AI Chat</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>📚 Universal Basic Income (UBI)</h3>
+                    <div class="footer-links">
+                        <div>
+                            <a href="https://ubi.gt.tc" target="_blank">📚 UBI Hub</a>
+                            <a href="https://g.co/gemini/share/4a457895642b" target="_blank">🖼️ UBI Storybook</a>
+                            <a href="https://youtu.be/cbyME1y4m4o" target="_blank">📽️ YouTube UBI Video</a>
+                            <a href="https://open.spotify.com/episode/1oTeGrNnXazJmkBdyH0Uhz" target="_blank">🎧 Spotify UBI Podcast</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>📽️ Videos & Multimedia</h3>
+                    <div class="footer-links">
+                        <div>
+                            <a href="https://youtu.be/zGXLeYJsAtc" target="_blank">🌍 Dream Your Own State into Reality</a>
+                            <a href="https://youtu.be/KTL6imKT3_w" target="_blank">🗺️ How to Start Your Own Country</a>
+                            <a href="https://youtu.be/ToPHDtEA-JI" target="_blank">📜 Flags, Laws, and No Man's Land</a>
+                            <a href="https://youtu.be/WsJetlIjF5Q" target="_blank">🛠️ DIY Micronation Sovereignty</a>
+                            <a href="https://youtu.be/JSk13GnVMdU" target="_blank">🚀 Your Nation in 30 Days</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>☁️ Backup & Archives</h3>
+                    <div class="footer-links">
+                        <div>
+                            <a href="https://drive.google.com/drive/folders/1aq6KJnGlzD7ZieVDD5wTHbE_2hfoi2pw" target="_blank">☁️ Google Drive Backup</a>
+                            <a href="https://mega.nz/folder/0qN23TzB#6EFkueLyOaZEWD4aLNk1fQ" target="_blank">☁️ Mega.nz Backup</a>
+                            <a href="https://e.pcloud.link/publink/show?code=kZyS7NZxAFQ4DPUaCJu9EhLjkXixYefdXO7" target="_blank">☁️ PCloud Videos Vault</a>
+                            <a href="https://e.pcloud.link/publink/show?code=0Zhu7NZOByIyjsD1WbWNhaDlHUvCQBAXjF7" target="_blank">💨 PCloud Podcast Vault</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>🎗️ Support & Donation</h3>
+                    <div class="footer-links">
+                        <div>
+                            <a href="https://donate.gt.tc" target="_blank">🎗️ Support Mission</a>
+                            <a href="https://nwo.page.gd" target="_blank">🛍️ Support Shop</a>
+                            <a href="https://merch.page.gd" target="_blank">🛒 Support Store</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>🌐 Social Media</h3>
+                    <div class="footer-links">
+                        <div>
+                            <a href="https://www.facebook.com/share/1ER7GbN7kM/" target="_blank">🌐 Facebook world sold</a>
+                            <a href="https://www.facebook.com/share/1DEMSyrrAt/" target="_blank">🤖 Facebook Electric Technocracy</a>
+                            <a href="https://www.facebook.com/groups/528455169898378/" target="_blank">🎗️ Facebook Humans & Machines Unite</a>
+                            <a href="https://x.com/WW3Precognition" target="_blank">✖️ X-Twitter - Cassandra Complex</a>
+                            <a href="https://x.com/NWO_BOOKS" target="_blank">✖️ X-Twitter - Welt verkauft offiziell</a>
+                            <a href="https://x.com/NWO_Support" target="_blank">✖️ X-Twitter - NWO Support</a>
+                            <a href="https://x.com/Electrocozy" target="_blank">✖️ X-Twitter - Electric Technocracy Sound Collective</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="footer-bottom">
+                    <p><strong>One United World Encyclopedia</strong></p>
+                    <p>Open Knowledge for Global Accessibility — Supporting Research on Future Governance</p>
+                    <p>&copy; 2026 | <a href="https://github.com/MrAnonymousNWO/One_World/" target="_blank" style="color: #0073E6;">GitHub Repository</a></p>
+                </div>
+            </footer>
+        </div>
+    </div>
+    
+    <!-- Mobile Menu (LEFT) - Articles & Search -->
+    <div id="mobile-menu">
+        <h2>📚 Articles</h2>
+        <input id="mobile-search" type="text" placeholder="Search…">
+        <div id="mobile-sidebar-links"></div>
+    </div>
+    
+    <!-- Control Menu (RIGHT) - Control Links -->
+    <div id="control-menu">
+        <h2>⚙️ Control</h2>
+        <a href="index.html">🏠 Home</a>
+        <hr style="border: none; border-top: 1px solid #005BBB; margin: 1rem 0;">
+        
+        <h3>🪢 Electric Technocracy Pioneers</h3>
+        <a href="https://et-pioneer.github.io/Electric-Technocracy-Pioneers-Community/" target="_blank">💡 GitHub Page</a>
+        <a href="https://repository.ct.ws" target="_blank">💡 GitHub Repository</a>
+        <a href="https://github.com/ET-Pioneer/Electric-Technocracy-Pioneers-Community/wiki" target="_blank">💡 Community WIKI</a>
+        <a href="https://community.xo.je" target="_blank">🪢 Community Hub</a>
+        
+        <hr style="border: none; border-top: 1px solid #005BBB; margin: 1rem 0;">
+        
+        <h3>🌎 One World Archive</h3>
+        <a href="https://mranonymousnwo.github.io/One_World/" target="_blank">🌎 Archive Vault</a>
+        <a href="https://github.com/MrAnonymousNWO/One_World/" target="_blank">🌏 GitHub Repository</a>
+        <a href="https://github.com/MrAnonymousNWO/One_World/wiki" target="_blank">🌍 GitHub WIKI</a>
+        
+        <hr style="border: none; border-top: 1px solid #005BBB; margin: 1rem 0;">
+        
+        <h3>📚 Treaty & Law</h3>
+        <a href="https://wiki.free.nf/" target="_blank">📚 International Treaty Law WIKI</a>
+        <a href="https://worldsold.wixsite.com/global-archive" target="_blank">📑 Treaty Archive HQ</a>
+        <a href="https://worldsold.wixsite.com/world-sold" target="_blank">🗺️ World Succession Deed HQ</a>
+        <a href="https://world.rf.gd" target="_blank">🌐 WSD 1400/98</a>
+        
+        <hr style="border: none; border-top: 1px solid #005BBB; margin: 1rem 0;">
+        
+        <h3>🚀 Resources</h3>
+        <a href="https://paradise.gt.tc" target="_blank">🚀 Electric Paradise</a>
+        <a href="https://et-pioneer.github.io/Electric-Technocracy-Pioneers-Community/search#gsc.tab=0" target="_blank">🔎 Search</a>
+        <a href="https://ubi.gt.tc" target="_blank">📚 UBI Hub</a>
+        <a href="https://donate.gt.tc" target="_blank">🎗️ Support Mission</a>
+        <a href="all_links.html" target="_blank">📑 All Links</a>
+    </div>
+    
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop" aria-label="Back to top">↑</button>
+    
+    <script>
+        /* ==================== HEADER AUTO-HIDE ON SCROLL ==================== */
+        let lastScrollTop = 0;
+        const header = document.getElementById("header");
+        
+        window.addEventListener("scroll", () => {
+            let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+            
+            if (currentScroll > lastScrollTop && currentScroll > 100) {
+                header.classList.add("hidden");
+            } else {
+                header.classList.remove("hidden");
+            }
+            
+            lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
+        });
+        
+        /* ==================== HAMBURGER MENU TOGGLES ==================== */
+        const hamburgerLeft = document.getElementById("hamburger-left");
+        const hamburgerRight = document.getElementById("hamburger-right");
+        const mobileMenu = document.getElementById("mobile-menu");
+        const controlMenu = document.getElementById("control-menu");
+        
+        hamburgerLeft.addEventListener("click", () => {
+            mobileMenu.classList.toggle("open");
+            controlMenu.classList.remove("open");
+        });
+        
+        hamburgerRight.addEventListener("click", () => {
+            controlMenu.classList.toggle("open");
+            mobileMenu.classList.remove("open");
+        });
+        
+        document.addEventListener("click", (e) => {
+            if (!mobileMenu.contains(e.target) && !hamburgerLeft.contains(e.target)) {
+                mobileMenu.classList.remove("open");
+            }
+            if (!controlMenu.contains(e.target) && !hamburgerRight.contains(e.target)) {
+                controlMenu.classList.remove("open");
+            }
+        });
+        
+        /* ==================== LOAD WIKI ARTICLES FROM GITHUB ==================== */
+        document.addEventListener("DOMContentLoaded", () => {
+            const sidebar = document.getElementById("sidebar-links");
+            const searchBox = document.getElementById("searchBox");
+            const searchResults = document.getElementById("search-results");
+            const mobileSearchBox = document.getElementById("mobile-search");
+            const mobileSidebar = document.getElementById("mobile-sidebar-links");
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Electric Technocracy Encyclopedia – dynamic index and viewer for all One World wiki articles.">
-<meta name="keywords" content="Electric Technocracy, Encyclopedia, One World, Wiki, Governance, Technocracy, Knowledge">
-<meta name="author" content="Electric Technocracy Pioneers Community">
+            const api = "https://api.github.com/repos/MrAnonymousNWO/One_World/contents/docs/wiki_encyclopedia";
 
-<!-- Markdown Renderer -->
-<script src="https://cdn.jsdelivr.net/npm/showdown@2.1.0/dist/showdown.min.js"></script>
+            let articleIndex = {};
 
-<style>
-/* GLOBAL */
-body { margin:0; font-family:Georgia,serif; background:#f5f5f5; color:#222; display:flex; }
+            fetch(api)
+                .then(r => r.json())
+                .then(files => {
+                    const mdFiles = files.filter(f => f.name.endsWith(".md"));
+                    mdFiles.sort((a, b) => a.name.localeCompare(b.name));
 
-/* SIDEBAR */
-#sidebar { width:260px; background:#111; color:#fff; height:100vh; overflow-y:auto; position:fixed; left:0; top:0; padding:20px; box-sizing:border-box; }
-#sidebar h2 { margin-top:0; }
-#sidebar a { display:block; color:#fff; text-decoration:none; padding:6px 0; opacity:0.85; }
-#sidebar a:hover { opacity:1; }
-
-/* SEARCH */
-#searchBox { width:100%; padding:8px; margin:10px 0 20px 0; border-radius:6px; border:none; }
-.search-result { margin-bottom:15px; }
-.search-result a { color:#fff; font-weight:bold; }
-.search-snippet { font-size:0.8rem; opacity:0.7; }
-
-/* MOBILE */
-#mobile-toggle { display:none; position:fixed; top:15px; left:15px; background:#111; color:#fff; padding:10px 14px; border-radius:6px; cursor:pointer; z-index:999; }
-@media(max-width:900px){
-    #sidebar{transform:translateX(-100%);transition:0.3s;}
-    #sidebar.open{transform:translateX(0);}
-    #mobile-toggle{display:block;}
-}
-
-/* CONTENT */
-#content { margin-left:260px; padding:30px; max-width:900px; }
-@media(max-width:900px){ #content{margin-left:0;padding:20px;} }
-
-/* HEADER */
-header { background:#0f0f0f; color:#fff; padding:25px; border-radius:10px; }
-header h1 { margin:0; }
-
-/* ARTICLE */
-article { background:#fff; padding:30px; border-radius:10px; box-shadow:0 0 10px rgba(0,0,0,0.05); margin-top:25px; }
-
-/* BREADCRUMB */
-#breadcrumb { margin:15px 0; font-size:0.9rem; }
-#breadcrumb a { color:#333; text-decoration:none; }
-#breadcrumb a:hover { text-decoration:underline; }
-
-/* FOOTER */
-footer { margin-top:40px; padding:20px; background:#0f0f0f; color:#fff; text-align:center; border-radius:10px; }
-</style>
-
-<script>
-function toggleSidebar(){ document.getElementById("sidebar").classList.toggle("open"); }
-
-document.addEventListener("DOMContentLoaded", () => {
-    const sidebar = document.getElementById("sidebar-links");
-    const searchBox = document.getElementById("searchBox");
-
-    // GitHub API: list files in docs/wiki_encyclopedia
-    const api = "https://api.github.com/repos/MrAnonymousNWO/One_World/contents/docs/wiki_encyclopedia";
-
-    let articleIndex = {}; // { name: { text: "...", label: "..." } }
-
-    fetch(api)
-        .then(r => r.json())
-        .then(files => {
-            const mdFiles = files.filter(f => f.name.endsWith(".md"));
-            mdFiles.sort((a,b)=>a.name.localeCompare(b.name));
-
-            // Sidebar list
-            mdFiles.forEach(f => {
-                const base = f.name.replace(".md","");
-                const label = base.replace(/_/g," ");
-
-                const link = document.createElement("a");
-                link.href = "?article=" + base;
-                link.textContent = label;
-                link.dataset.label = label.toLowerCase();
-
-                sidebar.appendChild(link);
-
-                // Preload raw text for search
-                fetch(f.download_url)
-                    .then(r => r.text())
-                    .then(text => {
-                        articleIndex[base] = {
-                            label: label,
-                            text: text
-                        };
-                    });
-            });
-
-            // Search filter
-            searchBox.addEventListener("input", () => {
-                const q = searchBox.value.toLowerCase();
-                sidebar.innerHTML = "";
-
-                if(q.length === 0){
-                    // restore normal list
                     mdFiles.forEach(f => {
-                        const base = f.name.replace(".md","");
-                        const label = base.replace(/_/g," ");
+                        const base = f.name.replace(".md", "");
+                        const label = base.replace(/_/g, " ");
+
                         const link = document.createElement("a");
                         link.href = "?article=" + base;
                         link.textContent = label;
+                        link.dataset.label = label.toLowerCase();
                         sidebar.appendChild(link);
+
+                        const mobileLink = document.createElement("a");
+                        mobileLink.href = "?article=" + base;
+                        mobileLink.textContent = label;
+                        mobileLink.dataset.label = label.toLowerCase();
+                        mobileSidebar.appendChild(mobileLink);
+
+                        fetch(f.download_url)
+                            .then(r => r.text())
+                            .then(text => {
+                                articleIndex[base] = {
+                                    label: label,
+                                    text: text
+                                };
+                            });
                     });
-                    return;
-                }
 
-                // Fulltext search
-                Object.keys(articleIndex).forEach(key => {
-                    const entry = articleIndex[key];
-                    const text = entry.text.toLowerCase();
+                    const performSearch = (searchBox, searchResults, sidebarLinks) => {
+                        const q = searchBox.value.toLowerCase();
+                        searchResults.innerHTML = "";
 
-                    if(text.includes(q)){
-                        const pos = text.indexOf(q);
-                        const snippet = entry.text.substring(Math.max(0,pos-40), pos+40);
+                        if (q.length < 2) {
+                            [...sidebarLinks.querySelectorAll("a")].forEach(a => {
+                                a.style.display = "block";
+                            });
+                            return;
+                        }
 
-                        const div = document.createElement("div");
-                        div.className = "search-result";
+                        [...sidebarLinks.querySelectorAll("a")].forEach(a => a.style.display = "none");
 
-                        div.innerHTML = `
-                            <a href="?article=${key}">${entry.label}</a>
-                            <div class="search-snippet">${snippet.replace(/\n/g," ")}</div>
-                        `;
+                        Object.keys(articleIndex).forEach(name => {
+                            const entry = articleIndex[name];
+                            const text = entry.text.toLowerCase();
 
-                        sidebar.appendChild(div);
-                    }
+                            if (entry.label.toLowerCase().includes(q) || text.includes(q)) {
+                                const pos = text.indexOf(q);
+                                const snippet = entry.text.substring(Math.max(0, pos - 40), pos + 100);
+
+                                const div = document.createElement("div");
+                                div.className = "search-result";
+
+                                div.innerHTML = `
+                                    <a href="?article=${name}">${entry.label}</a>
+                                    <div class="search-snippet">...${snippet.replace(/\n/g, " ")}...</div>
+                                `;
+
+                                searchResults.appendChild(div);
+                            }
+                        });
+                    };
+
+                    searchBox.addEventListener("input", () => {
+                        performSearch(searchBox, searchResults, sidebar);
+                    });
+
+                    mobileSearchBox.addEventListener("input", () => {
+                        performSearch(mobileSearchBox, searchResults, mobileSidebar);
+                    });
+
+                    const params = new URLSearchParams(window.location.search);
+                    const articleName = params.get("article") || "Home";
+                    loadArticle(articleName);
+                    updateActiveLink(articleName);
                 });
-            });
-
-            // Load article from URL
-            const params = new URLSearchParams(window.location.search);
-            const article = params.get("article") || "Home";
-            loadArticle(article);
         });
-});
 
-// Load and render Markdown
-function loadArticle(name){
-    const article = document.querySelector("article");
-    const breadcrumb = document.getElementById("breadcrumb");
+        /* ==================== LOAD AND RENDER MARKDOWN ==================== */
+        function loadArticle(name) {
+            const article = document.querySelector("#article");
+            const breadcrumb = document.getElementById("breadcrumb");
 
-    const url = `https://raw.githubusercontent.com/MrAnonymousNWO/One_World/master/docs/wiki_encyclopedia/${name}.md`;
+            const url = `https://raw.githubusercontent.com/MrAnonymousNWO/One_World/master/docs/wiki_encyclopedia/${name}.md`;
 
-    fetch(url)
-        .then(r => r.text())
-        .then(md => {
-            const converter = new showdown.Converter({
-                tables:true, ghCompatibleHeaderId:true,
-                simplifiedAutoLink:true, strikethrough:true, tasklists:true
+            fetch(url)
+                .then(r => {
+                    if (!r.ok) {
+                        throw new Error("404");
+                    }
+                    return r.text();
+                })
+                .then(markdown => {
+                    const converter = new showdown.Converter({
+                        tables: true,
+                        ghCompatibleHeaderId: true,
+                        simplifiedAutoLink: true,
+                        strikethrough: true,
+                        tasklists: true
+                    });
+
+                    const html = converter.makeHtml(markdown);
+                    article.innerHTML = html;
+
+                    const temp = document.createElement("div");
+                    temp.innerHTML = html;
+
+                    const h1 = temp.querySelector("h1");
+                    const title = h1 ? h1.textContent : name;
+
+                    document.title = `${title} - One United World Encyclopedia`;
+
+                    breadcrumb.innerHTML = `
+                        <a href="encyclopedia.html">Encyclopedia</a> ›
+                        <span>${title}</span>
+                    `;
+
+                    updateActiveLink(name);
+
+                    window.scrollTo(0, 0);
+                })
+                .catch(err => {
+                    console.error("Failed to load article:", err);
+
+                    article.innerHTML = `
+                        <h1 style="color:#c00;">❌ Article Not Found</h1>
+                        <p>The requested article "<strong>${name}</strong>" does not exist.</p>
+                        <p>Please choose another article from the sidebar.</p>
+                    `;
+
+                    breadcrumb.innerHTML = `
+                        <a href="encyclopedia.html">Encyclopedia</a> ›
+                        <span style="color:#c00;">Not Found</span>
+                    `;
+                });
+        }
+
+        /* ==================== UPDATE ACTIVE LINK ==================== */
+        function updateActiveLink(articleName) {
+            const links = document.querySelectorAll("#sidebar-links a, #mobile-sidebar-links a");
+            links.forEach(link => {
+                const href = link.getAttribute("href");
+                const linkArticle = new URLSearchParams(href.substring(1)).get("article");
+                
+                if (linkArticle === articleName) {
+                    link.classList.add("active");
+                } else {
+                    link.classList.remove("active");
+                }
             });
+        }
 
-            const html = converter.makeHtml(md);
-            article.innerHTML = html;
-
-            // Extract first H1 as title
-            const temp = document.createElement("div");
-            temp.innerHTML = html;
-            const h1 = temp.querySelector("h1");
-            document.title = h1 ? h1.textContent : name;
-
-            // Breadcrumb
-            breadcrumb.innerHTML = `
-                <a href="encyclopedia.html">Encyclopedia</a> › 
-                <span>${h1 ? h1.textContent : name}</span>
-            `;
-        })
-        .catch(() => {
-            article.innerHTML = "<p style='color:red'>Article not found.</p>";
+        /* ==================== BACK TO TOP BUTTON ==================== */
+        const backToTopBtn = document.getElementById("backToTop");
+        
+        window.addEventListener("scroll", () => {
+            if (window.pageYOffset > 300) {
+                backToTopBtn.classList.add("visible");
+            } else {
+                backToTopBtn.classList.remove("visible");
+            }
         });
-}
-</script>
-
-</head>
-<body>
-
-<div id="mobile-toggle" onclick="toggleSidebar()">☰ Menu</div>
-
-<!-- SIDEBAR -->
-<div id="sidebar">
-    <h2>📚 Articles</h2>
-    <input id="searchBox" type="text" placeholder="Search…">
-    <div id="sidebar-links"></div>
-</div>
-
-<!-- CONTENT -->
-<div id="content">
-
-<header>
-    <h1>Electric Technocracy Encyclopedia</h1>
-    <p>Dynamic viewer for all One World wiki articles</p>
-</header>
-
-<div id="breadcrumb"></div>
-
-<article>Loading…</article>
-
-<footer>
-    Electric Technocracy Pioneers Community — Open Knowledge for Global Accessibility
-</footer>
-
-</div>
+        
+        backToTopBtn.addEventListener("click", () => {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        });
+    </script>
 </body>
 </html>
