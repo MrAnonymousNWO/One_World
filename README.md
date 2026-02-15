@@ -2,6 +2,10 @@
 
 Welcome to the central digital nexus for the **One United World** initiative. This repository serves as the primary vault and authoritative source for the transitionary legal framework, archival records, and the technological blueprints of the Electric Technocracy.
 
+<div align="center">
+  <img src="https://github.com/MrAnonymousNWO/One_World/blob/82e6e450bec5001ba177afae27d426b6f5a16b55/docs/video/gif/oneworld.gif" width="250" height="250" />
+</div>
+
 ## 🏛 The Mission: Treaty Archive & Custodianship
 
 This repository functions as the official **Custodian of the Purchase Contract Deed Role 1400/98 (WSD 1400/98)**. 
